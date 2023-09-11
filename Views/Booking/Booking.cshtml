@@ -1,0 +1,267 @@
+@{
+    ViewData["Title"] = "Booking";
+    Layout = "_LayoutLite";
+}
+
+<a id="backtotop" href="#" title="Back to Top"><img src="@Url.Content("~/images/Arrow-Up.png")" alt="Back to Top" max-width="20px" height="50px" /></a>
+<!-- 預約日期 -->
+<div class="search">
+    <nav class="navbar navbar-light p-4">
+        <div class="container-fluid justify-content-center">
+            <div class="col-12 col-lg-3 d-flex">
+                <div class="col-6 d-flex">
+                    <input type="date"
+                           class="form-control me-2"
+                           id="start"
+                           name="trip-start"
+                           ;
+                           value="2023-10-01"
+                           min="2023-01-01"
+                           max="2024-1-31" />
+                </div>
+                <div class="col-6 d-flex clockpicker">
+                    <input class="input-group form-control ms-1"
+                           ;type="text"
+                           value="" />
+                    <span class="clockMove">                       
+                        <input type="button" class="border-0 clockImg"/>
+                    </span>
+                </div>
+            </div>
+            <form class="d-flex col-12 col-lg-2 my-2">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <button type="button" class="btn btn-outline-light">
+                    Search
+                </button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+<!-- 下拉選單 -->
+
+<div class="container d-flex justify-content-end my-4">
+    <div class="row">
+        <div class="col">
+            <div class="dropdown">
+                <button class="btn btn-outline-dark dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton2"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    探索
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark"
+                    aria-labelledby="dropdownMenuButton2">
+                    <li><a class="dropdown-item active" href="@Url.Content("")">評分最高</a></li>
+                    <li><a class="dropdown-item" href="@Url.Content("")">距離</a></li>
+                    <li><a class="dropdown-item" href="@Url.Content("")">最新</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 老師列表卡片 -->
+<div class="container-fluid py-3">
+    <div class="row g-4 d-flex justify-content-center">
+        <div class="col-lg-7 col-sm-10 col-11">
+
+            <div class="card md-3 bg-warning" style="max-width: 100%">
+                <div class="row g-0">
+                    <div class="col-lg-4 col-md-10 col-ms-10 col-12">
+                        <img src="@Url.Content("~/images/teacher-1.jpg")"
+                             class="my-2 mx-2 rounded-3" alt="teacher" style="max-width: 95%">
+                        <h5><span class="badge rounded-pill bg-success mx-1">英文口說</span><span class="badge rounded-pill bg-success">兒童英文</span></h5>
+                    </div>
+                    <div class="col-lg-8 col-md-10 col-ms-10 col-12">
+                        <div class="card-body">
+                            <h5><img src="@Url.Content("~/images/Uk.256.png")" style="max-width: 5%" alt="UK">&nbsp;Trisa Mayer&nbsp;<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></h5>
+                            <p class="card-text">
+                                Unlock the World of English with Trisa Mayer!
+                                Experience English Excellence with Trisa Mayer。<br>
+                                Inspiring a Passion for English Learning，
+                                Empowering Students to Master English。
+                                Interactive Learning for Fluent English，
+                                Building Confidence through English Conversations<br>
+                                Tailored English Lessons for All Ages and Levels，
+                                Get in Touch with Trisa Mayer for Personalized English Coaching~
+                            </p>
+                            <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic checkbox toggle button group">
+                                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck1">09:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck2">10:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck3">15:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck4">16:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck5">19:00</label>
+                            </div>
+                            <p class="my-2 d-flex justify-content-end">
+                                <button type="button" class="btn btn-outline-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+                                    </svg>
+                                    加關注
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card md-3 bg-warning my-4" style="max-width: 100%">
+                <div class="row g-0">
+                    <div class="col-lg-4 col-md-10 col-ms-10 col-12">
+                        <img src="@Url.Content("~/images/teacher-8.jpg")"
+                             class="my-2 mx-2 rounded-3" alt="teacher" style="max-width: 95%">
+                        <h5><span class="badge rounded-pill bg-success mx-1">英文口說</span><span class="badge rounded-pill bg-success">英文證照</span></h5>
+                    </div>
+                    <div class="col-lg-8 col-md-10 col-ms-10 col-12">
+                        <div class="card-body">
+                            <h5><img src="@Url.Content("~/images/Australia.256.png")" style="max-width: 5%" alt="UK">&nbsp;Grace&nbsp;<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></h5>
+                            <p class="card-text">
+                                Unlock the World of English with Grace!
+                                Experience English Excellence with Grace。<br>
+                                Inspiring a Passion for English Learning，
+                                Empowering Students to Master English。
+                                Interactive Learning for Fluent English，
+                                Building Confidence through English Conversations<br>
+                                Tailored English Lessons for All Ages and Levels，
+                                Get in Touch with Grace for Personalized English Coaching~
+                            </p>
+                            <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic checkbox toggle button group">
+                                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck1">10:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck2">14:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck3">15:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck4">17:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck5">20:00</label>
+                            </div>
+                            <p class="my-2 d-flex justify-content-end">
+                                <button type="button" class="btn btn-outline-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+                                    </svg>
+                                    加關注
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card md-3 bg-warning my-4" style="max-width: 100%">
+                <div class="row g-0">
+                    <div class="col-lg-4 col-md-10 col-ms-10 col-12">
+                        <img src="@Url.Content("~/images/teacher-7.jpg")"
+                             class="my-2 mx-2 rounded-3" alt="teacher" style="max-width: 95%">
+                        <h5><span class="badge rounded-pill bg-success mx-1">英文口說</span><span class="badge rounded-pill bg-success">英文證照</span><span class="badge rounded-pill bg-success mx-1">商用英文</span></h5>
+                    </div>
+                    <div class="col-lg-8 col-md-10 col-ms-10 col-12">
+                        <div class="card-body">
+                            <h5><img src="@Url.Content("~/images/Usa.256.png")" style="max-width: 5%" alt="UK">&nbsp;Henry&nbsp;<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></h5>
+                            <p class="card-text">
+                                Unlock the World of English with Henry!
+                                Experience English Excellence with Henry。<br>
+                                Inspiring a Passion for English Learning，
+                                Empowering Students to Master English。
+                                Interactive Learning for Fluent English，
+                                Building Confidence through English Conversations<br>
+                                Tailored English Lessons for All Ages and Levels，
+                                Get in Touch with Henry for Personalized English Coaching~
+                            </p>
+                            <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic checkbox toggle button group">
+                                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck1">10:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck2">13:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck3">15:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck4">16:00</label>
+
+                                <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btncheck5">21:00</label>
+                            </div>
+                            <p class="my-2 d-flex justify-content-end">
+                                <button type="button" class="btn btn-outline-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+                                    </svg>
+                                    加關注
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分頁 -->
+<div class="container-xxl container-fluid py-3">
+    <div class="container d-flex justify-content-end">
+        <div class="row g-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="@Url.Content("~/css/book.css")" rel="stylesheet" />
+     <link href="@Url.Content("https://weareoutman.github.io/clockpicker/dist/jquery-clockpicker.min.css")" rel="stylesheet" />
+}
+
+@section Scripts{
+   <script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js")"></script>
+     <script src="@Url.Content("https://weareoutman.github.io/clockpicker/dist/jquery-clockpicker.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+           // $(".clockpicker").clockpicker();
+            var clockInput = $(".clockpicker").clockpicker({
+                placement: "bottom",
+                autoclose: true,
+            });
+
+           $("#showClock").click(function (e) {
+                e.stopPropagation();
+                $(".clockpicker").clockpicker("show");
+            });
+        });
+    </script>
+}

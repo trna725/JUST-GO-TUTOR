@@ -1,0 +1,160 @@
+﻿@{
+    ViewData["Title"] = "Class";
+    Layout = "_Layout";
+}
+
+<!-- 課程監控選單 -->
+<nav class="navbar navbar-expand justify-content-center fixed-top navbar-dark">
+    <ul class="navbar-nav py-3">
+        <li class="nav-item mx-3"><a href="#area1" class="nav-link">English</a></li>
+        <li class="nav-item mx-3"><a href="#area2" class="nav-link">Japanese</a></li>
+        <li class="nav-item mx-3"><a href="#area3" class="nav-link">Korean</a></li>
+        <li class="nav-item mx-3"><a href="#area4" class="nav-link">French</a></li>
+    </ul>
+</nav>
+
+<!-- 課程選擇 -->
+
+<h1 id="area1">English</h1>
+
+
+<div class="container-fluid selection">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/e6.jpg")" alt="英文">
+            <h2 class="h5 mt-2 mb-0 fw-bold">商用英文</h2>
+            <p class="h5">10 courses</p>
+            <a href="@Url.Action("Booking", "Booking", new {area=""})" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/e1.jpg")" alt="英文">
+            <h2 class="h5 mt-2 mb-0 fw-bold">英文證照</h2>
+            <p class="h5">10 courses</p>
+            <a href="@Url.Action("Booking", "Booking", new {area=""})" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/e3.jpg")" alt="英文">
+            <h2 class="h5 mt-2 mb-0 fw-bold">英文口說</h2>
+            <p class="h5">10 courses</p>
+            <a href="@Url.Action("Booking", "Booking", new {area=""})" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/courses-method_2.jpg")" alt="英文">
+            <h2 class="h5 mt-2 mb-0 fw-bold">兒童英文</h2>
+            <p class="h5">10 courses</p>
+            <a href="@Url.Action("Booking", "Booking", new {area=""})" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+    </div>
+
+    <h2 class="h1 text-center my-2" id="area2">Japanese</h2>
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/JP1.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">商用日語</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/JP2.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">日語證照</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/JP3.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">日語口說</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/JP4.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">兒童日語</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+    </div>
+
+    <h2 class="h1 text-center my-2" id="area3">Korean</h2>
+
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/KO3.jpg")" alt="韓語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">商用韓語</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/KO2.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">韓語證照</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/KO1.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">韓語口說</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/KO4.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">兒童韓語</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+    </div>
+
+    <h2 class="h1 text-center my-2" id="area4">French</h2>
+
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/F1.jpg")" alt="韓語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">商用法文</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/F6.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">法文證照</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/F3.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">法文口說</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+        <div class="col-10 col-sm-10 col-md-5 col-lg-5 col-xl-2 my-3 text-center mycard">
+            <img src="@Url.Content("~/images/img_5.jpg")" alt="日語">
+            <h2 class="h5 mt-2 mb-0 fw-bold">兒童法文</h2>
+            <p class="h5">10 courses</p>
+            <a href="#" class="button" title="按左鍵前往">立即上課</a>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+@section Styles {
+    <link href="@Url.Content("~/css/class.css")" rel="stylesheet" />
+ 
+}
+
+@section Scripts{
+
+
+
+}
+
+
+@section ScriptsEnd{
+   
+
+
+}
