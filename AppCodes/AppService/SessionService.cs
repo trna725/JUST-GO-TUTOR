@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 /// <summary>
 /// Session 類別
@@ -184,6 +185,74 @@ public static class SessionService
         set
         { _context?.Session.Set<string>("ReviewStar", value); }
     }
+
+    /// <summary>
+    /// 可選擇的星期
+    /// </summary>
+    /// <value></value>
+    public static string WeekSection
+    {
+        get
+        {
+            string str_value = "";
+            if (_context != null) str_value = _context.Session.Get<string>("WeekSection");
+            if (str_value == null) str_value = "";
+            return str_value;
+        }
+        set
+        { _context?.Session.Set<string>("WeekSection", value); }
+    }
+
+
+    /// <summary>
+    /// 列出星期資料
+    /// </summary>
+    public static List<string> WeekData
+    {
+        get
+        {
+            List<string> weeks = new List<string>();
+            string[] weeksstring = WeekSection.Split(','); 
+            weeks = weeksstring.ToList(); 
+
+            return weeks; 
+        }
+    }
+
+      /// <summary>
+    /// 可選擇的星期
+    /// </summary>
+    /// <value></value>
+    public static string TimeSection
+    {
+        get
+        {
+            string str_value = "";
+            if (_context != null) str_value = _context.Session.Get<string>("TimeSection");
+            if (str_value == null) str_value = "";
+            return str_value;
+        }
+        set
+        { _context?.Session.Set<string>("TimeSection", value); }
+    }
+
+    
+    /// <summary>
+    /// 列出時間資料
+    /// </summary>
+    public static List<string> TimeData
+    {
+        get
+        {
+            List<string> times = new List<string>();
+            string[] timesstring = TimeSection.Split(','); 
+            times = timesstring.ToList(); 
+
+            return times; 
+        }
+    }
+
+
     /// <summary>
     /// 登入使用者職稱
     /// </summary>

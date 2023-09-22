@@ -378,6 +378,9 @@ VALUES
         parm.Add("UserMemo" , model.CourseMemo);
         parm.Add("Remark" , "");
         dpr.Execute(str_query , parm);
+
+        SessionService.WeekSection = str_week_section;
+        SessionService.TimeSection =str_time_section;  
     }
 
     private void SetSectionValue(bool checkValue , string value , ref string sectionValue)

@@ -20,7 +20,7 @@ public class SendMailService : BaseClass
         gmail.ReceiverName = mailObject.UserName;
         gmail.ReceiverEmail = mailObject.ToEmail;
         gmail.Subject = string.Format("{0} 會員註冊驗證通知信", AppService.AppName);
-        gmail.Body = string.Format("敬愛的會員 {0} 您好!! <br /><br />", mailObject.UserName);
+        gmail.Body = string.Format("敬愛的會員 {0} 您好~~ <br /><br />", mailObject.UserName);
         gmail.Body += string.Format("您於 {0} 在我們網站註冊了會員帳號<br />", str_reg_date);
         gmail.Body += string.Format("您的會員帳號為：{0}<br />", mailObject.UserNo);
         gmail.Body += "請您點擊以下連結進行帳號電子郵件驗證<br /><br />";
@@ -202,11 +202,12 @@ public class SendMailService : BaseClass
         gmail.MessageText = "";
         gmail.ReceiverName = userData.UserName;
         gmail.ReceiverEmail = userData.ContactEmail;
-        gmail.Subject = string.Format("{0} 案件申請網站的通知信", AppService.AppName);
-        gmail.Body = string.Format("親愛的 {0} 同學您好!! <br /><br />", SessionService.UserName);
-        gmail.Body += string.Format("您於本平台申請了一份上課申請資訊<br /><br />", DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
+        gmail.Subject = string.Format("{0} 申請預約家教的通知信", AppService.AppName);
+        gmail.Body = string.Format("親愛的 {0} 同學您好~~ <br /><br />", SessionService.UserName);
+        gmail.Body += string.Format("您於 {0} 在本平台申請了一份上課申請資訊<br /><br />", DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
         gmail.Body += "申請資訊如下：<br />";
-        gmail.Body += $"課程日期：{DateTime.Now.ToString("yyyy/MM/dd HH:mm")}<br />";
+        gmail.Body += $"希望上課的星期：{SessionService.WeekSection}<br />";
+        gmail.Body += $"希望上課的時間：{SessionService.TimeSection}<br />";
         gmail.Body += $"課程名稱：{SessionService.CourseName}<br />";
         gmail.Body += $"老師姓名：{SessionService.TeacherName}<br />";
         gmail.Body += "<br />";
@@ -239,7 +240,8 @@ public class SendMailService : BaseClass
         gmail.Body = string.Format("敬愛的 {0} 老師您好!! <br /><br />", teacherData.UserName);
         gmail.Body += string.Format("{0} 於本平台申請了一份上課申請資訊<br /><br />", SessionService.UserName);
         gmail.Body += "申請資訊如下：<br />";
-        gmail.Body += $"課程日期：{DateTime.Now.ToString("yyyy/MM/dd HH:mm")}<br />";
+        gmail.Body += $"希望上課的星期：{SessionService.WeekSection}<br />";
+        gmail.Body += $"希望上課的時間：{SessionService.TimeSection}<br />";
         gmail.Body += $"課程名稱：{SessionService.CourseName}<br />";
         gmail.Body += $"學生編號：{userData.UserNo}<br />";
         gmail.Body += $"學生姓名：{userData.UserName}<br />";

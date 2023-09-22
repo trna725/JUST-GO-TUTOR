@@ -12,8 +12,8 @@
     {
         var userData = user.GetUserData(SessionService.TeacherNo);
         CourseList = userCate.GetUserCourseList(SessionService.TeacherNo);
-        str_flag_url = $"~/flags/1x1/{userData.DeptNo}.svg";
-        string str_star_count = userData.TitleNo;
+        str_flag_url = $"~/flags/1x1/{userData.CountryNo}.svg";
+        string str_star_count = userData.ReviewStar;
         str_content_text = userData.ContentText;
         int_star_count = 5;
         if (!int.TryParse(str_star_count, out int_star_count)) int_star_count = 5;
@@ -24,7 +24,7 @@
 <form asp-area="" asp-action="Select" asp-controller="Booking" method="post">
     <div class="card md-3 bg-warning card-size-max menu-top-space">
         <div class="card-header bg-primary text-white">
-            <h1>上課資訊確認</h1>
+            <h1>預約上課資訊確認</h1>
         </div>
         <div class="card-body bg-white">
             <div class="row">
@@ -73,9 +73,9 @@
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <h3>預約日期：@DateTime.Today.ToString("yyyy/MM/dd")</h3>
-                    <h3>預約老師：@SessionService.TeacherName (@SessionService.TeacherNo)</h3>
-                    <h3>預約時段：</h3>
+                    <h3>預約申請日期：@DateTime.Today.ToString("yyyy/MM/dd")</h3>
+                    <h3>希望預約的老師：@SessionService.TeacherName (@SessionService.TeacherNo)</h3>
+                    <h3>希望預約時段：</h3>
                     <table class="table table-bordered">
                         <tr>
                             <th class="me-2">
@@ -170,7 +170,7 @@
                             </td>
                         </tr>
                     </table>
-                    <h3>預約星期：</h3>
+                    <h3>希望預約星期：</h3>
                     <table class="table table-bordered">
                         <tr>
                             <th class="me-2">
