@@ -1,0 +1,366 @@
+* {
+  margin: 0px;
+}
+
+.body {
+  height: 100%;
+  margin: 0px;
+}
+/*.header {
+  /* 圖片會被當作背景圖 */
+/* width: 100%;
+  height: 15%;
+  position: fixed;
+}*/
+
+/*.header-h2-style {
+  /* position: absolute; */
+/* 用於在圖片上呈現文字 */
+/* margin-top: -65%;
+  margin-left: 8%; 
+}*/
+
+.header-h2-style-a {
+  font-weight: bolder;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 0.5px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: 3px;
+  color: darkturquoise !important;
+  text-decoration: none;
+}
+
+.header-h2-style-a:hover {
+  color: orange !important;
+}
+
+.headerCover {
+  /* opacity: 0.8; */
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.headerLink a {
+  margin: 0% 3%;
+  text-decoration: none;
+}
+
+.btn-size {
+  width: 100%;
+  height: 100%;
+}
+
+.header-pos {
+  position: fixed;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1500px) {
+}
+
+/*每次往下滑Header會消失後又出現*/
+.showAnime {
+  animation: showHeader 3s ease-in;
+  transition: all 3s;
+  position: fixed;
+}
+
+@keyframes showHeader {
+  from {
+    position: absolute;
+  }
+
+  to {
+    position: fixed;
+  }
+}
+
+:root {
+  --primary: #06bbcc;
+  --light: #f0fbfc;
+  --dark: #181d38;
+}
+
+.service-item {
+  background-color: var(--light);
+  transition: 0.5s;
+  text-align: center;
+  height: 200px;
+  font-family: "Times New Roman", Times, serif;
+  overflow: hidden;
+}
+
+.service-item:hover {
+  background-color: aqua;
+  transition: 0.5s;
+}
+
+.carousel-control-next-icon:hover {
+  background-color: #06bbcc;
+}
+
+.carousel-control-prev-icon:hover {
+  background-color: #06bbcc;
+}
+
+.courses-img-style {
+  position: absolute;
+  background-color: azure;
+  width: 30%;
+  height: 15%;
+  bottom: 0px;
+  right: 0px;
+  font-size: 0px;
+  overflow: hidden;
+}
+
+.courses-img-medium-style {
+  position: absolute;
+  background-color: azure;
+  width: 40%;
+  height: 20%;
+  bottom: 0px;
+  right: 0px;
+  font-size: 0px;
+  overflow: hidden;
+}
+
+.courses-img-medium-2-style {
+  position: absolute;
+  background-color: azure;
+  width: 40%;
+  height: 15%;
+  bottom: 0px;
+  right: 0px;
+  font-size: 0px;
+  overflow: hidden;
+}
+
+.courses-img-long-style {
+  position: absolute;
+  background-color: azure;
+  width: 50%;
+  height: 20%;
+  bottom: 0px;
+  right: 0px;
+  font-size: 0px;
+  overflow: hidden;
+}
+
+.courses-img {
+  position: relative;
+  overflow: hidden;
+  object-fit: cover;
+  margin: 2%;
+}
+
+.courses-h5-style {
+  text-align: center;
+  padding-top: 5%;
+  font-size: 1rem;
+  width: 100%;
+  height: 100%;
+  font-weight: 900;
+  /* font-weight: 90%; */
+}
+
+/* .courses-h5-style::after {
+  content: "";
+  font-weight: 1000;
+  text-align: center;
+  padding: 1%;
+} */
+
+.courses-h5-style:hover {
+  background-color: #06bbcc;
+  color: white;
+}
+
+.img-hover-anime {
+  transform: scale(1, 1);
+  transition: all 1s ease-out;
+}
+
+.img-hover-anime:hover {
+  transform: scale(1.2, 1.2);
+}
+
+.popular-box {
+  background-color: var(--light);
+  /*  width: 100%;*/
+  height: 400px;
+  margin: 5% 1.5%;
+  border-radius: 2%;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+  .popular-box {
+    height: 330px;
+  }
+}
+
+.popular-box-size {
+  width: 100%;
+  height: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.popular-box-size img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popular-box-btn {
+  position: relative;
+  top: -40%;
+}
+
+.fa-color {
+  color: darkcyan;
+}
+
+.instructors-box {
+  width: 100%;
+  height: 350px;
+  background-color: var(--light);
+  border-radius: 2%;
+  overflow: hidden;
+}
+
+footer {
+  position: unset !important;
+  width: auto;
+  /*height: 100%;*/
+  background-color: #181d38;
+  /*    margin-top: 15%;*/
+  /*    margin-top: 100%;*/
+}
+
+.clearfix::before {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.popular-footer-end {
+  display: flex;
+  height: 16%;
+}
+
+.popular-footer-box {
+  display: flex;
+  width: calc(100% / 3);
+  justify-content: center;
+  border-right: 100px lightblue;
+  position: relative;
+  top: 10%;
+  border-right: 1.5px #d0d0d0 solid;
+  padding: 0%;
+  margin: 0%;
+}
+
+.popular-footer-endbox {
+  display: flex;
+  width: calc(100% / 3);
+  justify-content: center;
+  border-right: 100px lightblue;
+  position: relative;
+  top: 10%;
+  /* border-right: 1.5px #000 solid; */
+  padding: 0%;
+  margin: 0%;
+}
+
+.aboutusbox {
+  letter-spacing: -0.5px;
+}
+
+.footer-copy {
+  color: azure;
+  text-align: center;
+}
+
+.wrap {
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+}
+
+.footer-link {
+  /* text-decoration: none;
+  color: aliceblue; */
+  font-size: 12px !important;
+  font-weight: bolder;
+}
+
+.footer-title {
+  font-weight: 900;
+  /* margin-top: 10%; */
+}
+
+.font-small {
+  font-size: smaller;
+  letter-spacing: 0.5px;
+}
+
+.social-icon {
+  text-decoration: none;
+  color: white;
+}
+
+.social-icon:hover {
+  color: var(--primary);
+}
+
+.inputWidth {
+  width: 100% !important;
+  height: 50px !important;
+  line-height: 50px;
+  /* border: none; */
+}
+
+.inputBtn {
+  height: 50px;
+  background-color: var(--primary);
+  color: white;
+  width: 80px;
+  font-weight: bolder;
+  border-radius: 10%;
+  border: none;
+  line-height: 50px;
+}
+
+.instructors-box-size {
+  width: 100%;
+  height: 70%;
+  position: relative;
+  overflow: hidden;
+}
+
+.instructors-box-size img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.instructors-box-Btn {
+  margin-top: -23px;
+}
+
+#backtotop {
+  display: scroll;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}
+
+.nav-profile img {
+  max-height: 36px;
+}
+
+.nav-profile span {
+  font-size: 14px;
+  font-weight: 600;
+}

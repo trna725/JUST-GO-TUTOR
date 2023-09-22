@@ -1,0 +1,47 @@
+@model vmContact
+
+@{
+    ViewData["Title"] = "Contact";
+    Layout = "_Layout";
+}
+
+<hr />
+<div style="height:100rem;">
+    <div class="card bg-white menu-top-space">
+        <form asp-action="Contact">
+            <div class="card-header bg-primary text-white">
+                <h1>@_local.Value("Contact")</h1>
+            </div>
+            <div class="card-body bg-white">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ContactorName" class="control-label"></label>
+                    <input asp-for="ContactorName" class="form-control" />
+                    <span asp-validation-for="ContactorName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactorEmail" class="control-label"></label>
+                    <input asp-for="ContactorEmail" class="form-control" />
+                    <span asp-validation-for="ContactorEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactorSubject" class="control-label"></label>
+                    <input asp-for="ContactorSubject" class="form-control" />
+                    <span asp-validation-for="ContactorSubject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactorMessage" class="control-label"></label>
+                    <input asp-for="ContactorMessage" class="form-control" />
+                    <span asp-validation-for="ContactorMessage" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="form-group">
+                    <input type="submit" value="@_local.Value("Submit")" class="@_css.SubmitButton me-1" />
+                    <a asp-action="Index" class="@_css.ReturnButton">@_local.Value("BackToIndex")</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
