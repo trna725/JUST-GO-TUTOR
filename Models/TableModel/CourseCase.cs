@@ -11,7 +11,7 @@ public class CourseCase
     public string? StatusCode { get; set; }
     public DateTime? CaseDate { get; set; }
     public DateTime? ConfirmTime { get; set; }
-    public DateTime? CaseTime { get; set; }
+    public string? CaseTime { get; set; }
     public string? StudentNo { get; set; }
     public string? StudentName { get; set; }
     public string? TeacherNo { get; set; }

@@ -154,6 +154,7 @@ public class z_repoCourseCase : BaseClass
         }
         return model;
     }
+    
     /// <summary>
     /// 取得多筆資料(同步呼叫)
     /// </summary>
@@ -333,6 +334,9 @@ public class z_repoCourseCase : BaseClass
     {
         string str_time_section = "";
         string str_week_section = "";
+        var caseDate = DateTime.Today; 
+        var caseTime = DateTime.Now.ToString("yyyyMMddhhmmss"); 
+        
         using var dpr = new DapperRepository();
         SetSectionValue(model.IsTime1 , "09:00" , ref str_time_section);
         SetSectionValue(model.IsTime2 , "10:00" , ref str_time_section);
@@ -355,18 +359,18 @@ public class z_repoCourseCase : BaseClass
 
         string str_query = @"
 INSERT INTO CourseCase
-(StatusCode,CaseDate,ConfirmTime,StudentNo,StudentName
+(StatusCode,CaseDate,CaseTime,StudentNo,StudentName
 ,TeacherNo,TeacherName,CourseNo,CourseName,TimeSection,WeekSection
 ,UserMemo,Remark)
 VALUES  
-(@StatusCode,@CaseDate,@ConfirmTime,@StudentNo,@StudentName
+(@StatusCode,@CaseDate,@CaseTime,@StudentNo,@StudentName
 ,@TeacherNo,@TeacherName,@CourseNo,@CourseName,@TimeSection,@WeekSection
 ,@UserMemo,@Remark)  
 ";
         DynamicParameters parm = new DynamicParameters();
         parm.Add("StatusCode" , "N");
-        parm.Add("CaseDate" , DateTime.Today);
-        parm.Add("ConfirmTime" , DateTime.Now);
+        parm.Add("CaseDate" , caseDate);
+        parm.Add("CaseTime" , caseTime);
         parm.Add("StudentNo" , SessionService.UserNo);
         parm.Add("StudentName" , SessionService.UserName);
         parm.Add("TeacherNo" , SessionService.TeacherNo);
@@ -381,6 +385,7 @@ VALUES
 
         SessionService.WeekSection = str_week_section;
         SessionService.TimeSection =str_time_section;  
+        SessionService.CaseTime = caseTime; 
     }
 
     private void SetSectionValue(bool checkValue , string value , ref string sectionValue)
@@ -391,5 +396,24 @@ VALUES
             sectionValue += value;
         }
     }
+
+    public CourseCase GetData(string caseTime)
+    {
+        var model = new CourseCase();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE CaseTime = @CaseTime ";
+        sql_query += sql_where;
+        sql_query += GetSQLOrderBy();
+        DynamicParameters parm = new DynamicParameters();
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("CaseTime", caseTime);
+        }
+        model = dpr.ReadSingle<CourseCase>(sql_query, parm);
+        return model;
+    }
+
     #endregion
 }

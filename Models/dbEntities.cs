@@ -483,7 +483,7 @@ namespace JUSTGOTUTOR.Models
             entity.Property(e => e.StatusCode).HasMaxLength(50);
             entity.Property(e => e.CaseDate).HasColumnType("date");
             entity.Property(e => e.ConfirmTime).HasColumnType("date");
-            entity.Property(e => e.CaseTime).HasColumnType("date");
+            entity.Property(e => e.CaseTime).HasMaxLength(250);
             entity.Property(e => e.StudentNo).HasMaxLength(50);
             entity.Property(e => e.StudentName).HasMaxLength(50);
             entity.Property(e => e.TeacherNo).HasMaxLength(50);

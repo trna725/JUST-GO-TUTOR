@@ -220,7 +220,7 @@ public static class SessionService
     }
 
       /// <summary>
-    /// 可選擇的星期
+    /// 可選擇的時間
     /// </summary>
     /// <value></value>
     public static string TimeSection
@@ -251,6 +251,24 @@ public static class SessionService
             return times; 
         }
     }
+
+    /// <summary>
+    /// 可選擇的時間
+    /// </summary>
+    /// <value></value>
+    public static string CaseTime
+    {
+        get
+        {
+            string str_value = "";
+            if (_context != null) str_value = _context.Session.Get<string>("CaseTime");
+            if (str_value == null) str_value = "";
+            return str_value;
+        }
+        set
+        { _context?.Session.Set<string>("CaseTime", value); }
+    }
+
 
 
     /// <summary>

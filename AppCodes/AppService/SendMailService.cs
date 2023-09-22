@@ -197,12 +197,14 @@ public class SendMailService : BaseClass
     {
         using var gmail = new GmailService();
         using var user = new z_repoUsers();
+        using var courseCase = new z_repoCourseCase(); 
         var userData = user.GetData(SessionService.UserNo);
+        var caseData = courseCase.GetData(SessionService.CaseTime); 
         //寄信給 User
         gmail.MessageText = "";
         gmail.ReceiverName = userData.UserName;
         gmail.ReceiverEmail = userData.ContactEmail;
-        gmail.Subject = string.Format("{0} 申請預約家教的通知信", AppService.AppName);
+        gmail.Subject = string.Format("{0} 申請預約家教通知信，案件編號：{1}", AppService.AppName, caseData.Id);
         gmail.Body = string.Format("親愛的 {0} 同學您好~~ <br /><br />", SessionService.UserName);
         gmail.Body += string.Format("您於 {0} 在本平台申請了一份上課申請資訊<br /><br />", DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
         gmail.Body += "申請資訊如下：<br />";
@@ -230,13 +232,15 @@ public class SendMailService : BaseClass
     {
         using var gmail = new GmailService();
         using var user = new z_repoUsers();
+        using var courseCase = new z_repoCourseCase(); 
         var teacherData = user.GetData(SessionService.TeacherNo);
         var userData = user.GetData(SessionService.UserNo);
+        var caseData = courseCase.GetData(SessionService.CaseTime); 
         //寄信給 User
         gmail.MessageText = "";
         gmail.ReceiverName = teacherData.UserName;
         gmail.ReceiverEmail = teacherData.ContactEmail;
-        gmail.Subject = string.Format("{0} 預約案件成立通知信-{1}", AppService.AppName , SessionService.UserName);
+        gmail.Subject = string.Format("{0} 預約案件成立通知信-{1}，案件編號：{2}", AppService.AppName , SessionService.UserName, caseData.Id);
         gmail.Body = string.Format("敬愛的 {0} 老師您好!! <br /><br />", teacherData.UserName);
         gmail.Body += string.Format("{0} 於本平台申請了一份上課申請資訊<br /><br />", SessionService.UserName);
         gmail.Body += "申請資訊如下：<br />";
