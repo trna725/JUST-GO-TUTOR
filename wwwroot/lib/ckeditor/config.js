@@ -37,12 +37,12 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
 	config.language = "zh-TW";
-	config.uiColor = "#AADC6E";
-	config.basicEntities = false;
-	config.entities = false;
-	config.height = 500;
-	//¹Ï¤ùÀq»{Åã¥Ü¤å¦r¬°ªÅ
-	config.image_previewText = " ";
-	// ¸Ñ¨MCKEditor¹Ï¤ù¼e«×¦Û¾AÀ³ªº°İÃD p img {    width: auto;    height: auto;    max - width: 100 %;}
-	config.disallowedContent = "img{ width, height }; img[width, height]";
+    config.uiColor = "#AADC6E";
+    config.basicEntities = false;
+    config.entities = false;
+    config.height = 500;
+    //åœ–ç‰‡é»˜èªé¡¯ç¤ºæ–‡å­—ç‚ºç©º
+    config.image_previewText = " ";
+    // è§£æ±ºCKEditoråœ–ç‰‡å¯¬åº¦è‡ªé©æ‡‰çš„å•é¡Œ p img {    width: auto;    height: auto;    max - width: 100 %;}
+    config.disallowedContent = "img{ width, height }; img[width, height]";
 };

@@ -1,276 +1,48 @@
-
-@{
-    ViewData["Title"] = "_LayoutLite";
-    //Layout = "_Layout";
-}
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - project</title>
-    <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
-    <link rel="stylesheet" href="@Url.Content("~/project.styles.css")" asp-append-version="true" />
-    <link rel="stylesheet" href="@Url.Content("~/css/style2.css")" asp-append-version="true" />
-    <link rel="stylesheet" href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css")" asp-append-version="true" />
-    <link rel="stylesheet" href="@Url.Content("https://unpkg.com/aos@2.3.1/dist/aos.css")" asp-append-version="true" />
-    @await RenderSectionAsync("Styles", required: false)
-    <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")" asp-append-version="true"></script>
-    <script src="@Url.Content("https://unpkg.com/aos@2.3.1/dist/aos.js")" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-    <a id="backtotop" href="#" title="Back to Top"><img src="@Url.Content("~/images/Arrow-Up.png")" alt="Back to Top" max-width="20px" height="50px" /></a>
-</head>
-<body class="body bg-warning">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light  bg-white  p-0  py-3 m-0 fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand header-h2-style-a" href='@Url.Action("Index", "Home" , new {area = ""})'>
-                    JUST GO TUTOR
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="@Url.Action("Index", "Home" , new {area = ""})">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="#About us">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Courses
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>Sport</a></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>Programm</a></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>Science</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>Language</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Shop
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>功能項目一</a></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>功能項目二</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>功能項目三</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="#Contact">Contact</a>
-                        </li>                    
-                        <li class="nav-item">
-                            @* �ϥ�logout�|����A�X, �]��Logout �N�|�����i�J�n�J���� *@
-                            <a class="nav-link" href='@Url.Action("Logout" , "User" , new {area = ""})'>
-                                @*  <i class="@loginClass" title="@loginText"></i> *@
-                                <i class="fas fa-sign-out-alt pe-1 fa-lg text-secondary" title="Join Us"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav> 
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - 後台管理範例</title>
+        <link rel="stylesheet" href="@Url.Content("~/lib/jqueryui/themes/base/jquery-ui.min.css")" asp-append-version="true" />
+        <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")" asp-append-version="true" />
+        <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap-icons/font/bootstrap-icons.min.css")" asp-append-version="true" />
+        <link rel="stylesheet" href="@Url.Content("~/lib/datepicker/datepicker.css")" asp-append-version="true" />
+        <link rel="stylesheet" href="@Url.Content("~/lib/font-awesome/css/all.css")" asp-append-version="true" />
+        <link rel="stylesheet" href="@Url.Content("~/lib/FullCalendar/5.11.0/lib/main.min.css")" asp-append-version="true" />
+        <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap-select/css/bootstrap-select.min.css")" asp-append-version="true" />
+        <link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
+        @await RenderSectionAsync("Styles", required: false)
+        <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/jqueryui/jquery-ui.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/bootstrap-select/js/bootstrap-select.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/bootstrap-select/js/i18n/defaults-zh_TW.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/font-awesome/js/all.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/FullCalendar/5.11.0/lib/main.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/FullCalendar/5.11.0/lib/locales-all.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/FullCalendar/5.11.0/examples/js/theme-chooser.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/moment.js/moment.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/moment.js/locale/zh-tw.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/sweetalert/sweetalert.min.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/datepicker/datepicker.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/lib/datepicker/datepicker-zh-TW.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </head>
 
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <body>
+        <div class="container">
+            <main role="main" class="pb-3">
             @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container-fluid">
-            <div class="row text-start">
-                <div class="col-lg-3 col-md-6 text-white m-0 my-5">
-                    <div class="footer-title m-0 ">Quick Link</div>
-                    <div class="btn-group btn-group-vertical">
-                        <div class="btn btn-link  text-decoration-none text-start btn-sm footer-link my-1">
-                            <a href="#About us" class="text-white text-decoration-none">> About Us</a>
-                        </div>
-                        <div class="btn btn-link text-decoration-none text-white btn-sm footer-link text-start my-1">
-                            <label for="email"><a href="#email" class="text-decoration-none text-white">> Contact Us</a></label>
-                        </div>
-                        <div class="btn btn-link text-decoration-none text-white text-start btn-sm footer-link my-1">
-                            > Privacy Policy
-                        </div>
-                        <div class="btn btn-link text-decoration-none text-white text-start btn-sm footer-link my-1">
-                            >Terms&Condition
-                        </div>
-                        <div class="btn btn-link text-decoration-none text-white text-start btn-sm footer-link my-1">
-                            <a href="FAQ.html" class="text-decoration-none text-white" target="_blank">> FAQs & Help</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-white m-0  my-5">
-                    <div class="footer-title mb-3" id="Contact">Contact</div>
-                    <div class="font-small wrap">
-                        <i class="fa-solid fa-location-dot"></i>&emsp; Level 37,TAIPEI 101 Tower, No. 7, Section 5, Xinyi Road, Xinyi District,Taipei 110, Taiwan         
-                    <div class="font-small my-3">
-                            <i class="fa-solid fa-phone wrap"></i>&nbsp;&nbsp;+886 2 8758 2888
-                    </div>
-                    <div class="font-small my-3">
-                            <i class="fa-regular fa-envelope wrap"></i>&nbsp;&nbsp;
-                        odypass@gmail.com
-                    </div>
-                        <div class="my-3">
-                        <a href="@Url.Content("https://twitter.com/")" class="me-2 social-icon" target="_blank">
-                            <i class="fa-brands fa-square-x-twitter fa-2x"></i>
-                        </a>
-                        <a href="@Url.Content("https://www.facebook.com/")" class="me-2 social-icon" target="_blank">
-                            <i class="fa-brands fa-square-facebook fa-2x"></i>
-                        </a>
-                        <a href="@Url.Content("https://www.youtube.com/")" class="me-2 social-icon" target="_blank">
-                            <i class="fa-brands fa-square-youtube fa-2x"></i>
-                        </a>
-                        <a href="@Url.Content("https://tw.linkedin.com/")" class="me-2 social-icon" target="_blank">
-                            <i class="fa-brands fa-linkedin fa-2x"></i>
-                        </a>
-                    </div>
-                </div>
-
-
-             </div>
-                <div class="col-lg-3 col-md-6 text-white my-5">
-                    <div class="footer-title my-2">Gallery</div>
-                    <div class="row m-0 p-0">
-                        <div class="col-4 m-0 p-2">
-                            <img src="@Url.Content("~/images/courses-item_Japanese.jpg")"
-                                 alt=""
-                                 class="img-fluid"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#t1" />
-                        </div>
-                        <div class="col-4 m-0 p-2">
-                            <img src="@Url.Content("~/images/courses-method_2.jpg")"
-                                 alt=""
-                                 class="img-fluid"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#t2" />
-                        </div>
-                        <div class="col-4 m-0 p-2">
-                            <img src="@Url.Content("~/images/img_4.jpg")" alt="" class="img-fluid"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#t3" />
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-4 m-0 p-2">
-                            <img src="@Url.Content("~/images/img_6.jpg")" alt="" class="img-fluid"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#t4" />
-                        </div>
-                        <div class="col-4 m-0 p-2">
-                            <img src="@Url.Content("~/images/img_7.jpg")" alt="" class="img-fluid"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#t5" />
-                        </div>
-                        <div class="col-4 m-0 p-2">
-                            <img src="@Url.Content("~/images/img_8.jpg")" alt="" class="img-fluid"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#t6" />
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-3 col-md-6 text-white my-5">
-                    <div class="footer-title mb-2">Newsletter</div>
-                    <div class="my-3 wrap">Lorem ipsum dolor sit amet.</div>
-                    <form action="" method="get">
-                        <div class="row">
-                            <div class="col-7">
-                                <input type="email"
-                                       name="UserEmail"
-                                       id="email"
-                                       placeholder="Your email"
-                                       class="form-control inputWidth" />
-                            </div>
-                            <!-- submit ��S�����A���|�s������ -->
-                            <div class="col-2">
-                                <input type="submit" value="Send" class="inputBtn" onclick="alert('Thank you for your subscription~~~')" />
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-
-            <p class="footer-copy m-0 p-0 my-5 wrap" id=" footer-copy">
-                &copy JUST GO TUTOR All Right Reserved.
-            </p>
+            </main>
         </div>
-       </div>
-    </footer>
 
-    <!-- �O�c�\�� -->
-    <div class="modal fade" id="t1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/courses-item_Japanese.jpg")" alt="" class="img-thumbnail">
-                </div>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2023 - myapp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="t2">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/courses-method_2.jpg")" alt="" class="img-thumbnail">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="t3">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_4.jpg")" alt="" class="img-thumbnail">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="t4">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_6.jpg")" alt="" class="img-thumbnail">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="t5">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_7.jpg")" alt="" class="img-thumbnail">
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="t6">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_8.jpg")" alt="" class="img-thumbnail">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-                        @await RenderSectionAsync("ScriptsEnd", required: false)
-</body>
+        </footer>
+        @await RenderSectionAsync("ScriptsEnd", required: false)
+    </body>
 </html>
-

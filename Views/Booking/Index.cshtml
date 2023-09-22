@@ -1,8 +1,82 @@
+@model IEnumerable<JUSTGOTUTOR.Models.UserCategorys>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "index";
     Layout = "_Layout";
+    int int_star_count = 5;
+    string str_star_count = "5";
+    string userPic = "~/images/users/T001.jpg";
+    string str_flag_url = "~/flags/1x1/us.svg";
+    List<UserCategorys> CourseList = new List<UserCategorys>();
 }
 
-<h1>Index</h1>
+<!-- 老師列表卡片 -->
+<div class="py-3 menu-top-space">
+    @{
+        using (z_repoUserCategorys userCate = new z_repoUserCategorys())
+        {
+            foreach (var item1 in Model)
+            {
+                userPic = $"~/images/users/{item1.UserNo}.jpg";
+                CourseList = userCate.GetUserCourseList(item1.UserNo);
+                str_flag_url = $"~/flags/1x1/{item1.CountryNo}.svg";
+                str_star_count = item1.ReviewStar;
+                int_star_count = 5;
+                if (!int.TryParse(str_star_count, out int_star_count)) int_star_count = 5;
 
+                <div class="card card-size-max">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div>
+                                    <img src="@Url.Content(userPic)" class="m-2 rounded-3 img-fluid" alt="teacher" />
+                                </div>
+                                <hr />
+                                <div>
+                                    <div class="row">
+                                        @foreach (var item2 in CourseList)
+                                        {
+                                            <div class="col-md-4">
+                                                @item2.CategoryName
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="float-start">
+                                            <img class="flag-icon me-2" src="@Url.Content(str_flag_url)" alt="flag" />
+                                        </div>
+                                        <div class="float-start">
+                                            <h4>@item1.UserName (@item1.UserNo)</h4>
+                                        </div>
+                                        <div class="float-end">
+                                            @for (int i = 1; i <= int_star_count; i++)
+                                            {
+                                                <i class="fa-solid fa-star"></i>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-text">
+                                            @item1.ContentText
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="my-2 d-flex justify-content-end">
+                            @Html.ActionLink("選取老師","Select" , "Booking" , new {area = "" , id = item1.UserNo} , new {@class = "btn btn-success"})
+                        </span>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>

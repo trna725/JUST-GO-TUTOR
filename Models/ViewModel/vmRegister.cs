@@ -1,49 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace project.Models.ViewModel
+/// <summary>
+/// 註冊用 ViewModel
+/// </summary>
+public class vmRegister
 {
-    public class vmRegister
-    {
-        [Display(Name = "註冊帳號")]
-        [Required(ErrorMessage ="註冊帳號不可空白")]
-        public string AccountNo { get; set; } = "";
-
-
-        [Display(Name = "註冊姓名")]
-        [Required(ErrorMessage = "註冊姓名不可空白")]
-        public string Name { get; set; } = "";
-
-        [Display(Name ="註冊密碼")]
-        [Required(ErrorMessage ="註冊密碼不可空白")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = "";
-
-        [Display(Name = "確認密碼")]
-        [Required(ErrorMessage = "確認密碼不可空白")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage ="與註冊密碼不相符!!!")]
-        public string ConfirmPassword { get; set; } = "";
-
-        [Display(Name = "電子信箱")]
-        [Required(ErrorMessage = "電子信箱不可空白")]
-        //[DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage ="電子信箱格式錯誤!!!")]
-        public string Email { get; set; } = "";
-
-        [Display(Name = "電話號碼")]
-        [Required(ErrorMessage = "電話號碼不可空白")]
-        public string PhoneNumber { get; set; } = "";
-
-        [Display(Name = "聯絡地址")]
-        [Required(ErrorMessage = "聯絡地址不可空白")]
-        public string Address { get; set; } = "";
-
-        //[Display(Name = "生日")]
-        //[Required(ErrorMessage = "生日不可空白")]
-        //[DataType(DataType.DateTime)]
-        //public string Birthday { get; set; } = "";
-
-        //[Display(Name = "職業")]
-        //public string Job { get; set; } = "";
-    }
+    [Display(Name = "登入帳號")]
+    [Required(ErrorMessage = "登入帳號不可空白!!")]
+    public string UserNo { get; set; } = "";
+    [Display(Name = "登入名稱")]
+    [Required(ErrorMessage = "登入名稱不可空白!!")]
+    public string UserName { get; set; } = "";
+    [Display(Name = "登入密碼")]
+    [Required(ErrorMessage = "登入密碼不可空白!!")]
+    [DataType(DataType.Password)]
+    public string Password { get; set; } = "";
+    [Display(Name = "確認密碼")]
+    [Required(ErrorMessage = "確認密碼不可空白!!")]
+    [DataType(DataType.Password)]
+    [Compare("Password", ErrorMessage = "與登入密碼輸入不相符!!")]
+    public string ConfirmPassword { get; set; } = "";
+    [Display(Name = "性別")]
+    public string GenderCode { get; set; } = "";
+    [Display(Name = "電子信箱")]
+    [Required(ErrorMessage = "電子信箱不可空白!!")]
+    [EmailAddress(ErrorMessage = "電子信箱格式輸入錯誤!!")]
+    public string Email { get; set; } = "";
+    [Display(Name = "連絡電話")]
+    public string Tel { get; set; } = "";
+    [Display(Name = "連絡地址")]
+    public string Address { get; set; } = "";
 }

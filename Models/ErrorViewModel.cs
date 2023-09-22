@@ -1,4 +1,4 @@
-namespace project.Models
+namespace JUSTGOTUTOR.Models
 {
     public class ErrorViewModel
     {

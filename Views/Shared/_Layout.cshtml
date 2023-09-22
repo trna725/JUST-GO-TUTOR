@@ -1,8 +1,19 @@
-﻿@*@using System.Windows.Forms;*@
-@{
-    //string loginText = (SessionService.IsLogin) ? "登出系統" : "登入系統";
-    //string loginClass = (SessionService.IsLogin) ? "fas fa-sign-out-alt pe-1 fa-lg" : "fas fa-sign-in-alt pe-1 fa-lg";
-    //string userInfo = SessionService.UserNo + " " + SessionService.UserName;
+﻿@{
+    string loginText = (SessionService.IsLogin) ? "Logout" : "Join Us";
+    string loginClass = (SessionService.IsLogin) ? "fas fa-sign-out-alt pe-1 fa-lg" : "fas fa-sign-in-alt pe-1 fa-lg";
+    string userInfo = SessionService.UserNo + " " + SessionService.UserName;
+    string appInfo = $"{AppService.AppName} {AppService.AppVersion}";
+     
+    List<Category1s> ImportantList = new List<Category1s>(); 
+
+    List<Category1s> NotImportantList = new List<Category1s>(); 
+
+        using var cate1 = new z_repoCategory1s(); 
+        ImportantList = cate1.GetDataList(true);
+        NotImportantList = cate1.GetDataList(false);        
+
+    string loginLink = "";
+   
 }
 
 <!DOCTYPE html>
@@ -10,34 +21,23 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - project</title>
+    <title>@ViewData["Title"] - JUST-GO-TUTOR</title>
     <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")" />
     <link rel="stylesheet" href="@Url.Content("~/css/site.css")" asp-append-version="true" />
-    <link rel="stylesheet" href="@Url.Content("~/project.styles.css")" asp-append-version="true" />
     <link rel="stylesheet" href="@Url.Content("~/css/style.css")" asp-append-version="true" />
     <link rel="stylesheet" href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css")" asp-append-version="true" />
     <link rel="stylesheet" href="@Url.Content("https://unpkg.com/aos@2.3.1/dist/aos.css")" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
     <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")" asp-append-version="true"></script>
     <script src="@Url.Content("https://unpkg.com/aos@2.3.1/dist/aos.js")" asp-append-version="true"></script>
-@*    <script type="text/javascript">
-        $(document).ready(function () {
-            let screenwidth = screen.width;
-            let footerString = "";
-            if (screenwidth < 300)
-                document.getElementById("footer-copy").innerHTML = "& copy JUST GO TUTOR"+<br>+"All Right Reserved.";
-            else
-                document.getElementById("footer-copy").innerHTML = "&copy JUST GO TUTOR All Right Reserved."
 
-        })
-    </script>*@
     @await RenderSectionAsync("Scripts", required: false)  
 
   
 </head>
 <body class="body bg-warning">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light  bg-white p-0  py-3 m-0 fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light  bg-white p-0  py-3 m-0 fixed-top" style="z-index: 9999;">
             <div class="container-fluid">
                 <a class="navbar-brand header-h2-style-a" href='@Url.Action("Index", "Home" , new {area = ""})'>
                     JUST GO TUTOR
@@ -51,18 +51,47 @@
                             <a class="nav-link text-secondary" href="@Url.Action("Index", "Home" , new {area = ""})">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-secondary" href="@Url.Action("Index" , "Home" , new {area = ""})">About</a>
+                            <a class="nav-link text-secondary" href="@Url.Action("About" , "Home" , new {area = ""} )">About</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Courses
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>Sport</a></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>Programm</a></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Index" , "Home" , new {area = ""})'>Science</a></li>
+                      
+                                @foreach(var item in NotImportantList)
+                                {                   
+                                    @if (!SessionService.IsLogin)
+                                    {
+                                        //最後要開啟，達成預約前要先登入, 登入後學生只能回到起始頁，老師跟管理員可以回到管理頁面，但只有管理員
+                                        loginLink = @Url.Action("Login", "Web", new { area = "" });
+                                        @* loginLink = @Url.Action("Index", "Category", new { area = "", id = item.CategoryNo }); *@
+                                    }
+                                    else
+                                    {
+                                        loginLink = @Url.Action("Index", "Category", new { area = "", id = item.CategoryNo });
+
+                                    }        
+                                    <li>
+                                    <a class="dropdown-item text-secondary" aria-current="page" href=@loginLink>@item.CategoryName</a></li>
+                                }
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-secondary" aria-current="page" href='@Url.Action("Class" , "Booking" , new {area = ""})'>Language</a></li>
+                                @foreach(var item in ImportantList)
+                                 {
+                                     @if (!SessionService.IsLogin)
+                                    {
+                                        //最後要開啟，達成預約前要先登入, 登入後學生只能回到起始頁，老師跟管理員可以回到管理頁面，但只有管理員
+                                        loginLink = @Url.Action("Login", "Web", new { area = "" });
+                                        @* loginLink = @Url.Action("Index", "Category", new { area = "", id = item.CategoryNo }); *@
+                                    }
+                                    else
+                                    {
+                                        loginLink = @Url.Action("Index", "Category", new { area = "", id = item.CategoryNo });
+
+                                    }        
+                                    <li><a class="dropdown-item text-secondary" aria-current="page" href=@loginLink>@item.CategoryName</a></li>
+                                 }
+                                
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -77,25 +106,30 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-secondary" href="#Contact">Contact</a>
+                            <a class="nav-link text-secondary" href="@Url.Action("Contact", "Home",new {area=""})">Contact</a>
                         </li>
-                        @*@if (SessionService.IsLogin)
+                        @if (SessionService.IsLogin)
                         {
                         <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                <img src="@Url.Content(SessionService.UserImage)" alt="Profile" class="rounded-circle">
+                                <span class="d-none d-md-block dropdown-toggle ps-2">@userInfo</span>
+                            </a>
+                        @* <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         @userInfo
-                        </a>
+                        </a> *@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href='@Url.Action("ResetPassword" , "User" , new {area = ""})'>重設密碼</a></li>
-                        <li><a class="dropdown-item" href='@Url.Action("Profile" , "User" , new {area = ""})'>關於帳號</a></li>
+                        <li><a class="dropdown-item" href='@Url.Action("ResetPassword" , "Web" , new {area = ""})'>重設密碼</a></li>
+                        <li><a class="dropdown-item" href='@Url.Action("Profile" , "Web" , new {area = ""})'>關於帳號</a></li>
                         </ul>
                         </li>
-                        }*@
+                        }
                         <li class="nav-item">
                             @* 使用logout會比較適合, 因為Logout 就會直接進入登入介面 *@
-                            <a class="nav-link" href='@Url.Action("Logout" , "User" , new {area = ""})'>
-                                @*  <i class="@loginClass" title="@loginText"></i> *@
-                                <i class="fas fa-sign-out-alt pe-1 fa-lg text-secondary" title="Join Us"></i>
+                            <a class="nav-link" href='@Url.Action("Logout" , "Web" , new {area = ""})'>
+                            @*    <a class="nav-link" href='@Url.Action("MemberLogin" , "User" , new {area = ""})'>*@
+                                  <i class="@loginClass" title="@loginText"></i> 
+                            @*    <i class="fas fa-sign-out-alt pe-1 fa-lg text-secondary" title="Join Us"></i>*@
                             </a>
                         </li>
                     </ul>
@@ -105,7 +139,7 @@
 
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
@@ -113,11 +147,11 @@
     <footer class="border-top footer text-muted">
         <div class="container-fluid">
             <div class="row text-start">
-                <div class="col-lg-3 col-md-6 text-white m-0">
-                    <div class="footer-title m-0">Quick Link</div>
+                <div class="col-lg-3 col-md-6 text-white mt-5">
+                    <div class="footer-title mb-2">Quick Link</div>
                     <div class="btn-group btn-group-vertical">
                         <div class="btn btn-link  text-decoration-none text-start btn-sm footer-link">
-                            <a href="#About us" class="text-white text-decoration-none">> About Us</a>
+                            <a href=#About_us class="text-white text-decoration-none">> About Us</a>
                         </div>
                         <div class="btn btn-link text-decoration-none text-white btn-sm footer-link text-start">
                             <label for="email"><a href="#email" class="text-decoration-none text-white">> Contact Us</a></label>
@@ -133,19 +167,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 text-white m-0">
-                    <div class="footer-title" id="Contact">Contact</div>
-                    <div class="font-small wrap">
+                <div class="col-lg-3 col-md-6 text-white mt-5">
+                    <div class="footer-title mb-2" id="Contact">Contact</div>
+                    <div class="font-small wrap mt-3">
                         <i class="fa-solid fa-location-dot"></i>&emsp;  Level 37,TAIPEI 101 Tower, No. 7, Section 5, Xinyi Road, Xinyi District,Taipei 110, Taiwan
                 </div>
-                    <div class="font-small wrap">
+                    <div class="font-small wrap mt-3">
                     <i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+886 2 8758 2888
                 </div>
-                    <div class="font-small wrap">
+                    <div class="font-small wrap mt-3">
                     <i class="fa-regular fa-envelope"></i>&nbsp;&nbsp;
                     odypass@gmail.com
                 </div>
-                <div>
+                <div class="mt-3">
                     <a href="@Url.Content("https://twitter.com/")" class="me-2 social-icon" target="_blank">
                         <i class="fa-brands fa-square-x-twitter fa-2x"></i>
                     </a>
@@ -160,49 +194,49 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 text-white">
+            <div class="col-lg-3 col-md-6 text-white mt-5">
                 <div class="footer-title">Gallery</div>
                 <div class="row m-0 p-0">
                     <div class="col-4 m-0 p-2">
-                        <img src="@Url.Content("~/images/courses-item_Japanese.jpg")"
+                        <img src="@Url.Content("~/images/home/courses-item_Japanese.jpg")"
                              alt=""
                              class="img-fluid"
                              data-bs-toggle="modal"
                              data-bs-target="#t1" />
                     </div>
                     <div class="col-4 m-0 p-2">
-                        <img src="@Url.Content("~/images/courses-method_2.jpg")"
+                        <img src="@Url.Content("~/images/home/courses-method_2.jpg")"
                              alt=""
                              class="img-fluid"
                              data-bs-toggle="modal"
                              data-bs-target="#t2" />
                     </div>
                     <div class="col-4 m-0 p-2">
-                        <img src="@Url.Content("~/images/img_4.jpg")" alt="" class="img-fluid"
+                        <img src="@Url.Content("~/images/home/img_4.jpg")" alt="" class="img-fluid"
                              data-bs-toggle="modal"
                              data-bs-target="#t3" />
                     </div>
                 </div>
                 <div class="row m-0 p-0">
                     <div class="col-4 m-0 p-2">
-                        <img src="@Url.Content("~/images/img_6.jpg")" alt="" class="img-fluid"
+                        <img src="@Url.Content("~/images/home/img_6.jpg")" alt="" class="img-fluid"
                              data-bs-toggle="modal"
                              data-bs-target="#t4" />
                     </div>
                     <div class="col-4 m-0 p-2">
-                        <img src="@Url.Content("~/images/img_7.jpg")" alt="" class="img-fluid"
+                        <img src="@Url.Content("~/images/home/img_7.jpg")" alt="" class="img-fluid"
                              data-bs-toggle="modal"
                              data-bs-target="#t5" />
                     </div>
                     <div class="col-4 m-0 p-2">
-                        <img src="@Url.Content("~/images/img_8.jpg")" alt="" class="img-fluid"
+                        <img src="@Url.Content("~/images/home/img_8.jpg")" alt="" class="img-fluid"
                              data-bs-toggle="modal"
                              data-bs-target="#t6" />
                     </div>
                 </div>
 
             </div>
-            <div class="col-lg-3 col-md-6 text-white">
+            <div class="col-lg-3 col-md-6 text-white mt-5">
                 <div class="footer-title mb-2">Newsletter</div>
                     <div class="my-3 wrap">Lorem ipsum dolor sit amet.</div>
                 <form action="" method="get">
@@ -222,7 +256,7 @@
                 </form>
 
             </div>
-                <p class="footer-copy m-0 p-0 wrap" id=" footer-copy">
+                <p class="footer-copy m-0 p-0 wrap mt-5 mb-5" id=" footer-copy">
                 &copy JUST GO TUTOR All Right Reserved.
             </p>
         </div>
@@ -234,7 +268,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/courses-item_Japanese.jpg")" alt="" class="img-thumbnail">
+                    <img src="@Url.Content("~/images/home/courses-item_Japanese.jpg")" alt="" class="img-thumbnail">
                 </div>
             </div>
         </div>
@@ -243,7 +277,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/courses-method_2.jpg")" alt="" class="img-thumbnail">
+                    <img src="@Url.Content("~/images/home/courses-method_2.jpg")" alt="" class="img-thumbnail">
                 </div>
             </div>
         </div>
@@ -253,7 +287,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_4.jpg")" alt="" class="img-thumbnail">
+                    <img src="@Url.Content("~/images/home/img_4.jpg")" alt="" class="img-thumbnail">
                 </div>
             </div>
         </div>
@@ -263,7 +297,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_6.jpg")" alt="" class="img-thumbnail">
+                    <img src="@Url.Content("~/images/home/img_6.jpg")" alt="" class="img-thumbnail">
                 </div>
             </div>
         </div>
@@ -273,7 +307,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_7.jpg")" alt="" class="img-thumbnail">
+                    <img src="@Url.Content("~/images/home/img_7.jpg")" alt="" class="img-thumbnail">
                 </div>
             </div>
         </div>
@@ -284,12 +318,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <img src="@Url.Content("~/images/img_8.jpg")" alt="" class="img-thumbnail">
+                    <img src="@Url.Content("~/images/home/img_8.jpg")" alt="" class="img-thumbnail">
                 </div>
             </div>
         </div>
     </div>
-    <a id="backtotop" href="#" title="Back to Top"><img src="@Url.Content("~/images/Arrow-Up.png")" alt="Back to Top" max-width="20px" height="50px" /></a>
+    <a id="backtotop" href="#" title="Back to Top"><img src="@Url.Content("~/images/home/Arrow-Up.png")" alt="Back to Top" max-width="20px" height="50px" /></a>
 
     <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

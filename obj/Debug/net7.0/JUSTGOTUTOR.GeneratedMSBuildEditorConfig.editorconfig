@@ -1,0 +1,125 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = JUSTGOTUTOR
+build_property.RootNamespace = JUSTGOTUTOR
+build_property.ProjectDir = D:\Hanna\project\JUSTGOTUTOR\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Hanna\project\JUSTGOTUTOR
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Areas/Admin/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Areas/Mis/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWlzXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Areas/Mis/Views/MBASP001_Role/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWlzXFZpZXdzXE1CQVNQMDAxX1JvbGVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Areas/User/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Booking/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xpbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Booking/MessageText.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xNZXNzYWdlVGV4dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Booking/Select.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xTZWxlY3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Category/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcnlcaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Home/Contact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Shared/_LayoutAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Shared/_LayoutLite.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRMaXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/EditProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXEVkaXRQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/Forget.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXEZvcmdldC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/MessageResult.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXE1lc3NhZ2VSZXN1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/PhotoUpload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXFBob3RvVXBsb2FkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXFByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXFJlZ2lzdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Web/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2ViXFJlc2V0UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Hanna/project/JUSTGOTUTOR/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-kw3axxr7rt

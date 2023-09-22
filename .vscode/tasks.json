@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/project.csproj",
+        "${workspaceFolder}/JUSTGOTUTOR.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -19,7 +19,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/project.csproj",
+        "${workspaceFolder}/JUSTGOTUTOR.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -33,7 +33,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/project.csproj"
+        "${workspaceFolder}/JUSTGOTUTOR.csproj"
       ],
       "problemMatcher": "$msCompile"
     }

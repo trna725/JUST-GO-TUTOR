@@ -1,0 +1,255 @@
+@model vmCourseCase
+
+@{
+    ViewData["Title"] = "最後確認";
+    Layout = "_Layout";
+    int int_star_count = 5;
+    string str_flag_url = "";
+    string str_content_text = "";
+    List<UserCategorys> CourseList = new List<UserCategorys>();
+    using (z_repoUsers user = new z_repoUsers())
+    using (z_repoUserCategorys userCate = new z_repoUserCategorys())
+    {
+        var userData = user.GetUserData(SessionService.TeacherNo);
+        CourseList = userCate.GetUserCourseList(SessionService.TeacherNo);
+        str_flag_url = $"~/flags/1x1/{userData.DeptNo}.svg";
+        string str_star_count = userData.TitleNo;
+        str_content_text = userData.ContentText;
+        int_star_count = 5;
+        if (!int.TryParse(str_star_count, out int_star_count)) int_star_count = 5;
+    }
+    string userPic = $"~/images/users/{SessionService.TeacherNo}.jpg";
+}
+
+<form asp-area="" asp-action="Select" asp-controller="Booking" method="post">
+    <div class="card md-3 bg-warning card-size-max menu-top-space">
+        <div class="card-header bg-primary text-white">
+            <h1>上課資訊確認</h1>
+        </div>
+        <div class="card-body bg-white">
+            <div class="row">
+                <div class="col-md-4">
+                    <div>
+                        <img src="@Url.Content(userPic)" class="m-2 rounded-3 img-fluid" alt="teacher" />
+                    </div>
+                    <hr />
+                    <div>
+                        <div class="row">
+                            @foreach (var item2 in CourseList)
+                            {
+                                <div class="col-md-4">
+                                    @item2.CategoryName
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="float-start">
+                                <img class="flag-icon me-2" src="@Url.Content(str_flag_url)" alt="flag" />
+                            </div>
+                            <div class="float-start">
+                                <h4>@SessionService.TeacherName (@SessionService.TeacherNo)</h4>
+                            </div>
+                            <div class="float-end">
+                                @for (int i = 1; i <= int_star_count; i++)
+                                {
+                                    <i class="fa-solid fa-star"></i>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-text">
+                                @str_content_text
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>預約日期：@DateTime.Today.ToString("yyyy/MM/dd")</h3>
+                    <h3>預約老師：@SessionService.TeacherName (@SessionService.TeacherNo)</h3>
+                    <h3>預約時段：</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime1)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime2)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime3)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime4)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime5)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime6)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime7)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime8)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime9)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime10)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsTime11)</h5>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime1)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime2)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime3)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime4)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime5)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime6)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime7)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime8)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime9)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime10)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsTime11)
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <h3>預約星期：</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsWeek1)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsWeek2)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsWeek3)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsWeek4)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsWeek5)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsWeek6)</h5>
+                            </th>
+                            <th class="me-2">
+                                <h5>@Html.LabelFor(m => m.IsWeek7)</h5>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsWeek1)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsWeek2)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsWeek3)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsWeek4)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsWeek5)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsWeek6)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox big-checkbox">
+                                    @Html.EditorFor(m => m.IsWeek7)
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <h3>其他說明 :</h3>
+                    @Html.TextAreaFor(model => model.CourseMemo, new { @rows = 5, @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-secondary">
+            <input type="submit" value="送出" class="btn btn-primary">
+        </div>
+    </div>
+</form>
+
+@section Styles {
+    <style>
+        .big-checkbox {
+            width: 3rem;
+            height: 3rem;
+            top: 0.5rem
+        }
+    </style>
+}
