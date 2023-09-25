@@ -432,8 +432,8 @@ public static class SessionService
     {
         get
         {
-            string str_value = (string.IsNullOrEmpty(PrgNo)) ? "" : $" {PrgNo}";
-            str_value += PrgName;
+            string str_value = (string.IsNullOrEmpty(PrgNo)) ? "" : $"{PrgNo}";
+            str_value += $" {PrgName}";
             return str_value;
         }
     }
@@ -760,11 +760,39 @@ public static class SessionService
     }
 
     /// <summary>
+    /// 設定程式預設事件
+    /// </summary>
+    public static void SetPrgInit()
+    {
+        SessionService.SortColumn = "";
+        SessionService.SortDirection = "";
+        SessionService.SearchText = "";
+        if (ActionService.Controller == "Home")
+        {
+            PrgNo = "Home";
+            PrgName = "首頁";
+            SessionService.SubHeaderName = "";
+        }
+        else
+        {
+            if (SessionService.UserNo == "Debug")
+            {
+                using var prg = new z_repoPrograms();
+                prg.SetCurrentPrgInfo();
+            }
+            SessionService.SubHeaderName = SessionService.PrgInfo;
+        }
+    }
+
+    /// <summary>
     /// 設定程式資訊
     /// </summary>
     /// <param name="prg">程式</param>
     public static void SetProgramInfo(Programs prg)
     {
+        using var module = new z_repoModules();
+        ModuleNo = prg.ModuleNo;
+        ModuleName = module.GetDataName(prg.ModuleNo);
         PrgNo = prg.PrgNo;
         PrgName = prg.PrgName;
         IsPageSize = prg.IsPageSize;
@@ -803,14 +831,15 @@ public static class SessionService
     }
 
     /// <summary>
-    /// 取得分頁資訊
+    /// 取得分頁資訊 
     /// </summary>
     /// <param name="page">目前頁數</param>
     /// <param name="pageCount">總頁數</param>
     /// <returns></returns>
     public static void SetPageInfo(int page, int pageCount)
     {
-        PageInfo = $"第 {page} 頁，共 {pageCount}頁";
+        // PageInfo = $"第 {page} 頁，共 {pageCount}頁";
+        PageInfo = $"({page} / {pageCount})";
     }
 
     /// <summary>
@@ -852,7 +881,8 @@ public static class SessionService
         ActionName = (data == null) ? ActionNo : data.Text;
         string str_size = Enum.GetName(typeof(enCardSize), cardSize).ToLower();
         CardSize = $"card-size-{str_size}";
-        SubHeaderName = "";
+        
+        //SubHeaderName = "";
     }
 }
 

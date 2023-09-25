@@ -1,11 +1,11 @@
+
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 
 namespace JUSTGOTUTOR.Areas_Mis_Controllers
 {
-    public class MBASP001_RoleController : Controller
-    {
-        /// <summary>
+    public class MUSRP001_UserController : Controller
+    {  /// <summary>
         /// 資料初始化事件
         /// </summary>
         /// <returns></returns> <summary>
@@ -29,8 +29,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult Index(int id = 1)
         {
-            using var roles = new z_repoRoles(SessionService.SortColumn, SessionService.SortDirection);
-            var model = roles.GetDataList(SessionService.SearchText)
+            using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
+            var model = datas.GetDataList(SessionService.SearchText)
                 .ToPagedList(id, SessionService.PageSize);
             SessionService.SetPageInfo(id, model.PageCount);
             SessionService.SetActionInfo(enAction.Index, enCardSize.Max, id, "");
@@ -48,17 +48,17 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         public IActionResult CreateEdit(int id = 0)
         {
             SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);
-            var model = new Roles();
+            var model = new Users();
             if (id == 0)
             {
                 //新增預設值
-                model.IsEnabled = true;
+                model.IsValid = true;
             }
             else
             {
                 //修改資料
-                using var roles = new z_repoRoles();
-                model = roles.GetData(id);
+                using var datas = new z_repoUsers();
+                model = datas.GetData(id);
                 if (model == null) return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
             }
             return View(model);
@@ -72,11 +72,11 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [Area("Mis")]
         [Login(RoleList = "Mis")]
         [HttpPost]
-        public IActionResult CreateEdit(Roles model)
+        public IActionResult CreateEdit(Users model)
         {
             if (!ModelState.IsValid) return View(model);
-            using var roles = new z_repoRoles();
-            roles.CreateEdit(model);
+            using var datas = new z_repoUsers();
+            datas.CreateEdit(model);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
 
@@ -90,8 +90,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult Delete(int id = 0)
         {
-            using var roles = new z_repoRoles();
-            roles.Delete(id);
+            using var datas = new z_repoUsers();
+            datas.Delete(id);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
 
@@ -109,9 +109,9 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             //if (!PrgService.IsProgramSecurity(enSecurtyMode.Delete))
             //return RedirectToAction(ActionService.Index, ActionService.Controller, new { area = ActionService.Area });
 
-            using (z_repoRoles roles = new z_repoRoles())
+            using (z_repoUsers datas = new z_repoUsers())
             {
-                roles.Delete(id);
+                datas.Delete(id);
                 dmJsonMessage result = new dmJsonMessage() { Mode = true, Message = "資料已刪除!!" };
                 return Json(result);
             }

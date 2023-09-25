@@ -1,7 +1,9 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
 @{
-
+  string str_expanded = "false";
+  string str_show = "";
+  string str_style = "background-color:Chocolate;color:white;";
   using var module = new z_repoModules();
   using var notify = new z_repoNotifications();
   using var message = new z_repoMessages();
@@ -15,336 +17,407 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>@ViewData["Title"] - @appInfo</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+  <title>@ViewData["Title"] - @appInfo</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-    <!-- Favicons -->
-    <link href="@Url.Content("~/lib/Niceadmin/assets/img/favicon.png")" rel="icon">
-    <link href="@Url.Content("~/lib/Niceadmin/assets/img/apple-touch-icon.png")" rel="apple-touch-icon">
+  <!-- Favicons -->
+  <link href="@Url.Content("~/lib/Niceadmin/assets/img/favicon.png")" rel="icon">
+  <link href="@Url.Content("~/lib/Niceadmin/assets/img/apple-touch-icon.png")" rel="apple-touch-icon">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
-    <link href="@Url.Content("~/lib/jqueryui/themes/base/jquery-ui.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
-    <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.css")" rel="stylesheet">
-    <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/boxicons/css/boxicons.min.css")" rel="stylesheet">
-    <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/quill/quill.snow.css")" rel="stylesheet">
-    <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/quill/quill.bubble.css")" rel="stylesheet">
-    <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/remixicon/remixicon.css")" rel="stylesheet">
-    <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/simple-datatables/style.css")" rel="stylesheet">
-    <link href="@Url.Content("~/lib/datepicker/datepicker.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/lib/font-awesome/css/all.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/lib/FullCalendar/5.11.0/lib/main.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/lib/bootstrap-select/css/bootstrap-select.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/lib/Niceadmin/assets/css/style.css")" rel="stylesheet">
-    <link href="@Url.Content("~/css/site.css")" asp-append-version="true" rel="stylesheet">
+  <link href="@Url.Content("~/lib/jqueryui/themes/base/jquery-ui.min.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+  <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/bootstrap-icons/bootstrap-icons.css")" rel="stylesheet">
+  <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/boxicons/css/boxicons.min.css")" rel="stylesheet">
+  <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/quill/quill.snow.css")" rel="stylesheet">
+  <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/quill/quill.bubble.css")" rel="stylesheet">
+  <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/remixicon/remixicon.css")" rel="stylesheet">
+  <link href="@Url.Content("~/lib/Niceadmin/assets/vendor/simple-datatables/style.css")" rel="stylesheet">
+  <link href="@Url.Content("~/lib/datepicker/datepicker.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/lib/SweetAlert2/sweetalert2.min.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/lib/font-awesome/css/all.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/lib/FullCalendar/5.11.0/lib/main.min.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/lib/bootstrap-select/css/bootstrap-select.min.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/lib/Niceadmin/assets/css/style.css")" rel="stylesheet">
+  <link href="@Url.Content("~/css/site.css")" asp-append-version="true" rel="stylesheet">
   @await RenderSectionAsync("Styles", required: false)
 
-    <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
-    <script src="@Url.Content("~/lib/jqueryui/jquery-ui.min.js")"></script>
-    <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/apexcharts/apexcharts.min.js")"></script>
-    <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
-    <script src="@Url.Content("~/lib/bootstrap-select/js/bootstrap-select.min.js")"></script>
-    <script src="@Url.Content("~/lib/bootstrap-select/js/i18n/defaults-zh_TW.min.js")"></script>
-    <script src="@Url.Content("~/lib/font-awesome/js/all.js")"></script>
-    <script src="@Url.Content("~/lib/FullCalendar/5.11.0/lib/main.min.js")"></script>
-    <script src="@Url.Content("~/lib/FullCalendar/5.11.0/lib/locales-all.min.js")"></script>
-    <script src="@Url.Content("~/lib/FullCalendar/5.11.0/examples/js/theme-chooser.js")"></script>
-    <script src="@Url.Content("~/lib/moment.js/moment.min.js")"></script>
-    <script src="@Url.Content("~/lib/moment.js/locale/zh-tw.min.js")"></script>
-    <script src="@Url.Content("~/lib/sweetalert/sweetalert.min.js")"></script>
-    <script src="@Url.Content("~/lib/datepicker/datepicker.js")"></script>
-    <script src="@Url.Content("~/lib/datepicker/datepicker-zh-TW.js")"></script>
-    <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/chart.js/chart.min.js")"></script>
-    <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/echarts/echarts.min.js")"></script>
-    <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/quill/quill.min.js")"></script>
-    <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/simple-datatables/simple-datatables.js")"></script>
-    <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/tinymce/tinymce.min.js")"></script>
-    <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+  <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
+  <script src="@Url.Content("~/lib/jqueryui/jquery-ui.min.js")"></script>
+  <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/apexcharts/apexcharts.min.js")"></script>
+  <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
+  <script src="@Url.Content("~/lib/bootstrap-select/js/bootstrap-select.min.js")"></script>
+  <script src="@Url.Content("~/lib/bootstrap-select/js/i18n/defaults-zh_TW.min.js")"></script>
+  <script src="@Url.Content("~/lib/font-awesome/js/all.js")"></script>
+  <script src="@Url.Content("~/lib/FullCalendar/5.11.0/lib/main.min.js")"></script>
+  <script src="@Url.Content("~/lib/FullCalendar/5.11.0/lib/locales-all.min.js")"></script>
+  <script src="@Url.Content("~/lib/FullCalendar/5.11.0/examples/js/theme-chooser.js")"></script>
+  <script src="@Url.Content("~/lib/moment.js/moment.min.js")"></script>
+  <script src="@Url.Content("~/lib/moment.js/locale/zh-tw.min.js")"></script>
+  <script src="@Url.Content("~/lib/SweetAlert2/sweetalert2.min.js")"></script>
+  <script src="@Url.Content("~/lib/datepicker/datepicker.js")"></script>
+  <script src="@Url.Content("~/lib/datepicker/datepicker-zh-TW.js")"></script>
+  <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/chart.js/chart.min.js")"></script>
+  <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/echarts/echarts.min.js")"></script>
+  <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/quill/quill.min.js")"></script>
+  <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/simple-datatables/simple-datatables.js")"></script>
+  <script src="@Url.Content("~/lib/Niceadmin/assets/vendor/tinymce/tinymce.min.js")"></script>
+  <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+  <script>
+    function DeleteData(id, data) {
+      var message = '請問您確認是否要刪除';
+      if (!!data) {
+        message += ' [' + data + '] ?'
+      }
+      else {
+        message += '此筆資料?'
+      }
+
+      Swal.fire({
+        title: "<strong>您確定要刪除?</strong>",
+        text: message,
+        icon: 'question',
+        showCancelButton: true,
+        focusConfirm: false,
+        closeOnConfirm: false,
+        confirmButtonText: '<i class="fas fa-check pe-2"></i>確定',
+        cancelButtonText: '<i class="fas fa-times pe-2"></i>取消',
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '@Url.Action("DeleteRow", ActionService.Controller, new { area = ActionService.Area })',
+            data: { "id": id },
+            type: "POST",
+            dataType: "json",
+          }).done(function (value) {
+            if (value.Mode == true) {
+              location.reload(true);
+            }
+            else {
+              Swal.fire('錯誤訊息1', value.Message, 'error');
+            }
+          }).fail(function (err) {
+            Swal.fire('錯誤訊息2', err, 'error');
+            console.log(err);
+          });
+        }
+      });
+    }
+  </script>
   @await RenderSectionAsync("Scripts", required: false)
-    <!-- =======================================================
+  <!-- =======================================================
       * Template Name: NiceAdmin
       * Updated: Mar 09 2023 with Bootstrap v5.2.3
       * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
       * Author: BootstrapMade.com
       * License: https://bootstrapmade.com/license/
       ======================================================== -->
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top d-flex align-items-center">
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
 
-      <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <img src="@Url.Content("~/images/app/AppLogo.png")" alt="">
-          <span class="d-none d-lg-block">@AppService.AppName</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-      </div><!-- End Logo -->
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="@Url.Content("~/images/app/AppLogo.png")" alt="">
+        <span class="d-none d-lg-block">@AppService.AppName</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
 
-      <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
-          <li class="nav-item dropdown">
-            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-              <i class="bi bi-bell"></i>
-              <span class="badge bg-primary badge-number">@notifyList.Count</span>
-            </a><!-- End Notification Icon -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">@notifyList.Count</span>
+          </a><!-- End Notification Icon -->
 
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-              <li class="dropdown-header">
-                你有 @notifyList.Count 則新通知
-                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">顯示所有通知</span></a>
-              </li>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              你有 @notifyList.Count 則新通知
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">顯示所有通知</span></a>
+            </li>
             @foreach (var item in notifyList)
             {
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li class="notification-item">
-                  <i class="bi bi-exclamation-circle text-warning"></i>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="notification-item">
+                <i class="bi bi-exclamation-circle text-warning"></i>
+                <div>
+                  <h4>@item.HeaderText</h4>
+                  <p>@item.MessageText</p>
+                  <p>@item.SendDate.ToString("yyyy/MM/dd") @item.SendTime.ToString("HH:mm")</p>
+                </div>
+              </li>
+            }
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">顯示所有通知</a>
+            </li>
+          </ul><!-- End Notification Dropdown Items -->
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">@messageList.Count</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              你有 @messageList.Count 則新訊息
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">顯示所有訊息</span></a>
+            </li>
+            @foreach (var item in messageList)
+            {
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="message-item">
+                <a href="#">
+                  <img src="@Url.Content("~/lib/NiceAdmin/assets/img/messages-1.jpg")" alt="" class="rounded-circle">
                   <div>
                     <h4>@item.HeaderText</h4>
                     <p>@item.MessageText</p>
                     <p>@item.SendDate.ToString("yyyy/MM/dd") @item.SendTime.ToString("HH:mm")</p>
                   </div>
-                </li>
+                </a>
+              </li>
             }
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li class="dropdown-footer">
-                <a href="#">顯示所有通知</a>
-              </li>
-            </ul><!-- End Notification Dropdown Items -->
-          </li><!-- End Notification Nav -->
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-              <i class="bi bi-chat-left-text"></i>
-              <span class="badge bg-success badge-number">@messageList.Count</span>
-            </a><!-- End Messages Icon -->
+            <li class="dropdown-footer">
+              <a href="#">顯示所有訊息</a>
+            </li>
 
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-              <li class="dropdown-header">
-                你有 @messageList.Count 則新訊息
-                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">顯示所有訊息</span></a>
-              </li>
-            @foreach (var item in messageList)
-            {
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li class="message-item">
-                  <a href="#">
-                    <img src="@Url.Content("~/lib/NiceAdmin/assets/img/messages-1.jpg")" alt="" class="rounded-circle">
-                    <div>
-                      <h4>@item.HeaderText</h4>
-                      <p>@item.MessageText</p>
-                      <p>@item.SendDate.ToString("yyyy/MM/dd") @item.SendTime.ToString("HH:mm")</p>
-                    </div>
-                  </a>
-                </li>
-            }
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+          </ul><!-- End Messages Dropdown Items -->
 
-              <li class="dropdown-footer">
-                <a href="#">顯示所有訊息</a>
-              </li>
+        </li><!-- End Messages Nav -->
 
-            </ul><!-- End Messages Dropdown Items -->
+        <li class="nav-item dropdown pe-3">
 
-          </li><!-- End Messages Nav -->
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="@Url.Content(SessionService.UserImage)" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">@userInfo</span>
+          </a><!-- End Profile Iamge Icon -->
 
-          <li class="nav-item dropdown pe-3">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>@userInfo</h6>
+              <span>@SessionService.TitleName</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
-            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img src="@Url.Content(SessionService.UserImage)" alt="Profile" class="rounded-circle">
-              <span class="d-none d-md-block dropdown-toggle ps-2">@userInfo</span>
-            </a><!-- End Profile Iamge Icon -->
+            <li>
+              <a class="dropdown-item d-flex align-items-center"
+                href='@Url.Action("Profile" , "Web" , new {area = ""})'>
+                <i class="bi bi-person"></i>
+                <span>我的帳號</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-              <li class="dropdown-header">
-                <h6>@userInfo</h6>
-                <span>@SessionService.TitleName</span>
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center"
+                href='@Url.Action("ResetPassword" , "Web" , new {area = ""})'>
+                <i class="bi bi-key"></i>
+                <span>重設密碼</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href='@Url.Action("Logout" , "Web" , new {area = ""})'>
+                <i class="bi bi-box-arrow-right"></i>
+                <span>登出系統</span>
+              </a>
+            </li>
 
-              <li>
-                <a class="dropdown-item d-flex align-items-center"
-                  href='@Url.Action("Profile" , "Web" , new {area = ""})'>
-                  <i class="bi bi-person"></i>
-                  <span>我的帳號</span>
-                </a>
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
 
-              <li>
-                <a class="dropdown-item d-flex align-items-center"
-                  href='@Url.Action("ResetPassword" , "Web" , new {area = ""})'>
-                  <i class="bi bi-key"></i>
-                  <span>重設密碼</span>
-                </a>
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li>
-                <a class="dropdown-item d-flex align-items-center"
-                  href='@Url.Action("Logout" , "Web" , new {area = ""})'>
-                  <i class="bi bi-box-arrow-right"></i>
-                  <span>登出系統</span>
-                </a>
-              </li>
+      </ul>
+    </nav><!-- End Icons Navigation -->
 
-            </ul><!-- End Profile Dropdown Items -->
-          </li><!-- End Profile Nav -->
+  </header><!-- End Header -->
 
-        </ul>
-      </nav><!-- End Icons Navigation -->
-
-    </header><!-- End Header -->
-
-    <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-
-      <ul class="sidebar-nav" id="sidebar-nav">
-
-        <li class="nav-item">
-          <a class="nav-link " href="@Url.Action("Index" , "Home" , new {area = SessionService.RoleNo})">
-            <h3 class="fw-bold">後台管理</h3>
-          </a>
-        </li>
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link " href="@Url.Action("Index" , "Home" , new {area = SessionService.RoleNo})"
+          style="@str_style">
+          <h3 class="fw-bold">後台管理</h3>
+        </a>
+      </li>
       @{
         using var prg = new z_repoPrograms();
         foreach (var item1 in ModuleList)
         {
           ProgramList = prg.GetDataList(item1.ModuleNo);
+          if (item1.ModuleNo == SessionService.ModuleNo)
+          { str_expanded = "true"; str_show = "show"; str_style = "background-color:#fff3cd;color:blue;"; }
+          else
+          { str_expanded = "false"; str_show = ""; str_style = ""; }
 
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#@item1.ModuleNo" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i>
-                <span>@item1.ModuleNo @item1.ModuleName</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="@item1.ModuleNo" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#@item1.ModuleNo" data-bs-toggle="collapse" href="#"
+              aria-expanded="@str_expanded" style="@str_style">
+              <i class="bi bi-menu-button-wide"></i>
+              <span>@item1.ModuleNo @item1.ModuleName</span>
+              <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="@item1.ModuleNo" class="nav-content collapse @str_show" data-bs-parent="#sidebar-nav">
 
               @foreach (var item2 in ProgramList)
               {
-                  <a href="@Url.Action("Open" , "Web" , new {area = "" , id = item2.PrgNo})">
-                    <i class="bi bi-circle"></i><span>@item2.PrgNo.Substring(4, 4) @item2.PrgName</span>
-                  </a>
+                if (item2.PrgNo == SessionService.PrgNo)
+                { str_style = "background-color:#fff3cd;color:blue;"; }
+                else
+                { str_style = ""; }
+
+                <a href="@Url.Action("Open" , "Web" , new {area = "" , id = item2.PrgNo})" style="@str_style">
+                  <i class="bi bi-circle"></i><span>@item2.PrgNo.Substring(4, 4) @item2.PrgName</span>
+                </a>
               }
-              </ul>
-            </li>
+            </ul>
+          </li>
         }
       }
-    </aside><!-- End Sidebar-->
+  </aside><!-- End Sidebar-->
 
-    <main id="main" class="main">
-      <div class="container-fluid">
-        <div class="card @SessionService.CardSize">
-          <div class="card-header bg-primary text-white">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="float-start">
-                  <h4>@SessionService.ActionName</h4>
-                </div>
+  <main id="main" class="main">
+    <div class="container-fluid">
+      <div class="card @SessionService.CardSize">
+        <div class="card-header bg-primary text-white">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="float-start">
+                <h4>@SessionService.ActionName</h4>
+              </div>
               @if (!string.IsNullOrEmpty(SessionService.SubHeaderName))
               {
-                  <div class="float-end">
-                    <h4>@SessionService.SubHeaderName</h4>
-                  </div>
+                <div class="float-end">
+                  <h4>@SessionService.SubHeaderName</h4>
+                </div>
               }
-              </div>
             </div>
           </div>
-          <div class="card-body">
-          @if ((SessionService.IsPageSize && SessionService.PageSize > 0) || SessionService.IsSearch)
+        </div>
+        <div class="card-body">
+          @if (SessionService.ActionNo == "Index")
           {
+            if ((SessionService.IsPageSize && SessionService.PageSize > 0) || SessionService.IsSearch)
+            {
               <div class="row">
                 <div class="col-md-12">
-                @if (SessionService.IsPageSize && SessionService.PageSize > 0)
-                {
-                    <div class="float-start page-info pt-4 px-2">
-                    @Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", ActionService.Controller, new
-                      {
-                        area
-                           = ActionService.Area,
-                        page = x
-                      }))
-                    @SessionService.PageInfo
+                  @if (SessionService.IsPageSize && SessionService.PageSize > 0)
+                  {
+                    <div class="float-start page-info">
+                      <table>
+                        <tr>
+                          <td>
+                            頁數：
+                          </td>
+                          <td>
+                            <div class="mt-3 me-2">
+                              @Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", ActionService.Controller, new
+                                {
+                                  area = ActionService.Area,
+                                  id = x
+                                }))
+                            </div>
+                          </td>
+                          <td>
+                            @SessionService.PageInfo
+                          </td>
+                        </tr>
+                      </table>
                     </div>
-                }
-                @if (SessionService.IsSearch)
-                {
+                  }
+                  @if (SessionService.IsSearch)
+                  {
                     <div class="float-end">
                       <div class="mt-3">
-                      @using (Html.BeginForm("Search", ActionService.Controller,
-                     new { area = ActionService.Area }, FormMethod.Post))
-                      {
+                        @using (Html.BeginForm("Search", ActionService.Controller,
+                       new { area = ActionService.Area }, FormMethod.Post))
+                        {
                           <table>
                             <tr>
                               <td>
                                 <span class="control-label fw-bold">查詢條件：</span>
                               </td>
                               <td class="pr-2">
-                                <input id="SearchText" name="SearchText" type="text"
-                                  class="form-control data-list-search-text" placeholder="請輸入查詢條件..."
-                                  value="@SessionService.SearchText" style="width:200px;" />
+                                <input id="SearchText" name="SearchText" type="text" class="form-control data-list-search-text"
+                                  placeholder="請輸入查詢條件..." value="@SessionService.SearchText" style="width:200px;" />
                               </td>
                               <td>
                                 <input type="submit" value="查詢" class="btn btn-primary" />
                               </td>
                             </tr>
                           </table>
-                      }
+                        }
                       </div>
                     </div>
-                }
+                  }
                 </div>
               </div>
+            }
           }
+          @if (ActionService.Action == "Index")
+          {
             <div class="overflow-scroll">
-            @RenderBody()
+              @RenderBody()
             </div>
-          </div>
+          }
+          else
+          {
+            @RenderBody()
+          }
         </div>
       </div>
-    </main><!-- End #main -->
+    </div>
+  </main><!-- End #main -->
 
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
-      <div class="copyright">
-        &copy; Copyright <strong><span>@appInfo</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">@AppService.Designer</a>
-      </div>
-    </footer><!-- End Footer -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>@appInfo</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      Designed by <a href="https://bootstrapmade.com/">@AppService.Designer</a>
+    </div>
+  </footer><!-- End Footer -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Template Main JS File -->
-    <script src="@Url.Content("~/lib/Niceadmin/assets/js/main.js")"></script>
+  <!-- Template Main JS File -->
+  <script src="@Url.Content("~/lib/Niceadmin/assets/js/main.js")"></script>
   @await RenderSectionAsync("ScriptsEnd", required: false)
-  </body>
+</body>
 
 </html>

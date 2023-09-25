@@ -146,8 +146,14 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
     /// <param name="orderByDirection">排序方式</param>
     public z_repoUsers(string orderByColumn, string orderByDirection)
     {
-        OrderByColumn = orderByColumn;
-        OrderByDirection = orderByDirection;
+        if (string.IsNullOrEmpty(orderByColumn))
+            OrderByColumn = DefaultOrderByColumn;
+        else
+            OrderByColumn = orderByColumn;
+        if (string.IsNullOrEmpty(orderByDirection))
+            OrderByDirection = DefaultOrderByDirection;
+        else
+            OrderByDirection = orderByDirection;
     }
     #endregion
     #region 資料表 CRUD 指令(使用同步呼叫)
@@ -253,6 +259,7 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
         model = dpr.ReadAll<Users>(sql_query, parm);
         return model;
     }
+
     /// <summary>
     /// 新增或修改資料(同步呼叫)
     /// </summary>

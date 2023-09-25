@@ -196,6 +196,30 @@ INNER JOIN vi_CodeProgram ON Programs.CodeNo = vi_CodeProgram.CodeNo
         }
         return model;
     }
+
+     /// <summary>
+    /// 取得單筆資料(同步呼叫)
+    /// </summary>
+    /// <param name="areaName">Area 名稱</param>
+    /// <param name="controllerName">Controller 名稱</param>
+    /// <returns></returns>
+    public Programs GetData(string areaName, string controllerName)
+    {
+        var model = new Programs();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE Programs.AreaName = @AreaName AND Programs.ControllerName = @ControllerName ";
+        sql_query += sql_where;
+        DynamicParameters parm = new DynamicParameters();
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("AreaName", areaName);
+            parm.Add("ControllerName", controllerName);
+        }
+        model = dpr.ReadSingle<Programs>(sql_query, parm);
+        return model;
+    }
     /// <summary>
     /// 取得單筆資料(同步呼叫)
     /// </summary>
@@ -213,7 +237,8 @@ INNER JOIN vi_CodeProgram ON Programs.CodeNo = vi_CodeProgram.CodeNo
             using var dpr = new DapperRepository();
             string sql_query = GetSQLSelect();
             string sql_where = " WHERE (Programs.PrgNo = @PrgNo) ";
-            sql_query += GetSQLOrderBy();
+            //有出現問題,原本的程式：sql_query +=GetSQLWhere();
+            sql_query += sql_where;
             DynamicParameters parm = new DynamicParameters();
             if (!string.IsNullOrEmpty(sql_where))
             {
@@ -400,5 +425,10 @@ INNER JOIN vi_CodeProgram ON Programs.CodeNo = vi_CodeProgram.CodeNo
     }
     #endregion
     #region 其它自定義事件與函數
+     public void SetCurrentPrgInfo()
+    {
+        var data = GetData(ActionService.Area, ActionService.Controller);
+        SessionService.SetProgramInfo(data);
+    }
     #endregion
 }

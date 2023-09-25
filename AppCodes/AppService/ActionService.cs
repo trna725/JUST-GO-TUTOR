@@ -90,6 +90,41 @@ public static class ActionService
         get { return $"{Http}://{Host}"; }
     }
 
+     /// <summary>
+    /// Row ID
+    /// </summary>
+    /// <value></value>
+    public static int RowId
+    {
+        get
+        {
+            int int_value = 0;
+            string str_value = "0";
+            if (_context != null) str_value = _context.Session.Get<string>("RowId");
+            if (str_value == null) str_value = "0";
+            if (!int.TryParse(str_value, out int_value)) int_value = 0;
+            return int_value;
+        }
+        set
+        { _context?.Session.Set<string>("RowId", value.ToString()); }
+    }
+    /// <summary>
+    /// Row Data
+    /// </summary>
+    /// <value></value>
+    public static string RowData
+    {
+        get
+        {
+            string str_value = "0";
+            if (_context != null) str_value = _context.Session.Get<string>("RowData");
+            if (str_value == null) str_value = "0";
+            return str_value;
+        }
+        set
+        { _context?.Session.Set<string>("RowData", value); }
+    }
+
     /// <summary>
     /// View Action 名稱
     /// </summary>

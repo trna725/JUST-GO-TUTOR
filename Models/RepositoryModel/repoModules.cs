@@ -393,5 +393,20 @@ LEFT OUTER JOIN Roles ON Modules.RoleNo = Roles.RoleNo
     }
     #endregion
     #region 其它自定義事件與函數
+    /// <summary>
+    /// 以編號查名稱
+    /// </summary>
+    /// <param name="dataNo">編號</param>
+    /// <returns></returns>
+    public string GetDataName(string dataNo)
+    {
+        using var dpr = new DapperRepository();
+        string str_query = "SELECT ModuleName FROM Modules WHERE ModuleNo = @ModuleNo";
+        DynamicParameters parm = new DynamicParameters();
+        parm.Add("ModuleNo", dataNo);
+        var data = dpr.ReadSingle<Modules>(str_query, parm);
+        if (data == null) return "";
+        return data.ModuleName;
+    }
     #endregion
 }

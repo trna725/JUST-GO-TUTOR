@@ -8,6 +8,15 @@ namespace JUSTGOTUTOR.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {
+         [Area("Admin")]
+        [HttpGet]
+        [Login(RoleList = "Admin")]
+        public IActionResult Init()
+        {
+            SessionService.SetPrgInit();
+            return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
+        }
+
         [Area("Admin")]
         [HttpGet]
         [Login(RoleList = "Admin")]

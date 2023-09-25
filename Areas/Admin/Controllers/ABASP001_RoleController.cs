@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 
-namespace JUSTGOTUTOR.Areas_Mis_Controllers
+namespace JUSTGOTUTOR.Areas_Admin_Controllers
 {
-    public class MBASP001_RoleController : Controller
+    public class ABASP001_RoleController : Controller
     {
         /// <summary>
         /// 資料初始化事件
         /// </summary>
         /// <returns></returns> <summary>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpGet]
         public IActionResult Init()
         {
@@ -24,8 +24,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         /// <param name="page">目前頁數</param>
         /// <param name="searchText">查詢條件</param>
         /// <returns></returns>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpGet]
         public IActionResult Index(int id = 1)
         {
@@ -42,8 +42,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         /// </summary>
         /// <param name="id">新增/修改 Key 值</param>
         /// <returns></returns>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpGet]
         public IActionResult CreateEdit(int id = 0)
         {
@@ -69,8 +69,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         /// </summary>
         /// <param name="model">新增/修改資料</param>
         /// <returns></returns>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpPost]
         public IActionResult CreateEdit(Roles model)
         {
@@ -85,8 +85,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         /// </summary>
         /// <param name="id">刪除 Key 值</param>
         /// <returns></returns>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpGet]
         public IActionResult Delete(int id = 0)
         {
@@ -100,8 +100,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         /// </summary>
         /// <param name="id">記錄 ID</param>
         /// <returns></returns>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpPost]
         public JsonResult DeleteRow(int id = 0)
         {
@@ -121,8 +121,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         /// 查詢
         /// </summary>
         /// <returns></returns>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpPost]
         public IActionResult Search()
         {
@@ -137,8 +137,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         /// </summary>
         /// <param name="id">欄位名稱</param>
         /// <returns></returns>
-        [Area("Mis")]
-        [Login(RoleList = "Mis")]
+        [Area("Admin")]
+        [Login(RoleList = "Admin")]
         [HttpGet]
         public IActionResult Sort(string id)
         {

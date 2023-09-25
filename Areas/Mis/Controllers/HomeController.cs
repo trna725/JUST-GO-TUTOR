@@ -8,6 +8,15 @@ namespace JUSTGOTUTOR.Areas.Mis.Controllers
 {
     public class HomeController : Controller
     {
+       [Area("Mis")]
+        [HttpGet]
+        [Login(RoleList = "Mis")]
+        public IActionResult Init()
+        {
+            SessionService.SetPrgInit();
+            return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
+        }
+
         [Area("Mis")]
         [HttpGet]
         [Login(RoleList = "Mis")]
