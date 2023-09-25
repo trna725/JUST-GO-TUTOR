@@ -127,9 +127,9 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center" style="z-index: 9999;">
 
-    <div class="d-flex align-items-center justify-content-between">
+    <div class=" d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="@Url.Content("~/images/app/AppLogo.png")" alt="">
         <span class="d-none d-lg-block">@AppService.AppName</span>
@@ -265,7 +265,7 @@
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" class="sidebar" style="z-index: 9999;">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link " href="@Url.Action("Index" , "Home" , new {area = SessionService.RoleNo})"

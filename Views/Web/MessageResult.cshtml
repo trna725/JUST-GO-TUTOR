@@ -1,6 +1,21 @@
 @{
     ViewData["Title"] = "MessageResult";
-    Layout = "_Layout";
+    @* Layout = "_Layout"; *@
+    @* if (SessionService.RoleNo == "Member")
+{ Layout = "_Layout"; }
+else
+{ Layout = "_LayoutAdmin"; } *@
+    switch (SessionService.RoleNo)
+    {
+        case "Admin":
+        case "User":
+        case "Mis":
+            { Layout = "_LayoutAdmin"; }
+            break;
+        default:
+            { Layout = "_Layout"; }
+            break;
+    }
 }
 
 <div style="height: 100rem">

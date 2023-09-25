@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace JUSTGOTUTOR.Areas.Mis.Controllers
@@ -34,6 +35,12 @@ namespace JUSTGOTUTOR.Areas.Mis.Controllers
                 .ToPagedList(id, SessionService.PageSize);
             SessionService.SetPageInfo(id, model.PageCount);
             SessionService.SetActionInfo(enAction.Index, enCardSize.Max, id, "");
+
+            List<SelectListItem> Cate1List = new List<SelectListItem>();
+            using var cate1 = new z_repoCategory1s();
+            Cate1List = cate1.GetDropDownList(true);
+            ViewBag.ParentNo = Cate1List; 
+
             return View(model);
         }
 

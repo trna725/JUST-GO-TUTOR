@@ -29,7 +29,7 @@ public class z_metaUsers
 {
     [Key]
     public int Id { get; set; }
-    [Display(Name = "合法")]
+    [Display(Name = "是否已驗證")]
     public bool IsValid { get; set; }
     [Display(Name = "登入帳號")]
     [Required(ErrorMessage = "登入帳號不可空白!!")]
@@ -74,7 +74,7 @@ public class z_metaUsers
     public string? ValidateCode { get; set; }
     [Display(Name = "通知Token")]
     public string? NotifyPassword { get; set; }
-    [Display(Name = "ContentText")]
+    [Display(Name = "內容描述")]
     public string? ContentText { get; set; }
     [Display(Name = "備註")]
     public string? Remark { get; set; }

@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "CreateEdit";
     Layout = "_LayoutAdmin";
+
+    List<SelectListItem> Cate1List = new List<SelectListItem>();
+    using var cate1 = new z_repoCategory1s();
+    Cate1List = cate1.GetDropDownList(true);
+
 }
 
 @using (Html.BeginForm())
@@ -52,7 +57,11 @@
             @Html.DisplayNameFor(m => m.ParentNo)
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ParentNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.ParentNo, Cate1List, new
+                {
+                    htmlAttributes = new { @class = "form-control" }
+                })
+            @* @Html.EditorFor(model => model.ParentNo, new { htmlAttributes = new { @class = "form-control" } }) *@
             @Html.ValidationMessageFor(model => model.ParentNo, "", new { @class = "text-danger" })
         </div>
     </div>
