@@ -4,7 +4,7 @@ using X.PagedList;
 
 namespace JUSTGOTUTOR.Areas_Mis_Controllers
 {
-    public class MUSRP001_UserController : Controller
+    public class MUSRP002_MisController : Controller
     {  /// <summary>
         /// 資料初始化事件
         /// </summary>
@@ -32,7 +32,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
             // var model = datas.GetDataList(SessionService.SearchText)
             //     .ToPagedList(id, SessionService.PageSize);
-                 var model = datas.GetMutipleRoleDataList("User","Student","Teacher", SessionService.SearchText)
+                 var model = datas.GetDataList("Mis", SessionService.SearchText)
                 .ToPagedList(id, SessionService.PageSize);
             SessionService.SetPageInfo(id, model.PageCount);
             SessionService.SetActionInfo(enAction.Index, enCardSize.Max, id, "");

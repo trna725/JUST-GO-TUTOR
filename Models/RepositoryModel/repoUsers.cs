@@ -813,5 +813,35 @@ VALUES
         model = dpr.ReadSingle<Users>(sql_query, parm);
         return model;
     }
+
+    /// <summary>
+    /// 取得多數特定角色多筆資料(同步呼叫)  ==> 可嘗試用陣列改寫
+    /// </summary>
+    /// <param name="roleNo">角色編號</param>
+    /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
+    /// <returns></returns>
+    public List<Users> GetMutipleRoleDataList(string roleNo_1, string roleNo_2, string roleNo_3,string searchString = "")
+    {
+        List<string> searchColumns = GetSearchColumns();
+        DynamicParameters parm = new DynamicParameters();
+        var model = new List<Users>();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE (Users.RoleNo = @RoleNo_1 OR Users.RoleNo = @RoleNo_2 OR Users.RoleNo = @RoleNo_3 ) ";
+        sql_query += sql_where;
+        if (!string.IsNullOrEmpty(searchString))
+            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("RoleNo_1", roleNo_1);
+            parm.Add("RoleNo_2", roleNo_2);
+            parm.Add("RoleNo_3", roleNo_3);
+        }
+        sql_query += GetSQLOrderBy();
+        model = dpr.ReadAll<Users>(sql_query, parm);
+        return model;
+    }
+
     #endregion
 }

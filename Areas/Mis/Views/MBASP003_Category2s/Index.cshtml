@@ -1,4 +1,4 @@
-@model IEnumerable<JUSTGOTUTOR.Models.Category1s>
+@model IEnumerable<JUSTGOTUTOR.Models.Category2s>
 
 @{
     ViewData["Title"] = "Index";
@@ -24,11 +24,8 @@
                 @Html.DisplayNameFor(model => model.IsEnabled)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsImportment)
+                @Html.ColumnSort("ParentNo", @Html.DisplayNameFor(model => model.ParentNo))
             </th>
-            @* <th>
-            @Html.ColumnSort("ParentNo", @Html.DisplayNameFor(model => model.ParentNo))
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.EnglishName)
             </th>
@@ -60,11 +57,8 @@
                     @Html.DisplayFor(modelItem => item.IsEnabled)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsImportment)
+                    @Html.DisplayFor(modelItem => item.ParentNo)
                 </td>
-                @* <td>
-            @Html.DisplayFor(modelItem => item.ParentNo)
-            </td> *@
 
                 <td>
                     @Html.DisplayFor(modelItem => item.EnglishName)

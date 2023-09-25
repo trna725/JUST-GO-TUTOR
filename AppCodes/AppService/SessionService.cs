@@ -838,8 +838,8 @@ public static class SessionService
     /// <returns></returns>
     public static void SetPageInfo(int page, int pageCount)
     {
-        // PageInfo = $"第 {page} 頁，共 {pageCount}頁";
-        PageInfo = $"({page} / {pageCount})";
+        PageInfo = $"第 {page} 頁，共 {pageCount}頁";
+        //PageInfo = $"({page} / {pageCount})";
     }
 
     /// <summary>
