@@ -338,6 +338,10 @@ public class z_repoCourseCase : BaseClass
     }
     #endregion
     #region 其它自定義事件與函數
+    /// <summary>
+    /// 前台呼叫新增資料(同步呼叫)
+    /// </summary>
+    /// <param name="model"></param>
     public void InsertCase(vmCourseCase model)
     {
         string str_time_section = "";
@@ -397,7 +401,7 @@ VALUES
     }
 
      /// <summary>
-    /// 新增資料(同步呼叫)
+    /// 後台新增資料(同步呼叫)
     /// </summary>
     /// <param name="model">資料模型</param>
     public void InsertCase(CourseCase model)

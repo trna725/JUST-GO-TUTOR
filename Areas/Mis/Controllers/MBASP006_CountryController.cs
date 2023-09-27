@@ -1,13 +1,10 @@
-
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 
-namespace JUSTGOTUTOR.Areas_Mis_Controllers
+namespace JUSTGOTUTOR.Areas.Mis.Controllers
 {
-    public class MUSRP002_MisController : Controller
-    {  
-        int id=0; 
-        
+    public class MBASP006_CountryController : Controller
+    {
         /// <summary>
         /// 資料初始化事件
         /// </summary>
@@ -32,12 +29,9 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult Index(int id = 1)
         {
-            using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
-            // var model = datas.GetDataList(SessionService.SearchText)
-            //     .ToPagedList(id, SessionService.PageSize);
-                 var model = datas.GetRoleDataList("Mis", SessionService.SearchText)
+            using var datas = new z_repoCountry(SessionService.SortColumn, SessionService.SortDirection);
+            var model = datas.GetDataList(SessionService.SearchText)
                 .ToPagedList(id, SessionService.PageSize);
-      
             SessionService.SetPageInfo(id, model.PageCount);
             SessionService.SetActionInfo(enAction.Index, enCardSize.Max, id, "");
             return View(model);
@@ -53,21 +47,19 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult CreateEdit(int id = 0)
         {
-            SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);          
-            // var model = new vmCreateUser();
-            var model = new Users();
-            this.id = id; 
+            SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);
+            var model = new Country();
             if (id == 0)
             {
                 //新增預設值
-                model.IsValid = true;
+                //沒有需要預設的checkbox
+                //model.IsEnabled = true;
             }
             else
             {
                 //修改資料
-                using var datas = new z_repoUsers();
-                // model = datas.GetCreateUserData(id);
-                model = datas.GetUserData(id);
+                using var datas = new z_repoCountry();
+                model = datas.GetData(id);
                 if (model == null) return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
             }
             return View(model);
@@ -81,17 +73,14 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [Area("Mis")]
         [Login(RoleList = "Mis")]
         [HttpPost]
-        //public IActionResult CreateEdit(Users model)
-        // public IActionResult CreateEdit(vmCreateUser model)
-        public IActionResult CreateEdit(Users model)
+        public IActionResult CreateEdit(Country model)
         {
             if (!ModelState.IsValid) return View(model);
-            using var datas = new z_repoUsers();
-            // datas.UserEdit(id, model);
-            datas.UserEdit(model);
+            using var datas = new z_repoCountry();
+            datas.CreateEdit(model);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
-      
+
         /// <summary>
         /// 刪除
         /// </summary>
@@ -102,7 +91,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult Delete(int id = 0)
         {
-            using var datas = new z_repoUsers();
+            using var datas = new z_repoCountry();
             datas.Delete(id);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
@@ -121,7 +110,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             //if (!PrgService.IsProgramSecurity(enSecurtyMode.Delete))
             //return RedirectToAction(ActionService.Index, ActionService.Controller, new { area = ActionService.Area });
 
-            using (z_repoUsers datas = new z_repoUsers())
+            using (z_repoCountry datas = new z_repoCountry())
             {
                 datas.Delete(id);
                 dmJsonMessage result = new dmJsonMessage() { Mode = true, Message = "資料已刪除!!" };
@@ -165,7 +154,5 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             }
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
-
-        
     }
 }

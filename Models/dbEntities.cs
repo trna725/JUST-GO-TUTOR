@@ -49,6 +49,7 @@ namespace JUSTGOTUTOR.Models
         public virtual DbSet<CodeDatas> CodeDatas { get; set; }
 
         public virtual DbSet<Companys> Companys { get; set; }
+        public virtual DbSet<Country> Country { get; set; }
 
         public virtual DbSet<Course> Course { get; set; }
 
@@ -462,6 +463,16 @@ namespace JUSTGOTUTOR.Models
                 entity.Property(e => e.SkypeUrl).HasMaxLength(250);
                 entity.Property(e => e.TwitterUrl).HasMaxLength(250);
             });
+
+            modelBuilder.Entity<Country>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.CountryNo).HasMaxLength(50);
+            entity.Property(e => e.CountryName).HasMaxLength(50);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+        });
+
 
         modelBuilder.Entity<Course>(entity =>
         {

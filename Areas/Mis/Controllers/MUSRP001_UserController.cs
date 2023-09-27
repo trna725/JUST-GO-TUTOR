@@ -58,7 +58,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);          
             // var model = new vmCreateUser();
             var model = new Users();
-            this.id = id; 
+            // this.id = id; 
             if (id == 0)
             {
                 //新增預設值
@@ -89,7 +89,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         {
             if (!ModelState.IsValid) return View(model);
             using var datas = new z_repoUsers();
-            datas.UserEdit(id, model);
+            // datas.UserEdit(id, model);
+            datas.UserEdit(model);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
       

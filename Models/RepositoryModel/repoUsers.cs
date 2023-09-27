@@ -960,12 +960,15 @@ VALUES
     /// 後台新增或修改資料(同步呼叫)
     /// </summary>
     /// <param name="model">資料模型</param>
-    public void UserEdit(int id, Users model)
+    //public void UserEdit(int id, Users model)
+    public void UserEdit(Users model)
     {
-        if (id == 0)
+        if (model.Id == 0)
             CreateUsers(model);
         else
-            Edit(model);
+        //// 考慮過後還是採用原本的EDIT, 如果有資料沒辦法寫入再採用新寫的
+        //如果不用EditUsers 會有原本的userno 被蓋掉的問題
+            EditUsers(model);
     }
 
     public void Create(vmCreateUser model)
@@ -1042,6 +1045,48 @@ VALUES
         using var dpr = new DapperRepository();
         string str_query = dpr.GetSQLUpdateCommand(model);
         DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
+        dpr.Execute(str_query, parm);
+    }
+    /// <summary>
+    /// 更新資料(同步呼叫)
+    /// </summary>
+    /// <param name="model">資料模型</param>
+    public void EditUsers(Users model)
+    {
+        using var dpr = new DapperRepository();
+        string str_query =@"
+        UPDATE Users SET 
+        Password = @Password ,
+        UserName = @UserName ,
+        IsValid = @IsValid , 
+        GenderCode = @GenderCode , 
+        RoleNo = @RoleNo , 
+        CountryNo = @CountryNo , 
+        ReviewStar = @ReviewStar , 
+        Birthday = @Birthday , 
+        ContactEmail = @ContactEmail , 
+        ContactTel = @ContactTel ,
+        ContactAddress = @ContactAddress , 
+        Remark = @Remark
+        ";
+        str_query += " WHERE Id = @Id "; 
+        // DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("Password", model.Password);
+        parm.Add("UserName", model.UserName);
+        parm.Add("IsValid", model.IsValid);
+        parm.Add("GenderCode", model.GenderCode);
+        parm.Add("RoleNo", model.RoleNo);
+        parm.Add("CountryNo", model.CountryNo);
+        parm.Add("ReviewStar", model.ReviewStar);
+        parm.Add("Birthday", model.Birthday);
+        parm.Add("ContactEmail", model.ContactEmail);
+        parm.Add("ContactTel", model.ContactTel);
+        parm.Add("ContactAddress", model.ContactAddress);
+        parm.Add("Remark", model.Remark);
+
+        parm.Add("Id", model.Id);
+
         dpr.Execute(str_query, parm);
     }
 

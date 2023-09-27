@@ -324,7 +324,7 @@ public class SendMailService : BaseClass
         gmail.ReceiverEmail = teacherData.ContactEmail;
         gmail.Subject = string.Format("{0} 預約案件成立通知信-{1}，案件編號：{2}", AppService.AppName , model.StudentName, caseData.Id);
         gmail.Body = string.Format("敬愛的 {0} 老師您好!! <br /><br />", teacherData.UserName);
-        gmail.Body += string.Format("本平台的客服於 {0} 於本平台幫學生申請了一份上課申請資訊<br /><br />", model.StudentName);
+        gmail.Body += string.Format("本平台的客服幫 {0} 同學申請了一份上課申請資訊<br /><br />", model.StudentName);
         gmail.Body += "申請資訊如下：<br />";
         gmail.Body += $"希望上課的星期：{caseData.WeekSection}<br />";
         gmail.Body += $"希望上課的時間：{caseData.TimeSection}<br />";

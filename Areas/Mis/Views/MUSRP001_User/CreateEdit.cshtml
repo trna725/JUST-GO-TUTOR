@@ -11,6 +11,10 @@
     using var role = new z_repoRoles(); 
     List<SelectListItem> roles = new List<SelectListItem>();
     roles = role.GetExcludeRoleDropDownList("Admin", "Mis",true);  
+
+    using var country = new z_repoCountry(); 
+    List<SelectListItem> countrys = new List<SelectListItem>();
+    countrys = country.GetDropDownList(true);  
 }
 
 @using (Html.BeginForm())
@@ -18,16 +22,25 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @* @Html.HiddenFor(model => model.Id) *@
 
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.UserNo)
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UserNo, "", new { @class = "text-danger" })
+            @{
+                if(Model.Id ==0)
+                {                    
+                    @Html.EditorFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserNo, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } }); 
+                }
+            }
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.Password)
         </div>
@@ -36,7 +49,7 @@
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.UserName)
         </div>
@@ -46,7 +59,7 @@
         </div>
     </div>
 
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.IsValid)
         </div>
@@ -57,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.GenderCode)
         </div>
@@ -66,7 +79,7 @@
             @Html.ValidationMessageFor(model => model.GenderCode, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.RoleNo)
         </div>
@@ -84,16 +97,17 @@
             @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
         </div>
     </div> *@
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.CountryNo)
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.CountryNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.CountryNo,countrys, new { htmlAttributes = new { @class = "form-control" } })
+            @* @Html.EditorFor(model => model.CountryNo, new { htmlAttributes = new { @class = "form-control" } }) *@
             @Html.ValidationMessageFor(model => model.CountryNo, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.ReviewStar)
         </div>
@@ -102,7 +116,7 @@
             @Html.ValidationMessageFor(model => model.ReviewStar, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.Birthday)
         </div>
@@ -118,7 +132,7 @@
             @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.ContactEmail)
         </div>
@@ -127,7 +141,7 @@
             @Html.ValidationMessageFor(model => model.ContactEmail, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.ContactTel)
         </div>
@@ -136,7 +150,7 @@
             @Html.ValidationMessageFor(model => model.ContactTel, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.ContactAddress)
         </div>
@@ -145,7 +159,7 @@
             @Html.ValidationMessageFor(model => model.ContactAddress, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.Remark)
         </div>
@@ -155,7 +169,7 @@
         </div>
     </div>
     <hr>
-    <div class="row form-group">
+    <div class="row form-group my-3">
         <div class="col-md-12">
             <input type="submit" value="異動存檔" class="btn btn-primary" />
             @Html.ActionLink("返回列表", "Index", ActionService.Controller,

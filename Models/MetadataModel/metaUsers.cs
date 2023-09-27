@@ -32,7 +32,7 @@ public class z_metaUsers
     [Display(Name = "是否已驗證")]
     public bool IsValid { get; set; }
     [Display(Name = "登入帳號")]
-    [Required(ErrorMessage = "登入帳號不可空白!!")]
+    // [Required(ErrorMessage = "登入帳號不可空白!!")]
     public string? UserNo { get; set; }
     [Display(Name = "登入姓名")]
     [Required(ErrorMessage = "登入姓名不可空白!!")]

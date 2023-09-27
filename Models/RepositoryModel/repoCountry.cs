@@ -1,11 +1,10 @@
 using Dapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 /// <summary>
-/// 角色資料 CRUD 程式
+/// 員工資料 CRUD 程式
 /// </summary>
-public class z_repoRoles : BaseClass
+public class z_repoCountry : BaseClass
 {
     #region SQL 指令設定區
     /// <summary>
@@ -17,7 +16,7 @@ public class z_repoRoles : BaseClass
         string str_query = "";
         //自動由表格 Class 產生 SQL 查詢指令
         using var dpr = new DapperRepository();
-        str_query = dpr.GetSQLSelectCommand(new Roles());
+        str_query = dpr.GetSQLSelectCommand(new Country());
         return str_query;
     }
     /// <summary>
@@ -29,7 +28,7 @@ public class z_repoRoles : BaseClass
         List<string> searchColumn;
         //由系統自動取得文字欄位的集合
         using var dpr = new DapperRepository();
-        searchColumn = dpr.GetStringColumnList(new Roles());
+        searchColumn = dpr.GetStringColumnList(new Country());
         return searchColumn;
     }
     /// <summary>
@@ -44,7 +43,7 @@ public class z_repoRoles : BaseClass
     /// <summary>
     /// 預設 SQL 排序指令
     /// </summary>
-    private readonly string DefaultOrderByColumn = "Roles.RoleNo";
+    private readonly string DefaultOrderByColumn = "Country.CountryNo";
     /// <summary>
     /// 預設 SQL 排序方式指令
     /// </summary>
@@ -68,53 +67,11 @@ public class z_repoRoles : BaseClass
     {
         using var dpr = new DapperRepository();
         string str_query = "SELECT ";
-        if (showNo) str_query += "RoleNo + ' ' + ";
-        str_query += "RoleName AS Text , RoleNo AS Value FROM Roles ORDER BY RoleNo";
+        if (showNo) str_query += "CountryNo + ' ' + ";
+        str_query += "CountryName AS Text , CountryNo AS Value FROM Country ORDER BY CountryNo";
         var model = dpr.ReadAll<SelectListItem>(str_query);
         return model;
     }
-
-    /// <summary>
-    /// 取得下拉式選單資料集(特定角色)
-    /// </summary>
-    /// <param name="showNo">是否顯示編號</param>
-    /// <returns></returns>
-    public List<SelectListItem> GetRoleDropDownList(string roleNo_1,bool showNo = true)
-    {
-        using var dpr = new DapperRepository();
-        string str_query = "SELECT ";
-        if (showNo) str_query += "RoleNo + ' ' + ";
-        str_query += "RoleName AS Text , RoleNo AS Value FROM Roles "; 
-        str_query += "WHERE RoleNo = @RoleNo_1 "; 
-        str_query += "ORDER BY RoleNo";
-
-        DynamicParameters parm = new DynamicParameters(); 
-        parm.Add("RoleNo_1", roleNo_1);
-        var model = dpr.ReadAll<SelectListItem>(str_query, parm);
-        return model;
-    }
-
-    /// <summary>
-    /// 取得下拉式選單資料集(排除不要的角色)
-    /// </summary>
-    /// <param name="showNo">是否顯示編號</param>
-    /// <returns></returns>
-    public List<SelectListItem> GetExcludeRoleDropDownList(string roleNo_1, string roleNo_2,bool showNo = true)
-    {
-        using var dpr = new DapperRepository();
-        string str_query = "SELECT ";
-        if (showNo) str_query += "RoleNo + ' ' + ";
-        str_query += "RoleName AS Text , RoleNo AS Value FROM Roles "; 
-        str_query += "WHERE RoleNo != @RoleNo_1 AND RoleNo != @RoleNo_2 "; 
-        str_query += "ORDER BY RoleNo";
-
-        DynamicParameters parm = new DynamicParameters(); 
-        parm.Add("RoleNo_1", roleNo_1);
-        parm.Add("RoleNo_2", roleNo_2);
-        var model = dpr.ReadAll<SelectListItem>(str_query, parm);
-        return model;
-    }
-
     /// <summary>
     /// SQL 新增指令
     /// </summary>
@@ -124,7 +81,7 @@ public class z_repoRoles : BaseClass
         string str_query = "";
         //自動由表格 Class 產生 Insert 查詢指令
         using var dpr = new DapperRepository();
-        str_query = dpr.GetSQLInsertCommand(new Roles());
+        str_query = dpr.GetSQLInsertCommand(new Country());
         return str_query;
     }
     /// <summary>
@@ -136,7 +93,7 @@ public class z_repoRoles : BaseClass
         string str_query = "";
         //自動由表格 Class 產生 Delete 查詢指令
         using var dpr = new DapperRepository();
-        str_query = dpr.GetSQLDeleteCommand(new Roles());
+        str_query = dpr.GetSQLDeleteCommand(new Country());
         return str_query;
     }
     /// <summary>
@@ -148,7 +105,7 @@ public class z_repoRoles : BaseClass
         string str_query = "";
         //自動由表格 Class 產生 Update 查詢指令
         using var dpr = new DapperRepository();
-        str_query = dpr.GetSQLUpdateCommand(new Roles());
+        str_query = dpr.GetSQLUpdateCommand(new Country());
         return str_query;
     }
     #endregion
@@ -165,7 +122,7 @@ public class z_repoRoles : BaseClass
     /// <summary>
     /// 建構子
     /// </summary>
-    public z_repoRoles()
+    public z_repoCountry()
     {
         OrderByColumn = DefaultOrderByColumn;
         OrderByDirection = DefaultOrderByDirection;
@@ -175,16 +132,17 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="orderByColumn">排序欄位</param>
     /// <param name="orderByDirection">排序方式</param>
-    public z_repoRoles(string orderByColumn, string orderByDirection)
+    public z_repoCountry(string orderByColumn, string orderByDirection)
     {
-        if (!string.IsNullOrEmpty(orderByColumn))
+        if(string.IsNullOrEmpty(orderByColumn))
+            OrderByColumn =DefaultOrderByColumn; 
+        else
             OrderByColumn = orderByColumn;
-        else
-            OrderByColumn = DefaultOrderByColumn;
-        if (!string.IsNullOrEmpty(orderByDirection))
-            OrderByDirection = orderByDirection;
-        else
-            OrderByDirection = DefaultOrderByDirection;
+
+        if(string.IsNullOrEmpty(orderByDirection))
+            OrderByDirection = DefaultOrderByDirection; 
+        else            
+            OrderByDirection = orderByDirection;        
     }
     #endregion
     #region 資料表 CRUD 指令(使用同步呼叫)
@@ -193,9 +151,9 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="id">Key 欄位值</param>
     /// <returns></returns>
-    public Roles GetData(int id)
+    public Country GetData(int id)
     {
-        var model = new Roles();
+        var model = new Country();
         if (id == 0)
         {
             //新增預設值
@@ -213,7 +171,7 @@ public class z_repoRoles : BaseClass
                 //自定義的 Weher Parm 參數
                 //parm.Add("參數名稱", "參數值");
             }
-            model = dpr.ReadSingle<Roles>(sql_query, parm);
+            model = dpr.ReadSingle<Country>(sql_query, parm);
         }
         return model;
     }
@@ -222,31 +180,31 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
     /// <returns></returns>
-    public List<Roles> GetDataList(string searchString = "")
+    public List<Country> GetDataList(string searchString = "")
     {
         List<string> searchColumns = GetSearchColumns();
         DynamicParameters parm = new DynamicParameters();
-        var model = new List<Roles>();
+        var model = new List<Country>();
         using var dpr = new DapperRepository();
         string sql_query = GetSQLSelect();
         string sql_where = GetSQLWhere();
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new Roles(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumn(new Country(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數
             //parm.Add("參數名稱", "參數值");
         }
         sql_query += GetSQLOrderBy();
-        model = dpr.ReadAll<Roles>(sql_query, parm);
+        model = dpr.ReadAll<Country>(sql_query, parm);
         return model;
     }
     /// <summary>
     /// 新增或修改資料(同步呼叫)
     /// </summary>
     /// <param name="model">資料模型</param>
-    public void CreateEdit(Roles model)
+    public void CreateEdit(Country model)
     {
         if (model.Id == 0)
             Create(model);
@@ -257,7 +215,7 @@ public class z_repoRoles : BaseClass
     /// 新增資料(同步呼叫)
     /// </summary>
     /// <param name="model">資料模型</param>
-    public void Create(Roles model)
+    public void Create(Country model)
     {
         using var dpr = new DapperRepository();
         string str_query = dpr.GetSQLInsertCommand(model);
@@ -268,7 +226,7 @@ public class z_repoRoles : BaseClass
     /// 更新資料(同步呼叫)
     /// </summary>
     /// <param name="model">資料模型</param>
-    public void Edit(Roles model)
+    public void Edit(Country model)
     {
         using var dpr = new DapperRepository();
         string str_query = dpr.GetSQLUpdateCommand(model);
@@ -282,8 +240,8 @@ public class z_repoRoles : BaseClass
     public void Delete(int id = 0)
     {
         using var dpr = new DapperRepository();
-        string str_query = dpr.GetSQLDeleteCommand(new Roles());
-        DynamicParameters parm = dpr.GetSQLDeleteParameters(new Roles(), id);
+        string str_query = dpr.GetSQLDeleteCommand(new Country());
+        DynamicParameters parm = dpr.GetSQLDeleteParameters(new Country(), id);
         dpr.Execute(str_query, parm);
     }
     #endregion
@@ -293,9 +251,9 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="id">Key 欄位值</param>
     /// <returns></returns>
-    public async Task<Roles> GetDataAsync(int id)
+    public async Task<Country> GetDataAsync(int id)
     {
-        var model = new Roles();
+        var model = new Country();
         if (id == 0)
         {
             //新增預設值
@@ -313,7 +271,7 @@ public class z_repoRoles : BaseClass
                 //自定義的 Weher Parm 參數
                 //parm.Add("參數名稱", "參數值");
             }
-            model = await dpr.ReadSingleAsync<Roles>(sql_query, parm);
+            model = await dpr.ReadSingleAsync<Country>(sql_query, parm);
         }
         return model;
     }
@@ -322,24 +280,24 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
     /// <returns></returns>
-    public async Task<List<Roles>> GetDataListAsync(string searchString = "")
+    public async Task<List<Country>> GetDataListAsync(string searchString = "")
     {
         List<string> searchColumns = GetSearchColumns();
         DynamicParameters parm = new DynamicParameters();
-        var model = new List<Roles>();
+        var model = new List<Country>();
         using var dpr = new DapperRepository();
         string sql_query = GetSQLSelect();
         string sql_where = GetSQLWhere();
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new Roles(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumn(new Country(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數
             //parm.Add("參數名稱", "參數值");
         }
         sql_query += GetSQLOrderBy();
-        model = await dpr.ReadAllAsync<Roles>(sql_query, parm);
+        model = await dpr.ReadAllAsync<Country>(sql_query, parm);
         return model;
     }
     /// <summary>
@@ -347,7 +305,7 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="model">資料模型</param>
     /// <returns></returns>
-    public async Task CreateEditAsync(Roles model)
+    public async Task CreateEditAsync(Country model)
     {
         if (model.Id == 0)
             await CreateAsync(model);
@@ -359,7 +317,7 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="model">資料模型</param>
     /// <returns></returns>
-    public async Task CreateAsync(Roles model)
+    public async Task CreateAsync(Country model)
     {
         using var dpr = new DapperRepository();
         string str_query = dpr.GetSQLInsertCommand(model);
@@ -371,7 +329,7 @@ public class z_repoRoles : BaseClass
     /// </summary>
     /// <param name="model">資料模型</param>
     /// <returns></returns>
-    public async Task EditAsync(Roles model)
+    public async Task EditAsync(Country model)
     {
         using var dpr = new DapperRepository();
         string str_query = dpr.GetSQLUpdateCommand(model);
@@ -386,8 +344,8 @@ public class z_repoRoles : BaseClass
     public async Task DeleteAsync(int id = 0)
     {
         using var dpr = new DapperRepository();
-        string str_query = dpr.GetSQLDeleteCommand(new Roles());
-        DynamicParameters parm = dpr.GetSQLDeleteParameters(new Roles(), id);
+        string str_query = dpr.GetSQLDeleteCommand(new Country());
+        DynamicParameters parm = dpr.GetSQLDeleteParameters(new Country(), id);
         await dpr.ExecuteAsync(str_query, parm);
     }
     #endregion
