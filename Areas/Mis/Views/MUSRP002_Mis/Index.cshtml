@@ -10,9 +10,9 @@
             <th>
                 @await Html.PartialAsync("_PartialFormCreate")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+            @* <th>
+            @Html.DisplayNameFor(model => model.Id)
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.UserNo)
             </th>
@@ -98,9 +98,9 @@
                     @await Html.PartialAsync("_PartialFormEdit")
                     @await Html.PartialAsync("_PartialFormDelete")
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.Id)
+            </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.UserNo)
                 </td>

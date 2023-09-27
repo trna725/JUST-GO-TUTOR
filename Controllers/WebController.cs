@@ -55,6 +55,7 @@ namespace JUSTGOTUTOR.Controllers
             }
 
             //判斷使用者角色，進入不同的首頁
+            //需要改寫成switch
             var data = user.GetData(model.UserNo);
             if (data.RoleNo == "Admin") return RedirectToAction("Index", "Home", new { area = "Admin" });
             if (data.RoleNo == "Mis") return RedirectToAction("Index", "Home", new { area = "Mis" });
@@ -243,7 +244,7 @@ namespace JUSTGOTUTOR.Controllers
                 mailObject.ToEmail = userData.ContactEmail;
                 mailObject.ValidateCode = str_code;
                 mailObject.Password = userData.Password;
-                mailObject.ReturnUrl = $"{ActionService.HttpHost}/User/ResetPasswordValidate/{str_code}";
+                mailObject.ReturnUrl = $"{ActionService.HttpHost}/Web/ResetPasswordValidate/{str_code}";
 
                 str_message = sendEmail.UserResetPassword(mailObject);
                 if (string.IsNullOrEmpty(str_message))
@@ -259,7 +260,7 @@ namespace JUSTGOTUTOR.Controllers
 
             //顯示註冊訊息
             TempData["MessageText"] = str_message;
-            return RedirectToAction("MessageResult", "User", new { area = "" });
+            return RedirectToAction("MessageResult", "Web", new { area = "" });
         }
 
         [HttpGet]
@@ -271,7 +272,7 @@ namespace JUSTGOTUTOR.Controllers
             string str_message = user.ResetPasswordConfirm(id);
             //顯示重設密碼訊息
             TempData["MessageText"] = str_message;
-            return RedirectToAction("MessageResult", "User", new { area = "" });
+            return RedirectToAction("MessageResult", "Web", new { area = "" });
         }
 
         [HttpGet]

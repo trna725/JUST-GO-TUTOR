@@ -119,9 +119,16 @@ public class z_repoCourseCase : BaseClass
     /// <param name="orderByColumn">排序欄位</param>
     /// <param name="orderByDirection">排序方式</param>
     public z_repoCourseCase(string orderByColumn, string orderByDirection)
-    {
-        OrderByColumn = orderByColumn;
-        OrderByDirection = orderByDirection;
+    { 
+        if(string.IsNullOrEmpty(orderByColumn))
+            OrderByColumn =DefaultOrderByColumn; 
+        else
+            OrderByColumn = orderByColumn;
+
+        if(string.IsNullOrEmpty(orderByDirection))
+            OrderByDirection = DefaultOrderByDirection; 
+        else            
+            OrderByDirection = orderByDirection;    
     }
     #endregion
     #region 資料表 CRUD 指令(使用同步呼叫)
@@ -187,7 +194,8 @@ public class z_repoCourseCase : BaseClass
     public void CreateEdit(CourseCase model)
     {
         if (model.Id == 0)
-            Create(model);
+            // Create(model);
+            InsertCase(model); 
         else
             Edit(model);
     }
@@ -388,6 +396,68 @@ VALUES
         SessionService.CaseTime = caseTime; 
     }
 
+     /// <summary>
+    /// 新增資料(同步呼叫)
+    /// </summary>
+    /// <param name="model">資料模型</param>
+    public void InsertCase(CourseCase model)
+    {
+    string str_time_section = "";
+        string str_week_section = "";
+        // var caseDate = DateTime.Today; 
+        // var caseTime = DateTime.Now.ToString("yyyyMMddhhmmss"); 
+        
+        using var dpr = new DapperRepository();
+        SetSectionValue(model.IsTime1 , "09:00" , ref str_time_section);
+        SetSectionValue(model.IsTime2 , "10:00" , ref str_time_section);
+        SetSectionValue(model.IsTime3 , "11:00" , ref str_time_section);
+        SetSectionValue(model.IsTime4 , "13:00" , ref str_time_section);
+        SetSectionValue(model.IsTime5 , "14:00" , ref str_time_section);
+        SetSectionValue(model.IsTime6 , "15:00" , ref str_time_section);
+        SetSectionValue(model.IsTime7 , "16:00" , ref str_time_section);
+        SetSectionValue(model.IsTime8 , "17:00" , ref str_time_section);
+        SetSectionValue(model.IsTime9 , "18:00" , ref str_time_section);
+        SetSectionValue(model.IsTime10 , "19:00" , ref str_time_section);
+        SetSectionValue(model.IsTime11 , "20:00" , ref str_time_section);
+        SetSectionValue(model.IsWeek1 , "一" , ref str_week_section);
+        SetSectionValue(model.IsWeek2 , "二" , ref str_week_section);
+        SetSectionValue(model.IsWeek3 , "三" , ref str_week_section);
+        SetSectionValue(model.IsWeek4 , "四" , ref str_week_section);
+        SetSectionValue(model.IsWeek5 , "五" , ref str_week_section);
+        SetSectionValue(model.IsWeek6 , "六" , ref str_week_section);
+        SetSectionValue(model.IsWeek7 , "日" , ref str_week_section);
+
+        string str_query = @"
+INSERT INTO CourseCase
+(StatusCode,CaseDate,CaseTime,StudentNo,StudentName
+,TeacherNo,TeacherName,CourseNo,CourseName,TimeSection,WeekSection
+,UserMemo,Remark)
+VALUES  
+(@StatusCode,@CaseDate,@CaseTime,@StudentNo,@StudentName
+,@TeacherNo,@TeacherName,@CourseNo,@CourseName,@TimeSection,@WeekSection
+,@UserMemo,@Remark)  
+";
+        DynamicParameters parm = new DynamicParameters();
+        parm.Add("StatusCode" , "N");
+        parm.Add("CaseDate" , model.CaseDate);
+        parm.Add("CaseTime" , model.CaseTime);
+        parm.Add("StudentNo" , model.StudentNo);
+        parm.Add("StudentName" , model.StudentName);
+        parm.Add("TeacherNo" , model.TeacherNo);
+        parm.Add("TeacherName" , model.TeacherName);
+        parm.Add("CourseNo" , model.CourseNo);
+        parm.Add("CourseName" , model.CourseName);
+        parm.Add("TimeSection" , str_time_section);
+        parm.Add("WeekSection" , str_week_section);
+        parm.Add("UserMemo" , model.UserMemo);
+        parm.Add("Remark" , "");
+        dpr.Execute(str_query , parm);
+
+        // SessionService.WeekSection = str_week_section;
+        // SessionService.TimeSection =str_time_section;  
+        // SessionService.CaseTime = model.CaseTime; 
+    }
+
     private void SetSectionValue(bool checkValue , string value , ref string sectionValue)
     {
         if (checkValue)
@@ -414,6 +484,21 @@ VALUES
         model = dpr.ReadSingle<CourseCase>(sql_query, parm);
         return model;
     }
+
+        /// <summary>
+        /// 列出時間資料
+        /// </summary>
+        public List<string> TimeData(string section)
+        {
+        
+            List<string> times = new List<string>();
+            string[] timesstring = section.Split(','); 
+            times = timesstring.ToList(); 
+
+            return times; 
+           
+        }
+     
 
     #endregion
 }

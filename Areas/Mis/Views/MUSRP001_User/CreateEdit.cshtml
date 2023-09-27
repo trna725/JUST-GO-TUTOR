@@ -9,31 +9,34 @@
 {
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @Html.HiddenFor(model => model.Id)
-    <div class="row form-group my-3">
+
+    <div class="row form-group">
         <div class="control-label col-md-2">
-            @Html.DisplayNameFor(m => m.UserNo)
+            @Html.DisplayNameFor(m => m.IsValid)
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UserNo, "", new { @class = "text-danger" })
+            <div class="checkbox">
+                @Html.EditorFor(model => model.IsValid)
+                @Html.ValidationMessageFor(model => model.IsValid, "", new { @class = "text-danger" })
+            </div>
         </div>
     </div>
     <div class="row form-group">
         <div class="control-label col-md-2">
-            @Html.DisplayNameFor(m => m.UserName)
+            @Html.DisplayNameFor(m => m.RoleNo)
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.RoleNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RoleNo, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row form-group">
         <div class="control-label col-md-2">
-            @Html.DisplayNameFor(m => m.Password)
+            @Html.DisplayNameFor(m => m.RoleName)
         </div>
         <div class="col-md-10">
-            @* 要改寫 *@
-            @Html.ActionLink("發送密碼", "Forget", "Web", new { area = "" }, new { @class = "btn btn-warning" })
+            @Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row form-group">

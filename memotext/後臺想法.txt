@@ -1,0 +1,19 @@
+admin 總權限者 可修改 admin/mis/user/member 的資料 全部 
+Mis 僅次於總權限者, 不得觀看總權限者資料  可修改 mis/user/member 的資料  
+User 僅開放 調整User跟學生的資料 可修改 user/member 的資料 
+
+
+category 放到 基本資料 
+帳號管理 放到 帳號管理
+coursecase 放到系統管理 
+
+密碼 設按鈕直接Forget  或重設密碼 比較簡單 
+
+想法: 新增使用者 所有資料都填完後連結到寄密碼信的頁面 (另外做)
+修改使用者密碼就用重設密碼介面
+
+MUSR
+
+
+MBASP005_CourseStatus
+

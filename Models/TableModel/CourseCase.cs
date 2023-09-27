@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JUSTGOTUTOR.Models;
 
-public class CourseCase
+public partial class CourseCase
 {
-    [Key]
     public int Id { get; set; }
     public string? StatusCode { get; set; }
     public DateTime? CaseDate { get; set; }

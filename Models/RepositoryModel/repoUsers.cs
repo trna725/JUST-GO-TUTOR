@@ -281,7 +281,8 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
         string str_query = dpr.GetSQLInsertCommand(model);
         DynamicParameters parm = dpr.GetSQLInsertParameters(model);
         dpr.Execute(str_query, parm);
-    }
+    } 
+
     /// <summary>
     /// 更新資料(同步呼叫)
     /// </summary>
@@ -304,6 +305,9 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
         DynamicParameters parm = dpr.GetSQLDeleteParameters(new Users(), id);
         dpr.Execute(str_query, parm);
     }
+
+
+
     #endregion
     #region 資料表 CRUD 指令(使用非同步呼叫)   
     /// <summary>
@@ -841,6 +845,48 @@ VALUES
         sql_query += GetSQLOrderBy();
         model = dpr.ReadAll<Users>(sql_query, parm);
         return model;
+    }
+
+      /// <summary>
+    /// 後台新增或修改資料(同步呼叫)
+    /// </summary>
+    /// <param name="model">資料模型</param>
+    public void CreateUserEdit(int id, vmCreateUser model)
+    {
+        if (id == 0)
+            Create(model);
+        else
+            Edit(model);
+    }
+
+    public void Create(vmCreateUser model)
+    {
+        using var dpr = new DapperRepository();
+        using var cryp = new CryptographyService(); 
+        string str_code = Guid.NewGuid().ToString().Replace("-", ""); 
+        string str_query = @"
+INSERT INTO Users 
+(IsValid, UserNo, UserName, Password, RoleNo, CountryNo, ReviewStar, Birthday, ContactEmail, ContactTel , ContactAddress, ValidateCode, NotifyPassword, ContentText, Remark) 
+VALUES
+()
+        
+        
+        
+        "; 
+        DynamicParameters parm = dpr.GetSQLInsertParameters(model);
+        dpr.Execute(str_query, parm);
+    }
+
+    /// <summary>
+    /// 更新資料(同步呼叫)
+    /// </summary>
+    /// <param name="model">資料模型</param>
+    public void Edit(vmCreateUser model)
+    {
+        using var dpr = new DapperRepository();
+        string str_query = dpr.GetSQLUpdateCommand(model);
+        DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
+        dpr.Execute(str_query, parm);
     }
 
     #endregion
