@@ -219,6 +219,9 @@ public class SendMailService : BaseClass
         gmail.Body += "-------------------------------------------<br />";
         gmail.Body += string.Format("{0}<br />", AppService.AppName);
         gmail.Body += "-------------------------------------------<br />";
+        gmail.Body+=  $"與老師會談完後請再填寫滿意度調查~~: <br />";
+        gmail.Body+= "https://forms.gle/CknGmLweCUyJ3PgS9"; 
+        gmail.Body += "-------------------------------------------<br />";
         //寄信
         gmail.Send();
         return gmail.MessageText;
@@ -253,6 +256,9 @@ public class SendMailService : BaseClass
         gmail.Body += "本信件為系統自動寄出,請勿回覆!!<br /><br />";
         gmail.Body += "-------------------------------------------<br />";
         gmail.Body += string.Format("{0}<br />", AppService.AppName);
+        gmail.Body += "-------------------------------------------<br />";
+        gmail.Body+=  $"與老師會談完後請再填寫滿意度調查~~: <br />";
+        gmail.Body+= "https://forms.gle/CknGmLweCUyJ3PgS9"; 
         gmail.Body += "-------------------------------------------<br />";
         //寄信
         gmail.Send();
