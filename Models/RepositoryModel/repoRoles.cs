@@ -73,6 +73,28 @@ public class z_repoRoles : BaseClass
         var model = dpr.ReadAll<SelectListItem>(str_query);
         return model;
     }
+
+    /// <summary>
+    /// 取得下拉式選單資料集
+    /// </summary>
+    /// <param name="showNo">是否顯示編號</param>
+    /// <returns></returns>
+    public List<SelectListItem> GetExcludeRoleDropDownList(string roleNo_1, string roleNo_2,bool showNo = true)
+    {
+        using var dpr = new DapperRepository();
+        string str_query = "SELECT ";
+        if (showNo) str_query += "RoleNo + ' ' + ";
+        str_query += "RoleName AS Text , RoleNo AS Value FROM Roles "; 
+        str_query += "WHERE RoleNo != @RoleNo_1 AND RoleNo != @RoleNo_2 "; 
+        str_query += "ORDER BY RoleNo";
+
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("RoleNo_1", roleNo_1);
+        parm.Add("RoleNo_2", roleNo_2);
+        var model = dpr.ReadAll<SelectListItem>(str_query, parm);
+        return model;
+    }
+
     /// <summary>
     /// SQL 新增指令
     /// </summary>

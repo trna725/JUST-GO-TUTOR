@@ -88,14 +88,17 @@ public class z_metaCourseCase
     [Display(Name ="案件申請時間")]   
     public string? CaseTime { get; set; }
     [Display(Name ="學生代號")]  
+    [Required(ErrorMessage ="欄位不可空白!!!")]
     public string? StudentNo { get; set; }
     [Display(Name ="學生姓名")] 
     public string? StudentName { get; set; }
     [Display(Name ="老師代號")]  
+    [Required(ErrorMessage ="欄位不可空白!!!")]
     public string? TeacherNo { get; set; }
     [Display(Name ="老師姓名")] 
     public string? TeacherName { get; set; }
     [Display(Name ="課程代號")]  
+    [Required(ErrorMessage ="欄位不可空白!!!")]
     public string? CourseNo { get; set; }
     [Display(Name ="課程名稱")] 
     public string? CourseName { get; set; }

@@ -84,6 +84,47 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
         var model = dpr.ReadAll<SelectListItem>(str_query);
         return model;
     }
+
+    /// <summary>
+    /// 取得下拉式選單資料集(特定角色)
+    /// </summary>
+    /// <param name="showNo">是否顯示編號</param>
+    /// <returns></returns>
+    public List<SelectListItem> GetMultipleRoleDropDownList(string roleNo_1, string roleNo_2 , bool showNo = true)
+    {
+        using var dpr = new DapperRepository();
+        string str_query = "SELECT ";
+        if (showNo) str_query += "UserNo + ' ' + ";
+        str_query += "UserName AS Text , TitleNo AS Value FROM Users ";
+        str_query += "Where RoleNo == @RoleNo_1 OR RoleNo == @RoleNo_2 "; 
+        str_query += " ORDER BY UserNo ";
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("RoleNo_1", roleNo_1); 
+        parm.Add("RoleNo_2", roleNo_2); 
+        var model = dpr.ReadAll<SelectListItem>(str_query, parm);
+        return model;
+    }
+
+    /// <summary>
+    /// 取得下拉式選單資料集(排除某些角色)
+    /// </summary>
+    /// <param name="showNo">是否顯示編號</param>
+    /// <returns></returns>
+    public List<SelectListItem> GetExcludeDropDownList(string roleNo_1,  string roleNo_2, bool showNo = true)
+    {
+        using var dpr = new DapperRepository();
+        string str_query = "SELECT ";
+        if (showNo) str_query += "UserNo + ' ' + ";
+        str_query += "UserName AS Text , TitleNo AS Value FROM Users ";
+        str_query += "Where RoleNo != @RoleNo_1 AND RoleNo != @RoleNo_2 "; 
+        str_query += " ORDER BY UserNo ";
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("RoleNo_1" ,roleNo_1 );
+        parm.Add("RoleNo_2", roleNo_2); 
+        var model = dpr.ReadAll<SelectListItem>(str_query, parm);
+        return model;
+    }
+
     /// <summary>
     /// SQL 新增指令
     /// </summary>
@@ -819,12 +860,39 @@ VALUES
     }
 
     /// <summary>
+    /// 取得單一特定角色資料(同步呼叫)  ==> 可嘗試用陣列改寫
+    /// </summary>
+    /// <param name="roleNo">角色編號</param>
+    /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
+    /// <returns></returns>
+    public List<Users> GetRoleDataList(string roleNo_1,string searchString = "")    
+    {
+        List<string> searchColumns = GetSearchColumns();
+        DynamicParameters parm = new DynamicParameters();
+        var model = new List<Users>();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE (Users.RoleNo = @RoleNo_1) ";
+        sql_query += sql_where;
+        if (!string.IsNullOrEmpty(searchString))
+            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("RoleNo_1", roleNo_1);
+        }
+        sql_query += GetSQLOrderBy();
+        model = dpr.ReadAll<Users>(sql_query, parm);
+        return model;
+    }
+
+    /// <summary>
     /// 取得多數特定角色多筆資料(同步呼叫)  ==> 可嘗試用陣列改寫
     /// </summary>
     /// <param name="roleNo">角色編號</param>
     /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
     /// <returns></returns>
-    public List<Users> GetMutipleRoleDataList(string roleNo_1, string roleNo_2, string roleNo_3,string searchString = "")
+    public List<Users> GetMutipleRoleDataList(string roleNo_1, string roleNo_2, string roleNo_3,string searchString = "")    
     {
         List<string> searchColumns = GetSearchColumns();
         DynamicParameters parm = new DynamicParameters();
@@ -847,6 +915,35 @@ VALUES
         return model;
     }
 
+     /// <summary>
+    /// 排除多數特定角色多筆資料(同步呼叫)  ==> 可嘗試用陣列改寫
+    /// </summary>
+    /// <param name="roleNo">角色編號</param>
+    /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
+    /// <returns></returns>
+    public List<Users> ExcludeRoleDataList(string roleNo_1, string roleNo_2,string searchString = "")    
+    {
+        List<string> searchColumns = GetSearchColumns();
+        DynamicParameters parm = new DynamicParameters();
+        var model = new List<Users>();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE Users.RoleNo != @RoleNo_1 AND Users.RoleNo != @RoleNo_2 ";
+        sql_query += sql_where;
+        if (!string.IsNullOrEmpty(searchString))
+            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("RoleNo_1", roleNo_1);
+            parm.Add("RoleNo_2", roleNo_2);
+        }
+        sql_query += GetSQLOrderBy();
+        model = dpr.ReadAll<Users>(sql_query, parm);
+        return model;
+    }
+
+
       /// <summary>
     /// 後台新增或修改資料(同步呼叫)
     /// </summary>
@@ -859,6 +956,18 @@ VALUES
             Edit(model);
     }
 
+    /// <summary>
+    /// 後台新增或修改資料(同步呼叫)
+    /// </summary>
+    /// <param name="model">資料模型</param>
+    public void UserEdit(int id, Users model)
+    {
+        if (id == 0)
+            CreateUsers(model);
+        else
+            Edit(model);
+    }
+
     public void Create(vmCreateUser model)
     {
         using var dpr = new DapperRepository();
@@ -866,14 +975,61 @@ VALUES
         string str_code = Guid.NewGuid().ToString().Replace("-", ""); 
         string str_query = @"
 INSERT INTO Users 
-(IsValid, UserNo, UserName, Password, RoleNo, CountryNo, ReviewStar, Birthday, ContactEmail, ContactTel , ContactAddress, ValidateCode, NotifyPassword, ContentText, Remark) 
+(IsValid, UserNo, UserName, Password, RoleNo, GenderCode, CountryNo, ReviewStar, Birthday, ContactEmail, ContactTel , ContactAddress, ValidateCode, NotifyPassword, ContentText, Remark) 
 VALUES
-()
-        
-        
-        
-        "; 
+(@IsValid, @UserNo, @UserName, @Password, @RoleNo, @GenderCode,@CountryNo, @ReviewStar, @Birthday, @ContactEmail, @ContactTel , @ContactAddress, @ValidateCode, @NotifyPassword, @ContentText, @Remark)     
+"; 
         DynamicParameters parm = dpr.GetSQLInsertParameters(model);
+        parm.Add("IsValid", model.IsValid);
+        parm.Add("UserNo", model.UserNo); 
+        parm.Add("UserName", model.UserName);
+        parm.Add("Password", model.Password);
+        parm.Add("RoleNo", model.RoleNo);
+        parm.Add("GenderCode", model.GenderName);
+        parm.Add("CountryNo", model.CountryNo);
+        parm.Add("ReviewStar", model.ReviewStar);
+        parm.Add("Birthday", model.Birthday);
+        parm.Add("ContactEmail", model.ContactEmail);
+        parm.Add("ContactTel", model.ContactTel);
+        parm.Add("ContactAddress", model.ContactAddress);
+        parm.Add("ValidateCode", "");
+        parm.Add("NotifyPassword","");
+        parm.Add("ContentText", "");
+        parm.Add("Remark", model.Remark);
+
+        dpr.Execute(str_query, parm);
+    }
+
+    
+    public void CreateUsers(Users model)
+    {
+        using var dpr = new DapperRepository();
+        using var cryp = new CryptographyService(); 
+        string str_code = Guid.NewGuid().ToString().Replace("-", ""); 
+        string str_query = @"
+INSERT INTO Users 
+(IsValid, UserNo, UserName, Password, RoleNo, GenderCode, CountryNo, ReviewStar, Birthday, ContactEmail, ContactTel , ContactAddress, ValidateCode, NotifyPassword, ContentText, Remark) 
+VALUES
+(@IsValid, @UserNo, @UserName, @Password, @RoleNo, @GenderCode,@CountryNo, @ReviewStar, @Birthday, @ContactEmail, @ContactTel , @ContactAddress, @ValidateCode, @NotifyPassword, @ContentText, @Remark)     
+"; 
+        DynamicParameters parm = dpr.GetSQLInsertParameters(model);
+        parm.Add("IsValid", model.IsValid);
+        parm.Add("UserNo", model.UserNo); 
+        parm.Add("UserName", model.UserName);
+        parm.Add("Password", model.Password);
+        parm.Add("RoleNo", model.RoleNo);
+        parm.Add("GenderCode", model.GenderCode);
+        parm.Add("CountryNo", model.CountryNo);
+        parm.Add("ReviewStar", model.ReviewStar);
+        parm.Add("Birthday", model.Birthday);
+        parm.Add("ContactEmail", model.ContactEmail);
+        parm.Add("ContactTel", model.ContactTel);
+        parm.Add("ContactAddress", model.ContactAddress);
+        parm.Add("ValidateCode", "");
+        parm.Add("NotifyPassword","");
+        parm.Add("ContentText", "");
+        parm.Add("Remark", model.Remark);
+
         dpr.Execute(str_query, parm);
     }
 
@@ -887,6 +1043,65 @@ VALUES
         string str_query = dpr.GetSQLUpdateCommand(model);
         DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
         dpr.Execute(str_query, parm);
+    }
+
+    /// <summary>
+    /// 取得單筆資料(同步呼叫)
+    /// </summary>
+    /// <param name="id">Key 欄位值</param>
+    /// <returns></returns>
+    public vmCreateUser GetCreateUserData(int id)
+    {
+        var model = new vmCreateUser();
+        if (id == 0)
+        {
+            //新增預設值
+        }
+        else
+        {
+            using var dpr = new DapperRepository();
+            string sql_query = GetSQLSelect();
+            string sql_where = GetSQLWhere();
+            sql_query += dpr.GetSQLSelectWhereById(model, sql_where);
+            sql_query += GetSQLOrderBy();
+            DynamicParameters parm = dpr.GetSQLSelectKeyParm(model, id);
+            if (!string.IsNullOrEmpty(sql_where))
+            {
+                //自定義的 Weher Parm 參數
+                //parm.Add("參數名稱", "參數值");
+            }
+            model = dpr.ReadSingle<vmCreateUser>(sql_query, parm);
+        }
+        return model;
+    }
+     /// <summary>
+    /// 取得單筆資料(同步呼叫)
+    /// </summary>
+    /// <param name="id">Key 欄位值</param>
+    /// <returns></returns>
+    public Users GetUserData(int id)
+    {
+        var model = new Users();
+        if (id == 0)
+        {
+            //新增預設值
+        }
+        else
+        {
+            using var dpr = new DapperRepository();
+            string sql_query = GetSQLSelect();
+            string sql_where = GetSQLWhere();
+            sql_query += dpr.GetSQLSelectWhereById(model, sql_where);
+            sql_query += GetSQLOrderBy();
+            DynamicParameters parm = dpr.GetSQLSelectKeyParm(model, id);
+            if (!string.IsNullOrEmpty(sql_where))
+            {
+                //自定義的 Weher Parm 參數
+                //parm.Add("參數名稱", "參數值");
+            }
+            model = dpr.ReadSingle<Users>(sql_query, parm);
+        }
+        return model;
     }
 
     #endregion

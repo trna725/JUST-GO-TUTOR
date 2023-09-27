@@ -10,9 +10,6 @@
             <th>
                 @await Html.PartialAsync("_PartialFormCreate")
             </th>
-            @* <th>
-            @Html.DisplayNameFor(model => model.Id)
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.UserNo)
             </th>
@@ -26,47 +23,38 @@
                 @Html.DisplayNameFor(model => model.IsValid)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoleName)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.GenderName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeptName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TitleName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodeNo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RoleNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GenderCode)
+                @Html.DisplayNameFor(model => model.RoleName)
             </th>
+            @* <th>
+            @Html.DisplayNameFor(model => model.GenderCode)
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.CountryNo)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeptNo)
+            @* <th>
+            @Html.DisplayNameFor(model => model.DeptNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TitleNo)
-            </th>
+            @Html.DisplayNameFor(model => model.TitleNo)
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.ReviewStar)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Birthday)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OnboardDate)
+            @* <th>
+            @Html.DisplayNameFor(model => model.OnboardDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LeaveDate)
-            </th>
+            @Html.DisplayNameFor(model => model.LeaveDate)
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.ContactEmail)
             </th>
@@ -76,12 +64,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.ContactAddress)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NotifyPassword)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContentText)
-            </th>
+            @* <th>
+            @Html.DisplayNameFor(model => model.NotifyPassword)
+            </th> *@
+            @* <th>
+            @Html.DisplayNameFor(model => model.ContentText)
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Remark)
             </th>
@@ -98,13 +86,10 @@
                     @await Html.PartialAsync("_PartialFormEdit")
                     @await Html.PartialAsync("_PartialFormDelete")
                 </td>
-                @* <td>
-            @Html.DisplayFor(modelItem => item.Id)
-            </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.UserNo)
                 </td>
-                <td>
+                <td class="table-wrap">
                     @Html.DisplayFor(modelItem => item.Password)
                 </td>
                 <td>
@@ -114,63 +99,54 @@
                     @Html.DisplayFor(modelItem => item.IsValid)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RoleName)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.GenderName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeptName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TitleName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CodeNo)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RoleNo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GenderCode)
+                    @Html.DisplayFor(modelItem => item.RoleName)
                 </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.GenderCode)
+            </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.CountryNo)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeptNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TitleNo)
-                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.DeptNo)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.TitleNo)
+            </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.ReviewStar)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Birthday)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OnboardDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeaveDate)
-                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.OnboardDate)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.LeaveDate)
+            </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.ContactEmail)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ContactTel)
                 </td>
-                <td>
+                <td class="table-wrap">
                     @Html.DisplayFor(modelItem => item.ContactAddress)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NotifyPassword)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContentText)
-                </td>
-                <td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.NotifyPassword)
+            </td> *@
+                @* <td class="table-wrap">
+            @Html.DisplayFor(modelItem => item.ContentText)
+            </td> *@
+                <td class="table-wrap">
                     @Html.DisplayFor(modelItem => item.Remark)
                 </td>
 

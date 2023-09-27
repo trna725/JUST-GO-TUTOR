@@ -4,17 +4,12 @@
     ViewData["Title"] = "CreateEdit";
     Layout = "_LayoutAdmin";
 
-    var list = ViewBag.TimeList;
+    @* var list = ViewBag.TimeList;
+var isChecked = false; *@
 
-    var isChecked = false;
-
-
-
-
-
-
-
-
+    using var student = new z_repoUsers();
+    List<SelectListItem> students = new List<SelectListItem>();
+    students = student.GetMultipleRoleDropDownList("Student", "Member", true);
 }
 
 @using (Html.BeginForm())
@@ -32,20 +27,38 @@
         </div>
     </div>
 
-    <div class="row form-group">
-        <div class="control-label col-md-2">
-            @Html.DisplayNameFor(m => m.CaseDate)
+    if (Model.Id != 0)
+    {
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                @Html.DisplayNameFor(m => m.CaseDate)
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CaseDate, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @type = "date",
+                            @* @class = "form-control datepicker", *@
+                            @class = "form-control",
+                            @value = Model.CaseDate.ToString()
+                        }
+                    })
+                @Html.ValidationMessageFor(model => model.CaseDate, "", new { @class = "text-danger" })
+            </div>
         </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.CaseDate, new
-                {
-                    @type = "date",
-                    @class = "form-control datepicker",
-                    @value = Model.CaseDate.ToString()
-                })
-            @Html.ValidationMessageFor(model => model.CaseDate, "", new { @class = "text-danger" })
+        <div class="row form-group">
+            <div class="control-label col-md-2">
+                @Html.DisplayNameFor(m => m.CaseTime)
+            </div>
+            <div class="col-md-10">
+                @* @Html.EditorFor(model => model.CaseTime, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CaseTime, "", new { @class = "text-danger" }) *@
+                @Html.DisplayFor(model => model.CaseTime, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
         </div>
-    </div>
+
+    }
     <div class="row form-group">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.ConfirmTime)
@@ -55,15 +68,7 @@
             @Html.ValidationMessageFor(model => model.ConfirmTime, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group">
-        <div class="control-label col-md-2">
-            @Html.DisplayNameFor(m => m.CaseTime)
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.CaseTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CaseTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
+
     <div class="row form-group">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.StudentNo)

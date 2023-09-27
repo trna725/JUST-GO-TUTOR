@@ -12,7 +12,7 @@
                 @await Html.PartialAsync("_PartialFormCreate")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.ColumnSort("Id", @Html.DisplayNameFor(model => model.Id))
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CaseDate)

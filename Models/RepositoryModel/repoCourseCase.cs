@@ -343,7 +343,7 @@ public class z_repoCourseCase : BaseClass
         string str_time_section = "";
         string str_week_section = "";
         var caseDate = DateTime.Today; 
-        var caseTime = DateTime.Now.ToString("yyyyMMddhhmmss"); 
+        var caseTime = DateTime.Now.ToString("yyyyMMddHHmmss"); 
         
         using var dpr = new DapperRepository();
         SetSectionValue(model.IsTime1 , "09:00" , ref str_time_section);
@@ -404,8 +404,8 @@ VALUES
     {
     string str_time_section = "";
         string str_week_section = "";
-        // var caseDate = DateTime.Today; 
-        // var caseTime = DateTime.Now.ToString("yyyyMMddhhmmss"); 
+        var caseDate = DateTime.Today; 
+        var caseTime = DateTime.Now.ToString("yyyyMMddHHmmss"); 
         
         using var dpr = new DapperRepository();
         SetSectionValue(model.IsTime1 , "09:00" , ref str_time_section);
@@ -439,8 +439,10 @@ VALUES
 ";
         DynamicParameters parm = new DynamicParameters();
         parm.Add("StatusCode" , "N");
-        parm.Add("CaseDate" , model.CaseDate);
-        parm.Add("CaseTime" , model.CaseTime);
+        // parm.Add("CaseDate" , model.CaseDate);
+        // parm.Add("CaseTime" , model.CaseTime);
+        parm.Add("CaseDate" , caseDate);
+        parm.Add("CaseTime" , caseTime);
         parm.Add("StudentNo" , model.StudentNo);
         parm.Add("StudentName" , model.StudentName);
         parm.Add("TeacherNo" , model.TeacherNo);
@@ -455,7 +457,7 @@ VALUES
 
         // SessionService.WeekSection = str_week_section;
         // SessionService.TimeSection =str_time_section;  
-        // SessionService.CaseTime = model.CaseTime; 
+        SessionService.CaseTime =caseTime; 
     }
 
     private void SetSectionValue(bool checkValue , string value , ref string sectionValue)

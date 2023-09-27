@@ -15,7 +15,14 @@ using System.ComponentModel.DataAnnotations;
         [DataType(DataType.Password)]
         public string? Password { get; set; }
         [Display(Name = "角色代號")]
+        [Required(ErrorMessage ="欄位不可空白!!!")]
         public string? RoleNo { get; set; }
+        // [Display(Name = "角色名稱")]
+        // public string? RoleName { get; set; }
+        
+        /// <summary>
+        /// 等同於GenderCode
+        /// </summary>
         [Display(Name = "性別")]
         public string? GenderName { get; set; }
         [Display(Name = "國籍")]
@@ -28,6 +35,7 @@ using System.ComponentModel.DataAnnotations;
    
         [Display(Name = "電子信箱")]
         [EmailAddress(ErrorMessage = "電子信箱格式不正確!!")]
+        [Required(ErrorMessage ="欄位不可空白!!!")]
         public string? ContactEmail { get; set; }
         [Display(Name = "連絡電話")]
         public string? ContactTel { get; set; }

@@ -5,7 +5,11 @@ using X.PagedList;
 namespace JUSTGOTUTOR.Areas_Mis_Controllers
 {
     public class MUSRP001_UserController : Controller
-    {  /// <summary>
+    {  
+
+        int id=0; 
+        
+        /// <summary>
         /// 資料初始化事件
         /// </summary>
         /// <returns></returns> <summary>
@@ -32,7 +36,9 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
             // var model = datas.GetDataList(SessionService.SearchText)
             //     .ToPagedList(id, SessionService.PageSize);
-                 var model = datas.GetMutipleRoleDataList("User","Student","Teacher", SessionService.SearchText)
+                //  var model = datas.GetMutipleRoleDataList("User","Student","Teacher", SessionService.SearchText)
+                // .ToPagedList(id, SessionService.PageSize);
+                 var model = datas.ExcludeRoleDataList("Admin","Mis", SessionService.SearchText)
                 .ToPagedList(id, SessionService.PageSize);
             SessionService.SetPageInfo(id, model.PageCount);
             SessionService.SetActionInfo(enAction.Index, enCardSize.Max, id, "");
@@ -49,8 +55,10 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult CreateEdit(int id = 0)
         {
-            SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);
+            SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);          
+            // var model = new vmCreateUser();
             var model = new Users();
+            this.id = id; 
             if (id == 0)
             {
                 //新增預設值
@@ -60,7 +68,8 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             {
                 //修改資料
                 using var datas = new z_repoUsers();
-                model = datas.GetData(id);
+                // model = datas.GetCreateUserData(id);
+                model = datas.GetUserData(id);
                 if (model == null) return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
             }
             return View(model);
@@ -74,14 +83,16 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [Area("Mis")]
         [Login(RoleList = "Mis")]
         [HttpPost]
+        //public IActionResult CreateEdit(Users model)
+        // public IActionResult CreateEdit(vmCreateUser model)
         public IActionResult CreateEdit(Users model)
         {
             if (!ModelState.IsValid) return View(model);
             using var datas = new z_repoUsers();
-            datas.CreateEdit(model);
+            datas.UserEdit(id, model);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
-
+      
         /// <summary>
         /// 刪除
         /// </summary>
@@ -155,5 +166,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             }
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
+
+        
     }
 }

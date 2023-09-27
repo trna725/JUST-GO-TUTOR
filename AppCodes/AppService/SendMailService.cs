@@ -217,10 +217,10 @@ public class SendMailService : BaseClass
         gmail.Body += "<br /><br />";
         gmail.Body += "本信件為系統自動寄出,請勿回覆!!<br /><br />";
         gmail.Body += "-------------------------------------------<br />";
-        gmail.Body += string.Format("{0}<br />", AppService.AppName);
-        gmail.Body += "-------------------------------------------<br />";
         gmail.Body+=  $"與老師會談完後請再填寫滿意度調查~~: <br />";
         gmail.Body+= "https://forms.gle/CknGmLweCUyJ3PgS9"; 
+        gmail.Body += "<br />-------------------------------------------<br />";
+        gmail.Body += string.Format("{0}<br />", AppService.AppName);
         gmail.Body += "-------------------------------------------<br />";
         //寄信
         gmail.Send();
@@ -237,28 +237,29 @@ public class SendMailService : BaseClass
         using var user = new z_repoUsers();
         using var courseCase = new z_repoCourseCase(); 
         var userData = user.GetData(model.StudentNo);
-        var caseData = courseCase.GetData(model.CaseTime); 
+        // var caseData = courseCase.GetData(model.CaseTime); 
+        var caseData = courseCase.GetData(SessionService.CaseTime); 
         //寄信給 User
         gmail.MessageText = "";
         gmail.ReceiverName = userData.UserName;
         gmail.ReceiverEmail = userData.ContactEmail;
         gmail.Subject = string.Format("{0} 申請預約家教通知信，案件編號：{1}", AppService.AppName, caseData.Id);
-        gmail.Body = string.Format("親愛的 {0} 同學您好~~ <br /><br />", model.StudentName);
+        gmail.Body = string.Format("親愛的 {0} 同學您好~~ <br /><br />", caseData.StudentName);
         gmail.Body += string.Format("本平台的客服於 {0} 在本平台幫您申請了一份上課申請資訊<br /><br />", DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
         gmail.Body += "申請資訊如下：<br />";
-        gmail.Body += $"希望上課的星期：{model.WeekSection}<br />";
-        gmail.Body += $"希望上課的時間：{model.TimeSection}<br />";
-        gmail.Body += $"課程名稱：{model.CourseName}<br />";
-        gmail.Body += $"老師姓名：{model.TeacherName}<br />";
+        gmail.Body += $"希望上課的星期：{caseData.WeekSection}<br />";
+        gmail.Body += $"希望上課的時間：{caseData.TimeSection}<br />";
+        gmail.Body += $"課程名稱：{caseData.CourseName}<br />";
+        gmail.Body += $"老師姓名：{caseData.TeacherName}<br />";
         gmail.Body += "<br />";
         gmail.Body += "本平台會盡速安排安師與您主動連，請您靜待連絡資訊!!";
         gmail.Body += "<br /><br />";
         gmail.Body += "本信件為系統自動寄出,請勿回覆!!<br /><br />";
-        gmail.Body += "-------------------------------------------<br />";
-        gmail.Body += string.Format("{0}<br />", AppService.AppName);
-        gmail.Body += "-------------------------------------------<br />";
+        gmail.Body += "-------------------------------------------<br />"; 
         gmail.Body+=  $"與老師會談完後請再填寫滿意度調查~~: <br />";
         gmail.Body+= "https://forms.gle/CknGmLweCUyJ3PgS9"; 
+        gmail.Body += "<br />-------------------------------------------<br />";
+        gmail.Body += string.Format("{0}<br />", AppService.AppName);
         gmail.Body += "-------------------------------------------<br />";
         //寄信
         gmail.Send();
@@ -315,7 +316,8 @@ public class SendMailService : BaseClass
         using var courseCase = new z_repoCourseCase(); 
         var teacherData = user.GetData(model.TeacherNo);
         var userData = user.GetData(model.StudentNo);
-        var caseData = courseCase.GetData(model.CaseTime); 
+        // var caseData = courseCase.GetData(model.CaseTime); 
+        var caseData = courseCase.GetData(SessionService.CaseTime); 
         //寄信給 User
         gmail.MessageText = "";
         gmail.ReceiverName = teacherData.UserName;
@@ -324,9 +326,9 @@ public class SendMailService : BaseClass
         gmail.Body = string.Format("敬愛的 {0} 老師您好!! <br /><br />", teacherData.UserName);
         gmail.Body += string.Format("本平台的客服於 {0} 於本平台幫學生申請了一份上課申請資訊<br /><br />", model.StudentName);
         gmail.Body += "申請資訊如下：<br />";
-        gmail.Body += $"希望上課的星期：{model.WeekSection}<br />";
-        gmail.Body += $"希望上課的時間：{model.TimeSection}<br />";
-        gmail.Body += $"課程名稱：{model.CourseName}<br />";
+        gmail.Body += $"希望上課的星期：{caseData.WeekSection}<br />";
+        gmail.Body += $"希望上課的時間：{caseData.TimeSection}<br />";
+        gmail.Body += $"課程名稱：{caseData.CourseName}<br />";
         gmail.Body += $"學生編號：{userData.UserNo}<br />";
         gmail.Body += $"學生姓名：{userData.UserName}<br />";
         gmail.Body += $"連絡電話：{userData.ContactTel}<br />";
