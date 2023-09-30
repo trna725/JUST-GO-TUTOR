@@ -8,13 +8,13 @@
     List<SelectListItem> genders = new List<SelectListItem>();
     genders = codedata.GetDropDownList("Gender", true);
 
-    using var role = new z_repoRoles(); 
+    using var role = new z_repoRoles();
     List<SelectListItem> roles = new List<SelectListItem>();
-    roles = role.GetExcludeRoleDropDownList("Admin", "Mis",true);  
+    roles = role.GetExcludeRoleDropDownList("Admin", "Mis", true);
 
-    using var country = new z_repoCountry(); 
+    using var country = new z_repoCountry();
     List<SelectListItem> countrys = new List<SelectListItem>();
-    countrys = country.GetDropDownList(true);  
+    countrys = country.GetDropDownList(true);
 }
 
 @using (Html.BeginForm())
@@ -26,29 +26,30 @@
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.UserNo)
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10 control-label">
             @{
-                if(Model.Id ==0)
-                {                    
+                if (Model.Id == 0)
+                {
                     @Html.EditorFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.UserNo, "", new { @class = "text-danger" })
                 }
                 else
                 {
-                    @Html.DisplayFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } }); 
+                    @Html.DisplayFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } })
+                    ;
                 }
             }
         </div>
     </div>
-    <div class="row form-group my-3">
-        <div class="control-label col-md-2">
-            @Html.DisplayNameFor(m => m.Password)
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    @* <div class="row form-group my-3">
+<div class="control-label col-md-2">
+@Html.DisplayNameFor(m => m.Password)
+</div>
+<div class="col-md-10">
+@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+</div>
+</div> *@
     <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.UserName)
@@ -75,7 +76,7 @@
             @Html.DisplayNameFor(m => m.GenderCode)
         </div>
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.GenderCode, genders, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.GenderCode, genders, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.GenderCode, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -84,30 +85,36 @@
             @Html.DisplayNameFor(m => m.RoleNo)
         </div>
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.RoleNo, roles, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.RoleNo, roles, new
+                {
+                    @class = "form-control RoleNo",
+                    id = "dropdown",
+                    @* id = "RoleNo",
+        @onchange = "onChanged()" *@
+                })
             @Html.ValidationMessageFor(model => model.RoleNo, "", new { @class = "text-danger" })
         </div>
     </div>
     @* <div class="row form-group">
-        <div class="control-label col-md-2">
-            @Html.DisplayNameFor(m => m.RoleName)
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
-        </div>
-    </div> *@
+<div class="control-label col-md-2">
+@Html.DisplayNameFor(m => m.RoleName)
+</div>
+<div class="col-md-10">
+@Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+</div>
+</div> *@
     <div class="row form-group my-3">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.CountryNo)
         </div>
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.CountryNo,countrys, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.CountryNo, countrys, new { @class = "form-control" })
             @* @Html.EditorFor(model => model.CountryNo, new { htmlAttributes = new { @class = "form-control" } }) *@
             @Html.ValidationMessageFor(model => model.CountryNo, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row form-group my-3">
+    <div id="ReviewStar" class="row form-group my-3 ReviewStarDiv" style="display: none;">
         <div class="control-label col-md-2">
             @Html.DisplayNameFor(m => m.ReviewStar)
         </div>
@@ -121,14 +128,15 @@
             @Html.DisplayNameFor(m => m.Birthday)
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Birthday, new 
-            { 
-                htmlAttributes = new 
-                {   @type= "date", 
-                    @class = "form-control" ,
-                    @value = Model.Birthday.ToString()
-                } 
-            })
+            @Html.EditorFor(model => model.Birthday, new
+                {
+                    htmlAttributes = new
+                    {
+                        @type = "date",
+                        @class = "form-control",
+                        @value = Model.Birthday
+                    }
+                })
             @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -176,4 +184,57 @@
                      new { area = ActionService.Area }, new { @class = "btn btn-success" })
         </div>
     </div>
+}
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            debugger;
+            const dropdown = document.getElementById("dropdown");
+            const reviewstar = document.getElementById("ReviewStar");
+            dropdown.addEventListener('change', function () {
+
+                if (dropdown.value == "Teacher") {
+                    reviewstar.style.display = 'block';
+                }
+                else {
+                    reviewstar.style.display = 'none';
+                }
+            })
+        });
+        @* $(document).ready(function () {
+
+        debugger;
+        var select = document.getElementById("RoleNo").value;
+
+        $(".RoleNo").show(function () {
+        if (select != "Teacher") {
+        $(".ReviewStarDiv").hide();
+        }
+        else {
+        $(".ReviewStarDiv").show();
+        }
+        });
+
+        console.log(select);
+
+        });
+
+        function onChanged() {
+        debugger;
+        var select = document.getElementById("RoleNo").value;
+
+        $(".RoleNo").show(function () {
+        if (select == "Teacher") {
+        $(".ReviewStarDiv").show();
+        }
+        else {
+        $(".ReviewStarDiv").hide();
+        }
+        });
+        console.log(select);
+        }        *@
+    </script>
 }

@@ -68,6 +68,8 @@ namespace JUSTGOTUTOR.Models
         [NotMapped]
         [Display(Name = "課程備註")]
         public string CourseMemo { get; set; } = "";
+        [Display(Name = "狀態名稱")]
+        public string? StatusName{get; set; } =""; 
             
 
     }

@@ -55,13 +55,13 @@ public class z_metaUsers
     [Display(Name = "星星評論數量")]
     public string? ReviewStar { get; set; }
     [Display(Name = "出生日期")]
-    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime? Birthday { get; set; }
     [Display(Name = "到職日期")]
-    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime? OnboardDate { get; set; }
     [Display(Name = "離職日期")]
-    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime? LeaveDate { get; set; }
     [Display(Name = "電子信箱")]
     [EmailAddress(ErrorMessage = "電子信箱格式不正確!!")]

@@ -13,9 +13,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserNo)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
+            @* <th>
+            @Html.DisplayNameFor(model => model.Password)
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
@@ -85,13 +85,14 @@
                 <td>
                     @await Html.PartialAsync("_PartialFormEdit")
                     @await Html.PartialAsync("_PartialFormDelete")
+                    @await Html.PartialAsync("_PartialFormResetPassword")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserNo)
                 </td>
-                <td class="table-wrap">
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
+                @* <td class="table-wrap">
+            @Html.DisplayFor(modelItem => item.Password)
+            </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>

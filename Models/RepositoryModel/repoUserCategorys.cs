@@ -16,7 +16,7 @@ public class z_repoUserCategorys : BaseClass
     {
         string str_query = @"
     SELECT UserCategorys.Id, UserCategorys.UserNo, Users.UserName, Users.CountryNo, Users.ReviewStar,
-    UserCategorys.CategoryNo, ContactEmail, Users.ContactTel, UserCategorys.Remark, Category3s.CategoryName, Category3s.EnglishName, Category3s.ParentNo , Users.ContentText 
+    UserCategorys.CategoryNo,ContactEmail, Users.ContactTel, UserCategorys.Remark, Category3s.CategoryName, Category3s.EnglishName, Category3s.ParentNo , Users.ContentText 
     FROM UserCategorys 
     LEFT OUTER JOIN Users ON Users.UserNo = UserCategorys.UserNo 
     LEFT OUTER JOIN Category3s ON UserCategorys.CategoryNo = Category3s.CategoryNo 
@@ -187,14 +187,14 @@ public class z_repoUserCategorys : BaseClass
         {
             using var dpr = new DapperRepository();
             string sql_query = GetSQLSelect();
-            string sql_where = GetSQLWhere();
-            sql_query += dpr.GetSQLSelectWhereById(model, sql_where);
+            string sql_where = " WHERE UserCategorys.Id = @Id ";
+            sql_query += sql_where;
             sql_query += GetSQLOrderBy();
-            DynamicParameters parm = dpr.GetSQLSelectKeyParm(model, id);
+            DynamicParameters parm = new DynamicParameters();
             if (!string.IsNullOrEmpty(sql_where))
             {
                 //自定義的 Weher Parm 參數
-                //parm.Add("參數名稱", "參數值");
+                parm.Add("Id", id);
             }
             model = dpr.ReadSingle<UserCategorys>(sql_query, parm);
         }
@@ -266,8 +266,17 @@ public class z_repoUserCategorys : BaseClass
     public void Create(UserCategorys model)
     {
         using var dpr = new DapperRepository();
-        string str_query = dpr.GetSQLInsertCommand(model);
-        DynamicParameters parm = dpr.GetSQLInsertParameters(model);
+        //string str_query = dpr.GetSQLInsertCommand(model);
+        string str_query = @"
+        INSERT INTO UserCategorys (UserNo, CategoryNo, Remark) VALUES (@UserNo, @CategoryNo, @Remark)
+        ";
+        //DynamicParameters parm = dpr.GetSQLInsertParameters(model);
+        DynamicParameters parm = new DynamicParameters();
+
+        parm.Add("UserNo", model.UserNo);
+        parm.Add("CategoryNo", model.CategoryNo);
+        parm.Add("Remark", model.Remark);
+
         dpr.Execute(str_query, parm);
     }
     /// <summary>
@@ -277,8 +286,23 @@ public class z_repoUserCategorys : BaseClass
     public void Edit(UserCategorys model)
     {
         using var dpr = new DapperRepository();
-        string str_query = dpr.GetSQLUpdateCommand(model);
-        DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
+        //string str_query = dpr.GetSQLUpdateCommand(model);
+        string str_query = @"
+UPDATE UserCategorys 
+SET 
+UserNo  = @UserNo, 
+CategoryNo  = @CategoryNo, 
+Remark  = @Remark
+WHERE Id = @Id
+";
+        // DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
+        DynamicParameters parm = new DynamicParameters();
+
+        parm.Add("UserNo", model.UserNo); 
+        parm.Add("CategoryNo", model.CategoryNo); 
+        parm.Add("Remark", model.Remark); 
+        parm.Add("Id", model.Id); 
+
         dpr.Execute(str_query, parm);
     }
     /// <summary>

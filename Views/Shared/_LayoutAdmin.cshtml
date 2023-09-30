@@ -113,6 +113,48 @@
         }
       });
     }
+
+    function ResetPassword(id, data) {
+      var message = '請問您確認是否要重設';
+      if (!!data) {
+        message += ' [' + data + '] 的密碼?'
+      }
+      else {
+        message += '此筆資料的密碼?'
+      }
+
+      Swal.fire({
+        title: "<strong>您確定要重設密碼?</strong>",
+        text: message,
+        icon: 'question',
+        showCancelButton: true,
+        focusConfirm: false,
+        closeOnConfirm: false,
+        confirmButtonText: '<i class="fas fa-check pe-2"></i>確定',
+        cancelButtonText: '<i class="fas fa-times pe-2"></i>取消',
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '@Url.Action("ResetPasswordRow", ActionService.Controller, new { area = ActionService.Area })',
+            data: { "id": id },
+            type: "POST",
+            dataType: "json",
+          }).done(function (value) {
+            if (value.Mode == true) {
+              location.reload(true);
+            }
+            else {
+              Swal.fire('錯誤訊息1', value.Message, 'error');
+            }
+          }).fail(function (err) {
+            Swal.fire('錯誤訊息2', err, 'error');
+            console.log(err);
+          });
+        }
+      });
+    }
+
+
   </script>
   @await RenderSectionAsync("Scripts", required: false)
   <!-- =======================================================

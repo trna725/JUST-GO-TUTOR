@@ -19,6 +19,19 @@ public class z_repoCourseCase : BaseClass
         str_query = dpr.GetSQLSelectCommand(new CourseCase());
         return str_query;
     }
+
+    public string GetCaseSelect()
+    {
+        string sql_query = @"
+SELECT CourseCase.Id, StatusCode, CourseStatus.StatusName, CaseDate, ConfirmTime, CaseTime, StudentNo, StudentName, TeacherNo, TeacherName, CourseNo, CourseName, TimeSection, WeekSection, UserMemo, CourseCase.Remark 
+FROM CourseCase 
+LEFT OUTER JOIN CourseStatus
+ON CourseCase.StatusCode = CourseStatus.StatusNo        
+"; 
+        return sql_query; 
+
+    }
+
     /// <summary>
     /// 取得模擬搜尋的欄位集合
     /// </summary>
@@ -147,7 +160,8 @@ public class z_repoCourseCase : BaseClass
         else
         {
             using var dpr = new DapperRepository();
-            string sql_query = GetSQLSelect();
+            // string sql_query = GetSQLSelect();
+            string sql_query = GetCaseSelect();
             string sql_where = GetSQLWhere();
             sql_query += dpr.GetSQLSelectWhereById(model, sql_where);
             sql_query += GetSQLOrderBy();
@@ -173,7 +187,8 @@ public class z_repoCourseCase : BaseClass
         DynamicParameters parm = new DynamicParameters();
         var model = new List<CourseCase>();
         using var dpr = new DapperRepository();
-        string sql_query = GetSQLSelect();
+        // string sql_query = GetSQLSelect();
+        string sql_query = GetCaseSelect();
         string sql_where = GetSQLWhere();
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
@@ -197,7 +212,7 @@ public class z_repoCourseCase : BaseClass
             // Create(model);
             InsertCase(model); 
         else
-            Edit(model);
+            EditCase(model);
     }
     /// <summary>
     /// 新增資料(同步呼叫)
@@ -406,7 +421,7 @@ VALUES
     /// <param name="model">資料模型</param>
     public void InsertCase(CourseCase model)
     {
-    string str_time_section = "";
+        string str_time_section = "";
         string str_week_section = "";
         var caseDate = DateTime.Today; 
         var caseTime = DateTime.Now.ToString("yyyyMMddHHmmss"); 
@@ -433,30 +448,38 @@ VALUES
 
         string str_query = @"
 INSERT INTO CourseCase
-(StatusCode,CaseDate,CaseTime,StudentNo,StudentName
-,TeacherNo,TeacherName,CourseNo,CourseName,TimeSection,WeekSection
+(StatusCode,CaseDate,CaseTime,StudentNo, StudentName,
+TeacherNo,TeacherName, CourseNo, CourseName, TimeSection,WeekSection
 ,UserMemo,Remark)
 VALUES  
-(@StatusCode,@CaseDate,@CaseTime,@StudentNo,@StudentName
-,@TeacherNo,@TeacherName,@CourseNo,@CourseName,@TimeSection,@WeekSection
+(@StatusCode,@CaseDate,@CaseTime,@StudentNo, @StudentName
+,@TeacherNo, @TeacherName, @CourseNo, @CourseName, @TimeSection,@WeekSection
 ,@UserMemo,@Remark)  
 ";
+
+        using var user = new z_repoUsers(); 
+    var student_name = user.GetData(model.StudentNo).UserName; 
+    var teacher_name = user.GetData(model.TeacherNo).UserName; 
+
+    using var course = new z_repoCategory3s(); 
+    var course_name = course.GetCategoryName(model.CourseNo); 
+
         DynamicParameters parm = new DynamicParameters();
-        parm.Add("StatusCode" , "N");
+        parm.Add("StatusCode" , model.StatusCode);
         // parm.Add("CaseDate" , model.CaseDate);
         // parm.Add("CaseTime" , model.CaseTime);
         parm.Add("CaseDate" , caseDate);
         parm.Add("CaseTime" , caseTime);
         parm.Add("StudentNo" , model.StudentNo);
-        parm.Add("StudentName" , model.StudentName);
-        parm.Add("TeacherNo" , model.TeacherNo);
-        parm.Add("TeacherName" , model.TeacherName);
-        parm.Add("CourseNo" , model.CourseNo);
-        parm.Add("CourseName" , model.CourseName);
+        parm.Add("StudentName" , student_name);
+        parm.Add("TeacherNo" , model.TeacherNo);       
+        parm.Add("TeacherName" , teacher_name);       
+        parm.Add("CourseNo" , model.CourseNo);        
+        parm.Add("CourseName" , course_name);        
         parm.Add("TimeSection" , str_time_section);
         parm.Add("WeekSection" , str_week_section);
         parm.Add("UserMemo" , model.UserMemo);
-        parm.Add("Remark" , "");
+        parm.Add("Remark" , model.Remark);
         dpr.Execute(str_query , parm);
 
         // SessionService.WeekSection = str_week_section;
@@ -464,11 +487,56 @@ VALUES
         SessionService.CaseTime =caseTime; 
     }
 
+    /// <summary>
+    /// 更新資料(同步呼叫)
+    /// </summary>
+    /// <param name="model">資料模型</param>
+    public void EditCase(CourseCase model)
+    {
+        using var dpr = new DapperRepository();
+        string str_query =@"
+UPDATE CourseCase SET 
+ConfirmTime = @ConfirmTime, 
+StudentNo = @StudentNo, 
+StudentName = @StudentName, 
+TeacherNo = @TeacherNo, 
+TeacherName = @TeacherName,
+CourseNo = @CourseNo, 
+CourseName = @CourseName, 
+StatusCode = @StatusCode 
+";
+    str_query += " WHERE Id = @Id ";
+
+    using var user = new z_repoUsers(); 
+    var student_name = user.GetData(model.StudentNo).UserName; 
+    var teacher_name = user.GetData(model.TeacherNo).UserName; 
+
+      using var course = new z_repoCategory3s(); 
+    var course_name = course.GetCategoryName(model.CourseNo);  
+   
+        // DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("ConfirmTime" , model.ConfirmTime); 
+        parm.Add("StudentNo" , model.StudentNo); 
+        parm.Add("StudentName" , student_name); 
+        parm.Add("TeacherNo" , model.TeacherNo); 
+        parm.Add("TeacherName" , teacher_name); 
+        parm.Add("CourseNo" , model.CourseNo); 
+        parm.Add("CourseName" , course_name); 
+        parm.Add("StatusCode" , model.StatusCode);
+        
+        parm.Add("Id" , model.Id); 
+
+        dpr.Execute(str_query, parm);
+        
+        SessionService.CaseTime =GetData(model.Id).CaseTime;  
+    }
+
     private void SetSectionValue(bool checkValue , string value , ref string sectionValue)
     {
         if (checkValue)
         {
-            if (!string.IsNullOrEmpty(sectionValue)) sectionValue += ",";
+            if (!string.IsNullOrEmpty(sectionValue)) sectionValue += " / ";
             sectionValue += value;
         }
     }
@@ -477,7 +545,7 @@ VALUES
     {
         var model = new CourseCase();
         using var dpr = new DapperRepository();
-        string sql_query = GetSQLSelect();
+        string sql_query = GetCaseSelect();
         string sql_where = " WHERE CaseTime = @CaseTime ";
         sql_query += sql_where;
         sql_query += GetSQLOrderBy();
@@ -503,6 +571,23 @@ VALUES
 
             return times; 
            
+        }
+
+        public bool CheckTeacherNoCompareCourseNo(string teacherNo, string courseNo)
+        {
+            using var usercate = new z_repoUserCategorys(); 
+
+            var data = usercate.GetUserCourseList(teacherNo);
+
+            foreach(var course in data)
+            {
+                if(courseNo == course.CategoryNo)
+                {
+                    return true; 
+                }
+            }
+            
+            return false;
         }
      
 

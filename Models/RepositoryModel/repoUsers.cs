@@ -1,6 +1,7 @@
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Data.Common;
 
 /// <summary>
@@ -80,8 +81,27 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
         using var dpr = new DapperRepository();
         string str_query = "SELECT ";
         if (showNo) str_query += "UserNo + ' ' + ";
-        str_query += "UserName AS Text , TitleNo AS Value FROM Users ORDER BY UserNo";
+        str_query += "UserName AS Text , UserNo AS Value FROM Users ORDER BY UserNo";
         var model = dpr.ReadAll<SelectListItem>(str_query);
+        return model;
+    }
+
+        /// <summary>
+    /// 取得下拉式選單資料集(排除某些角色)
+    /// </summary>
+    /// <param name="showNo">是否顯示編號</param>
+    /// <returns></returns>
+    public List<SelectListItem> GetDropDownList(string roleNo, bool showNo = true)
+    {
+        using var dpr = new DapperRepository();
+        string str_query = "SELECT ";
+        if (showNo) str_query += "UserNo + ' ' + ";
+        str_query += "UserName AS Text , UserNo AS Value FROM Users ";
+        str_query += "Where RoleNo = @RoleNo "; 
+        str_query += " ORDER BY UserNo ";
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("RoleNo" ,roleNo );
+        var model = dpr.ReadAll<SelectListItem>(str_query, parm);
         return model;
     }
 
@@ -95,8 +115,8 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
         using var dpr = new DapperRepository();
         string str_query = "SELECT ";
         if (showNo) str_query += "UserNo + ' ' + ";
-        str_query += "UserName AS Text , TitleNo AS Value FROM Users ";
-        str_query += "Where RoleNo == @RoleNo_1 OR RoleNo == @RoleNo_2 "; 
+        str_query += "UserName AS Text , UserNo AS Value FROM Users ";
+        str_query += "Where RoleNo = @RoleNo_1 OR RoleNo = @RoleNo_2 "; 
         str_query += " ORDER BY UserNo ";
         DynamicParameters parm = new DynamicParameters(); 
         parm.Add("RoleNo_1", roleNo_1); 
@@ -115,7 +135,7 @@ LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo
         using var dpr = new DapperRepository();
         string str_query = "SELECT ";
         if (showNo) str_query += "UserNo + ' ' + ";
-        str_query += "UserName AS Text , TitleNo AS Value FROM Users ";
+        str_query += "UserName AS Text , UserNo AS Value FROM Users ";
         str_query += "Where RoleNo != @RoleNo_1 AND RoleNo != @RoleNo_2 "; 
         str_query += " ORDER BY UserNo ";
         DynamicParameters parm = new DynamicParameters(); 
@@ -1011,15 +1031,14 @@ VALUES
         string str_code = Guid.NewGuid().ToString().Replace("-", ""); 
         string str_query = @"
 INSERT INTO Users 
-(IsValid, UserNo, UserName, Password, RoleNo, GenderCode, CountryNo, ReviewStar, Birthday, ContactEmail, ContactTel , ContactAddress, ValidateCode, NotifyPassword, ContentText, Remark) 
+(IsValid, UserNo, UserName, RoleNo, GenderCode, CountryNo, ReviewStar, Birthday, ContactEmail, ContactTel , ContactAddress, ValidateCode, NotifyPassword, ContentText, Remark) 
 VALUES
-(@IsValid, @UserNo, @UserName, @Password, @RoleNo, @GenderCode,@CountryNo, @ReviewStar, @Birthday, @ContactEmail, @ContactTel , @ContactAddress, @ValidateCode, @NotifyPassword, @ContentText, @Remark)     
+(@IsValid, @UserNo, @UserName,  @RoleNo, @GenderCode,@CountryNo, @ReviewStar, @Birthday, @ContactEmail, @ContactTel , @ContactAddress, @ValidateCode, @NotifyPassword, @ContentText, @Remark)     
 "; 
         DynamicParameters parm = dpr.GetSQLInsertParameters(model);
         parm.Add("IsValid", model.IsValid);
         parm.Add("UserNo", model.UserNo); 
         parm.Add("UserName", model.UserName);
-        parm.Add("Password", model.Password);
         parm.Add("RoleNo", model.RoleNo);
         parm.Add("GenderCode", model.GenderCode);
         parm.Add("CountryNo", model.CountryNo);
@@ -1056,7 +1075,6 @@ VALUES
         using var dpr = new DapperRepository();
         string str_query =@"
         UPDATE Users SET 
-        Password = @Password ,
         UserName = @UserName ,
         IsValid = @IsValid , 
         GenderCode = @GenderCode , 
@@ -1071,8 +1089,7 @@ VALUES
         ";
         str_query += " WHERE Id = @Id "; 
         // DynamicParameters parm = dpr.GetSQLUpdateParameters(model);
-        DynamicParameters parm = new DynamicParameters(); 
-        parm.Add("Password", model.Password);
+        DynamicParameters parm = new DynamicParameters();         
         parm.Add("UserName", model.UserName);
         parm.Add("IsValid", model.IsValid);
         parm.Add("GenderCode", model.GenderCode);
@@ -1147,6 +1164,25 @@ VALUES
             model = dpr.ReadSingle<Users>(sql_query, parm);
         }
         return model;
+    }
+
+    public void ResetPassword(int id)
+    {
+        using var dpr= new DapperRepository(); 
+        using var cryp = new CryptographyService();
+        var str_query_userno =@"
+        SELECT * FROM Users WHERE Id = @Id  
+        ";
+        DynamicParameters parm_userNo = new DynamicParameters();
+        parm_userNo.Add("Id", id);
+        var users =dpr.ReadSingle<Users>(str_query_userno, parm_userNo); 
+        
+         var str_password = cryp.StringToSHA256(users.UserNo);
+                var sql_query = "UPDATE Users SET Password = @Password WHERE UserNo = @UserNo";
+                DynamicParameters parm = new DynamicParameters();
+                parm.Add("UserNo", users.UserNo);
+                parm.Add("Password", str_password);
+                dpr.Execute(sql_query, parm);
     }
 
     #endregion

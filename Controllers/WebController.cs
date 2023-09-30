@@ -19,6 +19,7 @@ namespace JUSTGOTUTOR.Controllers
         public IActionResult Logout()
         {
             SessionService.IsLogin = false;
+            SessionService.RoleNo=""; 
             return RedirectToAction("Login", "Web", new { area = "" });
         }
 

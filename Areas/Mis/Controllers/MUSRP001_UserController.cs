@@ -7,7 +7,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
     public class MUSRP001_UserController : Controller
     {  
 
-        int id=0; 
+        //int id=0; 
         
         /// <summary>
         /// 資料初始化事件
@@ -89,6 +89,13 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         {
             if (!ModelState.IsValid) return View(model);
             using var datas = new z_repoUsers();
+
+             if (!datas.CheckRegisterUserNo(model.UserNo))
+            {
+                ModelState.AddModelError("UserNo", "登入帳號重覆註冊!!");
+                return View(model);
+            }
+
             // datas.UserEdit(id, model);
             datas.UserEdit(model);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
@@ -127,6 +134,24 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             {
                 datas.Delete(id);
                 dmJsonMessage result = new dmJsonMessage() { Mode = true, Message = "資料已刪除!!" };
+                return Json(result);
+            }
+        }
+
+        /// <summary>
+        /// 重新設定密碼
+        /// </summary>
+        /// <param name="id">記錄 ID</param>
+        /// <returns></returns>
+        [Area("Mis")]
+        [Login(RoleList = "Mis")]
+        [HttpPost]
+        public JsonResult ResetPasswordRow(int id = 0)
+        {
+            using (z_repoUsers datas = new z_repoUsers())
+            {
+                datas.ResetPassword(id);
+                dmJsonMessage result = new dmJsonMessage() { Mode = true, Message = "密碼已重設!!" };
                 return Json(result);
             }
         }

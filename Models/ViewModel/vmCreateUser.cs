@@ -30,7 +30,7 @@ using System.ComponentModel.DataAnnotations;
         [Display(Name = "星星評論數量")]
         public string? ReviewStar { get; set; }
         [Display(Name = "出生日期")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? Birthday { get; set; }
    
         [Display(Name = "電子信箱")]

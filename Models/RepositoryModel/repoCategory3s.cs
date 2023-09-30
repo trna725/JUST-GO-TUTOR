@@ -175,6 +175,7 @@ public class z_repoCategory3s : BaseClass
         }
         return model;
     }
+    
 /// <summary>
     /// 取得多筆資料(同步呼叫)
     /// </summary>
@@ -196,6 +197,33 @@ public class z_repoCategory3s : BaseClass
         {
             //自定義的 Weher Parm 參數
             parm.Add("ParentNo", cate2No);
+        }
+        sql_query += GetSQLOrderBy();
+        model = dpr.ReadAll<Category3s>(sql_query, parm);
+        return model;
+    }
+
+    /// <summary>
+    /// 取得多筆資料(同步呼叫)
+    /// </summary>
+    /// <param name="cate2No">CategoryNo</param>
+    /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
+    /// <returns></returns>
+    public List<Category3s> GetDataListByCateNo(string cateNo , string searchString = "")
+    {
+        List<string> searchColumns = GetSearchColumns();
+        DynamicParameters parm = new DynamicParameters();
+        var model = new List<Category3s>();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE Category3s.CategoryNo = @CategoryNo ";
+        sql_query += sql_where;
+        if (!string.IsNullOrEmpty(searchString))
+            sql_query += dpr.GetSQLWhereBySearchColumn(new Category3s(), searchColumns, sql_where, searchString);
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("CategoryNo", cateNo);
         }
         sql_query += GetSQLOrderBy();
         model = dpr.ReadAll<Category3s>(sql_query, parm);

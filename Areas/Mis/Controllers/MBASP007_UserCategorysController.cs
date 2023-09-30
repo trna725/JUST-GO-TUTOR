@@ -1,12 +1,11 @@
-using System.Reflection.PortableExecutable;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
-namespace JUSTGOTUTOR.Areas_Mis_Controllers
+namespace JUSTGOTUTOR.Areas.Mis.Controllers
 {
-    public class MSYSP000_CourseCaseController : Controller
-    {  /// <summary>
+    public class MBASP007_UserCategorysController : Controller
+    {
+        /// <summary>
         /// 資料初始化事件
         /// </summary>
         /// <returns></returns> <summary>
@@ -30,7 +29,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult Index(int id = 1)
         {
-            using var datas = new z_repoCourseCase(SessionService.SortColumn, SessionService.SortDirection);
+            using var datas = new z_repoUserCategorys(SessionService.SortColumn, SessionService.SortDirection);
             var model = datas.GetDataList(SessionService.SearchText)
                 .ToPagedList(id, SessionService.PageSize);
             SessionService.SetPageInfo(id, model.PageCount);
@@ -49,18 +48,18 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         public IActionResult CreateEdit(int id = 0)
         {
             SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);
-            var model = new CourseCase();
+            var model = new UserCategorys();
             if (id == 0)
             {
                 //新增預設值
+                //沒有需要預設的checkbox
+                //model.IsEnabled = true;
             }
             else
             {
                 //修改資料
-                using var datas = new z_repoCourseCase();
+                using var datas = new z_repoUserCategorys();
                 model = datas.GetData(id);
-                // ViewBag.TimeList =datas.TimeData(model.TimeSection); 
-               
                 if (model == null) return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
             }
             return View(model);
@@ -74,36 +73,14 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [Area("Mis")]
         [Login(RoleList = "Mis")]
         [HttpPost]
-        public IActionResult CreateEdit(CourseCase model)
+        public IActionResult CreateEdit(UserCategorys model)
         {
             if (!ModelState.IsValid) return View(model);
-            using var datas = new z_repoCourseCase();
-            using var sendEmail = new SendMailService();           
-           
-            if (!datas.CheckTeacherNoCompareCourseNo(model.TeacherNo, model.CourseNo))
-            {
-                using var usercate = new z_repoUserCategorys(); 
-                var cates = usercate.GetUserCourseList(model.TeacherNo); 
-                string course = "("; 
-
-                foreach(var cate in cates)
-                {
-                    course += cate.CategoryName;
-                    course +="/"; 
-                };
-
-                course +=")"; 
-
-                ModelState.AddModelError("TeacherNo", $"此老師並未教授所選課程，請參閱此老師以下課程再做選擇：{course}!!");
-                return View(model);
-            }
-
+            using var datas = new z_repoUserCategorys();
             datas.CreateEdit(model);
-             sendEmail.CaseSendToUserByBackend(model);
-             sendEmail.CaseSendToTeacherByBackend(model);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
-      
+
         /// <summary>
         /// 刪除
         /// </summary>
@@ -114,7 +91,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
         [HttpGet]
         public IActionResult Delete(int id = 0)
         {
-            using var datas = new z_repoCourseCase();
+            using var datas = new z_repoUserCategorys();
             datas.Delete(id);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
@@ -133,7 +110,7 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             //if (!PrgService.IsProgramSecurity(enSecurtyMode.Delete))
             //return RedirectToAction(ActionService.Index, ActionService.Controller, new { area = ActionService.Area });
 
-            using (z_repoCourseCase datas = new z_repoCourseCase())
+            using (z_repoUserCategorys datas = new z_repoUserCategorys())
             {
                 datas.Delete(id);
                 dmJsonMessage result = new dmJsonMessage() { Mode = true, Message = "資料已刪除!!" };

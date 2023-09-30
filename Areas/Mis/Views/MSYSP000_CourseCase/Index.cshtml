@@ -15,6 +15,9 @@
                 @Html.ColumnSort("Id", @Html.DisplayNameFor(model => model.Id))
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.StatusName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.CaseDate)
             </th>
             <th>
@@ -67,6 +70,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CaseDate)
