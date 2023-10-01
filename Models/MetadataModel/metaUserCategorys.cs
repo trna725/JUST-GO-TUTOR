@@ -50,7 +50,7 @@ namespace JUSTGOTUTOR.Models
     {
     [Key]
     public int Id { get; set; }
-    [Display(Name ="使用者姓名")]
+    [Display(Name ="使用者代號")]
     public string? UserNo { get; set; }
     [Display(Name ="分類代號")]
     public string? CategoryNo { get; set; }
