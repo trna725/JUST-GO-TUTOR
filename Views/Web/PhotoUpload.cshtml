@@ -1,6 +1,17 @@
 @{
     ViewData["Title"] = ActionService.ViewActionName;
-    Layout = "_Layout";
+    @* Layout = "_Layout"; *@
+    switch (SessionService.RoleNo)
+    {
+        case "Admin":
+        case "User":
+        case "Mis":
+            { Layout = "_LayoutAdminLite"; }
+            break;
+        default:
+            { Layout = "_Layout"; }
+            break;
+    }
 }
 
 <div style="height: 100rem">

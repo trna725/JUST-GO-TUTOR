@@ -192,7 +192,7 @@ ON CourseCase.StatusCode = CourseStatus.StatusNo
         string sql_where = GetSQLWhere();
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new CourseCase(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumnForCase(new CourseCase(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數

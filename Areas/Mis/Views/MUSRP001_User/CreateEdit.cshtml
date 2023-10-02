@@ -20,7 +20,8 @@
 @using (Html.BeginForm())
 {
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    @* @Html.HiddenFor(model => model.Id) *@
+    // 幫助傳回ID
+    @Html.HiddenFor(model => model.Id)
 
     <div class="row form-group my-3">
         <div class="control-label col-md-2">

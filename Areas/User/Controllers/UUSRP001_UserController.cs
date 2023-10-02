@@ -2,15 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 
-namespace JUSTGOTUTOR.Areas_Admin_Controllers
+namespace JUSTGOTUTOR.Areas_Mis_Controllers
 {
-    public class ABASP002_UserController : Controller
-    {  /// <summary>
+    public class UUSRP001_UserController : Controller
+    {  
+
+        //int id=0; 
+        
+        /// <summary>
         /// 資料初始化事件
         /// </summary>
         /// <returns></returns> <summary>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpGet]
         public IActionResult Init()
         {
@@ -24,13 +28,17 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
         /// <param name="page">目前頁數</param>
         /// <param name="searchText">查詢條件</param>
         /// <returns></returns>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpGet]
         public IActionResult Index(int id = 1)
         {
             using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
-            var model = datas.GetDataList(SessionService.SearchText)
+            // var model = datas.GetDataList(SessionService.SearchText)
+            //     .ToPagedList(id, SessionService.PageSize);
+                //  var model = datas.GetMutipleRoleDataList("User","Student","Teacher", SessionService.SearchText)
+                // .ToPagedList(id, SessionService.PageSize);
+                 var model = datas.GetMutipleRoleDataList("Teacher", "Student","Member",SessionService.SearchText)
                 .ToPagedList(id, SessionService.PageSize);
             SessionService.SetPageInfo(id, model.PageCount);
             SessionService.SetActionInfo(enAction.Index, enCardSize.Max, id, "");
@@ -42,13 +50,15 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
         /// </summary>
         /// <param name="id">新增/修改 Key 值</param>
         /// <returns></returns>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpGet]
         public IActionResult CreateEdit(int id = 0)
         {
-            SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);
+            SessionService.SetActionInfo(enAction.CreateEdit, enCardSize.Medium);          
+            // var model = new vmCreateUser();
             var model = new Users();
+            // this.id = id; 
             if (id == 0)
             {
                 //新增預設值
@@ -58,7 +68,8 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
             {
                 //修改資料
                 using var datas = new z_repoUsers();
-                model = datas.GetData(id);
+                // model = datas.GetCreateUserData(id);
+                model = datas.GetUserData(id);
                 if (model == null) return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
             }
             return View(model);
@@ -69,24 +80,34 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
         /// </summary>
         /// <param name="model">新增/修改資料</param>
         /// <returns></returns>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpPost]
+        //public IActionResult CreateEdit(Users model)
+        // public IActionResult CreateEdit(vmCreateUser model)
         public IActionResult CreateEdit(Users model)
         {
             if (!ModelState.IsValid) return View(model);
             using var datas = new z_repoUsers();
-            datas.CreateEdit(model);
+
+             if (!datas.CheckRegisterUserNo(model.UserNo))
+            {
+                ModelState.AddModelError("UserNo", "登入帳號重覆註冊!!");
+                return View(model);
+            }
+
+            // datas.UserEdit(id, model);
+            datas.UserEdit(model);
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
-
+      
         /// <summary>
         /// 刪除
         /// </summary>
         /// <param name="id">刪除 Key 值</param>
         /// <returns></returns>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpGet]
         public IActionResult Delete(int id = 0)
         {
@@ -100,8 +121,8 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
         /// </summary>
         /// <param name="id">記錄 ID</param>
         /// <returns></returns>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpPost]
         public JsonResult DeleteRow(int id = 0)
         {
@@ -118,11 +139,29 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
         }
 
         /// <summary>
+        /// 重新設定密碼
+        /// </summary>
+        /// <param name="id">記錄 ID</param>
+        /// <returns></returns>
+        [Area("User")]
+        [Login(RoleList = "User")]
+        [HttpPost]
+        public JsonResult ResetPasswordRow(int id = 0)
+        {
+            using (z_repoUsers datas = new z_repoUsers())
+            {
+                datas.ResetPassword(id);
+                dmJsonMessage result = new dmJsonMessage() { Mode = true, Message = "密碼已重設!!" };
+                return Json(result);
+            }
+        }
+
+        /// <summary>
         /// 查詢
         /// </summary>
         /// <returns></returns>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpPost]
         public IActionResult Search()
         {
@@ -137,8 +176,8 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
         /// </summary>
         /// <param name="id">欄位名稱</param>
         /// <returns></returns>
-        [Area("Admin")]
-        [Login(RoleList = "Admin")]
+        [Area("User")]
+        [Login(RoleList = "User")]
         [HttpGet]
         public IActionResult Sort(string id)
         {
@@ -153,5 +192,7 @@ namespace JUSTGOTUTOR.Areas_Admin_Controllers
             }
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
+
+        
     }
 }

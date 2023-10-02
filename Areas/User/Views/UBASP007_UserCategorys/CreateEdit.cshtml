@@ -1,0 +1,57 @@
+@model JUSTGOTUTOR.Models.UserCategorys
+
+@{
+    ViewData["Title"] = "CreateEdit";
+    Layout = "_LayoutAdmin";
+
+    using var teacher = new z_repoUsers();
+    List<SelectListItem> teachers = new List<SelectListItem>();
+    teachers = teacher.GetDropDownList("Teacher", true);
+
+    using var cate = new z_repoCategory3s();
+    List<SelectListItem> cates = new List<SelectListItem>();
+    cates = cate.GetDropDownList(true);
+}
+
+@using (Html.BeginForm())
+{
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @Html.HiddenFor(model => model.Id)
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.UserNo)
+        </div>
+        <div class="col-md-10">
+            @* @Html.EditorFor(model => model.UserNo, new { htmlAttributes = new { @class = "form-control" } }) *@
+            @Html.DropDownListFor(model => model.UserNo, teachers, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.CategoryNo)
+        </div>
+        <div class="col-md-10">
+            @* @Html.EditorFor(model => model.CategoryNo, new { htmlAttributes = new { @class = "form-control" } }) *@
+            @Html.DropDownListFor(model => model.CategoryNo, cates, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.Remark)
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <input type="submit" value="異動存檔" class="btn btn-primary" />
+            @Html.ActionLink("返回列表", "Index", ActionService.Controller,
+                     new { area = ActionService.Area }, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}

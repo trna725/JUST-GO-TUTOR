@@ -101,3 +101,7 @@ a:active {
   /* margin-top: 80px; */
   margin-top: 150px;
 }
+
+.card {
+  margin-bottom: 0px !important;
+}

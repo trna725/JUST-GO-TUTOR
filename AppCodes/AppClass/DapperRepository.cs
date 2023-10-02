@@ -605,6 +605,88 @@ public class DapperRepository : BaseClass, IDapperRepository
         }
         return str_query;
     }
+
+     /// <summary>
+    /// 取得查詢模糊搜尋條件參數(For User)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity">物件變數</param>
+    /// <param name="columns">欄位</param>
+    /// <param name="sqlWhere">目前的 Where 條件</param>
+    /// <param name="searchText">查詢條件</param>
+    /// <returns></returns>
+    public string GetSQLWhereBySearchColumnForUser<T>(T entity, List<string> columns, string sqlWhere, string searchText)
+    {
+        string str_query = "";
+        string str_where = "";
+        if (columns.Count > 0 && !string.IsNullOrEmpty(searchText))
+        {            
+            if (string.IsNullOrEmpty(sqlWhere))
+                str_query += " WHERE ";
+            else
+                str_query += " AND ";
+            str_query += " (";
+            /*foreach (var col in columns)
+            {
+                if (!string.IsNullOrEmpty(str_where)) str_where += " OR ";
+                str_where += $"{col} LIKE '%{searchText}%'";
+            }*/
+
+            str_where+= @$"
+vi_CodeGender.CodeName LIKE '%{searchText}%' OR Roles.RoleName LIKE  '%{searchText}%' OR vi_CodeGender.CodeName LIKE  '%{searchText}%' 
+OR Departments.DeptName LIKE  '%{searchText}%' OR Titles.TitleName LIKE  '%{searchText}%' OR Users.UserNo LIKE  '%{searchText}%' OR Users.UserName LIKE  '%{searchText}%' 
+OR Users.Password LIKE  '%{searchText}%' OR Users.CodeNo LIKE  '%{searchText}%' OR Users.RoleNo LIKE  '%{searchText}%' OR Users.GenderCode LIKE  '%{searchText}%' OR Users.CountryNo LIKE  '%{searchText}%' 
+OR Users.DeptNo LIKE  '%{searchText}%' OR Users.TitleNo LIKE  '%{searchText}%' OR Users.ReviewStar LIKE  '%{searchText}%' OR Users.ContactEmail LIKE  '%{searchText}%' OR Users.ContactTel LIKE  '%{searchText}%' 
+OR Users.ContactAddress LIKE  '%{searchText}%' OR Users.ValidateCode LIKE  '%{searchText}%' OR Users.NotifyPassword LIKE  '%{searchText}%' OR Users.ContentText LIKE  '%{searchText}%' OR Users.Remark LIKE  '%{searchText}%'   
+";
+            str_query += str_where;
+            str_query += ") ";
+        }
+        return str_query;
+    }
+
+     /// <summary>
+    /// 取得查詢模糊搜尋條件參數(For Case)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity">物件變數</param>
+    /// <param name="columns">欄位</param>
+    /// <param name="sqlWhere">目前的 Where 條件</param>
+    /// <param name="searchText">查詢條件</param>
+    /// <returns></returns>
+    public string GetSQLWhereBySearchColumnForCase<T>(T entity, List<string> columns, string sqlWhere, string searchText)
+    {
+        string str_query = "";
+        string str_where = "";
+        if (columns.Count > 0 && !string.IsNullOrEmpty(searchText))
+        {
+            string str_entity_name = entity.GetType().Name;
+            if (string.IsNullOrEmpty(sqlWhere))
+                str_query += " WHERE ";
+            else
+                str_query += " AND ";
+            str_query += " (";
+            // foreach (var col in columns)
+            // {
+            //     if (!string.IsNullOrEmpty(str_where)) str_where += " OR ";
+            //     str_where += $"{col} LIKE '%{searchText}%'";
+            // }
+
+            str_where+= @$" CourseCase.Id LIKE '%{searchText}%' OR
+CourseCase.UserMemo LIKE '%{searchText}%' 
+OR CourseStatus.StatusName LIKE '%{searchText}%' OR CourseCase.StatusCode LIKE '%{searchText}%' 
+OR CourseCase.CaseTime LIKE '%{searchText}%' OR CourseCase.StudentNo LIKE '%{searchText}%' 
+OR CourseCase.StudentName LIKE '%{searchText}%' OR CourseCase.TeacherNo LIKE '%{searchText}%' 
+OR CourseCase.TeacherName LIKE '%{searchText}%' OR CourseCase.CourseNo LIKE '%{searchText}%' 
+OR CourseCase.CourseName LIKE '%{searchText}%' OR CourseCase.TimeSection LIKE '%{searchText}%' 
+OR CourseCase.WeekSection LIKE '%{searchText}%' OR CourseCase.UserMemo LIKE '%{searchText}%' OR CourseCase.Remark LIKE '%{searchText}%'           
+"; 
+            str_query += str_where;
+            str_query += ") ";
+        }
+        return str_query;
+    }
+
     /// <summary>
     /// 動態取得 SQL Insert 語法
     /// </summary>

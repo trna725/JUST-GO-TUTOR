@@ -2,16 +2,30 @@
 
 @{
     ViewData["Title"] = ActionService.ViewActionName;
-    Layout = "_Layout";
+    @* Layout = "_Layout"; *@
+    switch (SessionService.RoleNo)
+    {
+        case "Admin":
+        case "User":
+        case "Mis":
+            { Layout = "_LayoutAdminLite"; }
+            break;
+        default:
+            { Layout = "_Layout"; }
+            break;
+    }
     List<SelectListItem> GenderList = new List<SelectListItem>();
     List<SelectListItem> DepartmentList = new List<SelectListItem>();
     List<SelectListItem> TitleList = new List<SelectListItem>();
+    List<SelectListItem> CountryList = new List<SelectListItem>();
     using var codeDatas = new z_repoCodeDatas();
     using var dept = new z_repoDepartments();
     using var title = new z_repoTitles();
+    using var country = new z_repoCountry();
     GenderList = codeDatas.GetDropDownList("Gender" , false);
     DepartmentList = dept.GetDropDownList(true);
     TitleList = title.GetDropDownList(true);
+    CountryList =country.GetDropDownList(true);  
 }
 
 <div style="height: 100rem">
@@ -61,7 +75,7 @@
                 </div>
                 @if (SessionService.RoleNo != "Member")
                 {
-                    <div class="row form-group">
+                    @* <div class="row form-group">
                         <label asp-for="DeptName" class="control-label col-md-3"></label>
                         <div class="col-md-9">
                             <select asp-for="DeptNo" asp-items="@DepartmentList" class="form-control"></select>
@@ -73,6 +87,13 @@
                         <div class="col-md-9">
                             <select asp-for="TitleNo" asp-items="@TitleList" class="form-control"></select>
                             <span asp-validation-for="TitleNo" class="text-danger"></span>
+                        </div>
+                    </div> *@
+                     <div class="row form-group">
+                        <label asp-for="CountryNo" class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <select asp-for="CountryNo" asp-items="@CountryList" class="form-control"></select>
+                            <span asp-validation-for="CountryNo" class="text-danger"></span>
                         </div>
                     </div>
                 }

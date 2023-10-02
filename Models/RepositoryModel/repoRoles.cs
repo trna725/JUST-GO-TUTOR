@@ -82,14 +82,37 @@ public class z_repoRoles : BaseClass
     public List<SelectListItem> GetRoleDropDownList(string roleNo_1,bool showNo = true)
     {
         using var dpr = new DapperRepository();
+        DynamicParameters parm = new DynamicParameters(); 
         string str_query = "SELECT ";
         if (showNo) str_query += "RoleNo + ' ' + ";
         str_query += "RoleName AS Text , RoleNo AS Value FROM Roles "; 
         str_query += "WHERE RoleNo = @RoleNo_1 "; 
         str_query += "ORDER BY RoleNo";
 
-        DynamicParameters parm = new DynamicParameters(); 
+       
         parm.Add("RoleNo_1", roleNo_1);
+        var model = dpr.ReadAll<SelectListItem>(str_query, parm);
+        return model;
+    }
+
+     /// <summary>
+    /// 取得下拉式選單資料集(特定角色)
+    /// </summary>
+    /// <param name="showNo">是否顯示編號</param>
+    /// <returns></returns>
+    public List<SelectListItem> GetRoleDropDownList(string roleNo_1, string roleNo_2, bool showNo = true)
+    {
+        using var dpr = new DapperRepository();
+        DynamicParameters parm = new DynamicParameters(); 
+        string str_query = "SELECT ";
+        if (showNo) str_query += "RoleNo + ' ' + ";
+        str_query += "RoleName AS Text , RoleNo AS Value FROM Roles "; 
+        str_query += "WHERE RoleNo = @RoleNo_1 OR RoleNo = @RoleNo_2 "; 
+        str_query += "ORDER BY RoleNo";
+
+       
+        parm.Add("RoleNo_1", roleNo_1);
+        parm.Add("RoleNo_2", roleNo_2);
         var model = dpr.ReadAll<SelectListItem>(str_query, parm);
         return model;
     }

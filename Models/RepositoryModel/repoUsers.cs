@@ -19,7 +19,7 @@ public class z_repoUsers : BaseClass
         string str_query = @"
 SELECT Users.Id, Users.IsValid, Users.UserNo, Users.UserName, Users.Password, 
 Users.CodeNo, vi_CodeUser.CodeName, Users.RoleNo, Roles.RoleName, Users.GenderCode, 
-vi_CodeGender.CodeName AS GenderName, Users.CountryNo, Users.DeptNo, Departments.DeptName, Users.ReviewStar,
+vi_CodeGender.CodeName AS GenderName, Users.CountryNo, Country.CountryName, Users.DeptNo, Departments.DeptName, Users.ReviewStar,
 Users.TitleNo, Titles.TitleName, Users.Birthday, Users.OnboardDate, Users.LeaveDate, 
 Users.ContactEmail, Users.ContactTel, Users.ContactAddress, Users.ValidateCode, 
 Users.NotifyPassword, Users.ContentText,Users.Remark 
@@ -28,8 +28,9 @@ LEFT OUTER JOIN vi_CodeGender ON Users.GenderCode = vi_CodeGender.CodeNo
 LEFT OUTER JOIN vi_CodeUser ON Users.CodeNo = vi_CodeUser.CodeNo 
 LEFT OUTER JOIN Departments ON Users.DeptNo = Departments.DeptNo 
 LEFT OUTER JOIN Titles ON Users.TitleNo = Titles.TitleNo 
-LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo     
-        ";
+LEFT OUTER JOIN Roles ON Users.RoleNo = Roles.RoleNo 
+LEFT OUTER JOIN Country ON Users.CountryNo = Country.CountryNo     
+";
         return str_query;
     }
     /// <summary>
@@ -808,10 +809,12 @@ VALUES
         ContactAddress = @ContactAddress ";
         if (SessionService.RoleNo != "Member")
         {
+            // sql_query += @", 
+            // CountryNo =@CountryNo,
+            // DeptNo = @DeptNo ,
+            // TitleNo = @TitleNo ";
             sql_query += @", 
-            CountryNo =@CountryNo,
-            DeptNo = @DeptNo ,
-            TitleNo = @TitleNo ";
+            CountryNo =@CountryNo "; 
         }
         sql_query += "WHERE UserNo = @UserNo";
         DynamicParameters parm = new DynamicParameters();
@@ -823,8 +826,8 @@ VALUES
         if (SessionService.RoleNo != "Member")
         {
             parm.Add("CountryNo", model.CountryNo);
-            parm.Add("DeptNo", model.DeptNo);
-            parm.Add("TitleNo", model.TitleNo);
+            // parm.Add("DeptNo", model.DeptNo);
+            // parm.Add("TitleNo", model.TitleNo);
         }
         dpr.Execute(sql_query, parm);
     }
@@ -895,7 +898,7 @@ VALUES
         string sql_where = " WHERE (Users.RoleNo = @RoleNo_1) ";
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumnForUser(new Users(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數
@@ -936,6 +939,34 @@ VALUES
     }
 
      /// <summary>
+    /// 取得多數特定角色多筆資料(同步呼叫)  ==> 可嘗試用陣列改寫
+    /// </summary>
+    /// <param name="roleNo">角色編號</param>
+    /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
+    /// <returns></returns>
+    public List<Users> GetMutipleRoleDataList(string roleNo_1, string roleNo_2,string searchString = "")    
+    {
+        List<string> searchColumns = GetSearchColumns();
+        DynamicParameters parm = new DynamicParameters();
+        var model = new List<Users>();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE (Users.RoleNo = @RoleNo_1 OR Users.RoleNo = @RoleNo_2 ) ";
+        sql_query += sql_where;
+        if (!string.IsNullOrEmpty(searchString))
+            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("RoleNo_1", roleNo_1);
+            parm.Add("RoleNo_2", roleNo_2);
+        }
+        sql_query += GetSQLOrderBy();
+        model = dpr.ReadAll<Users>(sql_query, parm);
+        return model;
+    }
+
+     /// <summary>
     /// 排除多數特定角色多筆資料(同步呼叫)  ==> 可嘗試用陣列改寫
     /// </summary>
     /// <param name="roleNo">角色編號</param>
@@ -951,7 +982,7 @@ VALUES
         string sql_where = " WHERE Users.RoleNo != @RoleNo_1 AND Users.RoleNo != @RoleNo_2 ";
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumnForUser(new Users(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數
@@ -962,6 +993,34 @@ VALUES
         model = dpr.ReadAll<Users>(sql_query, parm);
         return model;
     }
+
+      /// <summary>
+    /// 排除多數特定角色多筆資料(同步呼叫)  ==> 可嘗試用陣列改寫
+    /// </summary>
+    /// <param name="roleNo">角色編號</param>
+    /// <param name="searchString">模糊搜尋文字(空白或不傳入表示不搜尋)</param>
+    /// <returns></returns>
+    public List<Users> ExcludeRoleDataList(string roleNo_1,string searchString = "")    
+    {
+        List<string> searchColumns = GetSearchColumns();
+        DynamicParameters parm = new DynamicParameters();
+        var model = new List<Users>();
+        using var dpr = new DapperRepository();
+        string sql_query = GetSQLSelect();
+        string sql_where = " WHERE Users.RoleNo != @RoleNo_1 ";
+        sql_query += sql_where;
+        if (!string.IsNullOrEmpty(searchString))
+            sql_query += dpr.GetSQLWhereBySearchColumnForUser(new Users(), searchColumns, sql_where, searchString);
+        if (!string.IsNullOrEmpty(sql_where))
+        {
+            //自定義的 Weher Parm 參數
+            parm.Add("RoleNo_1", roleNo_1);
+        }
+        sql_query += GetSQLOrderBy();
+        model = dpr.ReadAll<Users>(sql_query, parm);
+        return model;
+    }
+
 
 
       /// <summary>

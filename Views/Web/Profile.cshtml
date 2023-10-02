@@ -8,7 +8,7 @@
         case "Admin":
         case "User":
         case "Mis":
-            { Layout = "_LayoutAdmin"; }
+            { Layout = "_LayoutAdminLite"; }
             break;
         default:
             { Layout = "_Layout"; }
@@ -61,7 +61,7 @@ else
                                 <label asp-for="CountryNo" class="control-label"></label>
                             </div>
                             <div class="col-md-9 border-bottom border-end pt-1">
-                                <span class="control-label">@Model.DeptName</span>
+                                <span class="control-label">@Model.CountryName</span>
                             </div>
                         </div>
                         @* <div class="row">

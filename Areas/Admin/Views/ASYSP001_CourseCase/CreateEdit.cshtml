@@ -1,0 +1,315 @@
+@model JUSTGOTUTOR.Models.CourseCase
+
+@{
+    ViewData["Title"] = "CreateEdit";
+    Layout = "_LayoutAdmin";
+
+    @* var list = ViewBag.TimeList;
+var isChecked = false; *@
+
+    using var student = new z_repoUsers();
+    List<SelectListItem> students = new List<SelectListItem>();
+    students = student.GetMultipleRoleDropDownList("Student", "Member", true);
+
+    using var status = new z_repoCourseStatus();
+    List<SelectListItem> statuslist = new List<SelectListItem>();
+    statuslist = status.GetDropDownList(true);
+
+    using var teacher = new z_repoUsers();
+    List<SelectListItem> teachers = new List<SelectListItem>();
+    teachers = teacher.GetDropDownList("Teacher", true);
+
+    using var course = new z_repoCategory3s();
+    List<SelectListItem> courses = new List<SelectListItem>();
+    courses = course.GetDropDownList(true);
+}
+
+@using (Html.BeginForm())
+{
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @* @Html.HiddenFor(model => model.Id) *@
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.Id)
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Id)
+            @* @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" }) *@
+
+        </div>
+    </div>
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.StatusCode)
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.StatusCode, statuslist, new
+                {
+                    @class = "form-control"
+                })
+            @* @Html.EditorFor(model => model.StatusCode, new { htmlAttributes = new { @class = "form-control" } }) *@
+            @Html.ValidationMessageFor(model => model.StatusCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    if (Model.Id != 0)
+    {
+        <div class="row form-group my-3">
+            <div class="control-label col-md-2">
+                @Html.DisplayNameFor(m => m.CaseDate)
+            </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CaseDate, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @type = "date",
+                            @* @class = "form-control datepicker", *@
+                            @class = "form-control",
+                            @value = Model.CaseDate.ToString()
+                        }
+                    })
+                @Html.ValidationMessageFor(model => model.CaseDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row form-group my-3">
+            <div class="control-label col-md-2">
+                @Html.DisplayNameFor(m => m.CaseTime)
+            </div>
+            <div class="col-md-10">
+                @* @Html.EditorFor(model => model.CaseTime, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CaseTime, "", new { @class = "text-danger" }) *@
+                @Html.DisplayFor(model => model.CaseTime, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+    }
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.ConfirmTime)
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ConfirmTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConfirmTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.StudentNo)
+        </div>
+        <div class="col-md-10">
+            @* @Html.EditorFor(model => model.StudentNo, new { htmlAttributes = new { @class = "form-control" } }) *@
+            @Html.DropDownListFor(m => m.StudentNo, students, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StudentNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @* <div class="row form-group my-3">
+<div class="control-label col-md-2">
+@Html.DisplayNameFor(m => m.StudentName)
+</div>
+<div class="col-md-10">
+@Html.EditorFor(model => model.StudentName, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.StudentName, "", new { @class = "text-danger" })
+</div>
+</div> *@
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.TeacherNo)
+        </div>
+        <div class="col-md-10">
+            @* @Html.EditorFor(model => model.TeacherNo, new { htmlAttributes = new { @class = "form-control" } }) *@
+            @Html.DropDownListFor(m => m.TeacherNo, teachers, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TeacherNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @* <div class="row form-group my-3">
+<div class="control-label col-md-2">
+@Html.DisplayNameFor(m => m.TeacherName)
+</div>
+<div class="col-md-10">
+@Html.EditorFor(model => model.TeacherName, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.TeacherName, "", new { @class = "text-danger" })
+</div>
+</div> *@
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.CourseNo)
+        </div>
+        <div class="col-md-10">
+            @* @Html.EditorFor(model => model.CourseNo, new { htmlAttributes = new { @class = "form-control" } }) *@
+            @Html.DropDownListFor(m => m.CourseNo, courses, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CourseNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @* <div class="row form-group my-3">
+<div class="control-label col-md-2">
+@Html.DisplayNameFor(m => m.CourseName)
+</div>
+<div class="col-md-10">
+@Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
+@Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
+</div>
+</div> *@
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.TimeSection)
+        </div>
+        <div class="col-md-10">
+            @if (Model.Id == 0)
+            {
+                <span class="mx-2">
+                    @Html.EditorFor(m => m.IsTime1, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime1)
+                </span>
+                <span class="mx-2">
+                    @Html.EditorFor(m => m.IsTime2, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime2)
+                </span>
+                <span class="mx-2">
+                    @Html.EditorFor(m => m.IsTime3, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime3)
+                </span>
+                <span class="mx-2">@Html.CheckBoxFor(m => m.IsTime4, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime4)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsTime5, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime5)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsTime6, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime6)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsTime7, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime7)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsTime8, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime8)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsTime9, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime9)
+                </span>
+
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsTime10, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime10)
+                </span>
+
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsTime11, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsTime11)
+                </span>
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.TimeSection, new { htmlAttribute = new { @class = "form-control" } })
+            }
+
+            @* @Html.EditorFor(model => model.TimeSection, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.TimeSection, "", new { @class = "text-danger" }) *@
+        </div>
+    </div>
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.WeekSection)
+        </div>
+        <div class="col-md-10">
+            @if (Model.Id == 0)
+            {
+                <span class="mx-2">
+                    @Html.EditorFor(m => m.IsWeek1, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsWeek1)
+                </span>
+                <span class="mx-2">
+                    @Html.EditorFor(m => m.IsWeek2, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsWeek2)
+                </span>
+                <span class="mx-2">
+                    @Html.EditorFor(m => m.IsWeek3, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsWeek3)
+                </span>
+                <span class="mx-2">@Html.CheckBoxFor(m => m.IsWeek4, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsWeek4)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsWeek5, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsWeek5)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsWeek6, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsWeek6)
+                </span>
+                <span class="mx-2">
+                    @Html.CheckBoxFor(m => m.IsWeek7, new { @checked = "checked" })
+                    @Html.DisplayNameFor(m => m.IsWeek7)
+                </span>
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.WeekSection, new { htmlAttribute = new { @class = "form-control" } })
+            }
+
+            @* @Html.EditorFor(model => model.WeekSection, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.WeekSection, "", new { @class = "text-danger" }) *@
+        </div>
+    </div>
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.UserMemo)
+        </div>
+        <div class="col-md-10">
+            @if (Model.Id == 0)
+            {
+                @Html.EditorFor(model => model.UserMemo, new { htmlAttributes = new { @class = "form-control" } })
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.UserMemo, new { htmlAttributes = new { @class = "form-control" } })
+            }
+            @Html.ValidationMessageFor(model => model.UserMemo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row form-group my-3">
+        <div class="control-label col-md-2">
+            @Html.DisplayNameFor(m => m.Remark)
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr>
+    <div class="row form-group my-3">
+        <div class="col-md-12">
+            <input type="submit" value="異動存檔" class="btn btn-primary" />
+            @Html.ActionLink("返回列表", "Index", ActionService.Controller,
+                     new { area = ActionService.Area }, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+    </script>
+
+}

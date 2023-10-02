@@ -22,6 +22,9 @@ namespace JUSTGOTUTOR.Models
         [NotMapped]
         [Display(Name = "職稱名稱")]
         public string? TitleName { get; set; }
+        [NotMapped]
+        [Display(Name = "國籍名稱")]
+        public string? CountryName { get; set; }
     }
 }
 
