@@ -503,7 +503,8 @@ TeacherNo = @TeacherNo,
 TeacherName = @TeacherName,
 CourseNo = @CourseNo, 
 CourseName = @CourseName, 
-StatusCode = @StatusCode 
+StatusCode = @StatusCode, 
+Remark = @Remark
 ";
     str_query += " WHERE Id = @Id ";
 
@@ -524,6 +525,7 @@ StatusCode = @StatusCode
         parm.Add("CourseNo" , model.CourseNo); 
         parm.Add("CourseName" , course_name); 
         parm.Add("StatusCode" , model.StatusCode);
+        parm.Add("Remark" , model.Remark);
         
         parm.Add("Id" , model.Id); 
 
