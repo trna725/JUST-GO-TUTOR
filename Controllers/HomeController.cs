@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Localization;
+﻿using System.Dynamic;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -37,7 +38,25 @@ namespace JUSTGOTUTOR.Controllers
         public IActionResult Contact(vmContact model)
         {
             if (!ModelState.IsValid) return View(model);
-            return RedirectToAction("Index", "Home", new { area = "" });
+            
+                //寄出驗證信
+                using var sendEmail = new SendMailService(); 
+                var mailObject = new MailObject();
+                mailObject.ToName = model.ContactorName; 
+                mailObject.ToEmail = model.ContactorEmail; 
+                mailObject.FromName = AppService.AdminName;
+                mailObject.MailSubject = model.ContactorSubject; 
+                mailObject.MailContent =model.ContactorMessage; 
+
+                var str_message = sendEmail.ContactUs(mailObject);
+                if (string.IsNullOrEmpty(str_message))
+                {
+                    str_message = "您的訊息已傳送，我們會請專人盡快回復您!!";
+                }
+
+                TempData["MessageText"] = str_message;
+                return RedirectToAction("MessageResult", "Web", new { area = "" });
+            // return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         public IActionResult ChangeLanguage(string culture)
