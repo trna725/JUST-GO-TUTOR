@@ -312,8 +312,14 @@ WHERE Id = @Id
     public void Delete(int id = 0)
     {
         using var dpr = new DapperRepository();
-        string str_query = dpr.GetSQLDeleteCommand(new UserCategorys());
-        DynamicParameters parm = dpr.GetSQLDeleteParameters(new UserCategorys(), id);
+        // string str_query = dpr.GetSQLDeleteCommand(new UserCategorys());
+        // DynamicParameters parm = dpr.GetSQLDeleteParameters(new UserCategorys(), id);
+        string str_query =@"
+DELETE FROM UserCategorys
+WHERE id = @id      
+";
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("Id", id); 
         dpr.Execute(str_query, parm);
     }
     #endregion
