@@ -205,37 +205,37 @@
         }
         })
         }); *@
-        @* $(document).ready(function () {
+            $(document).ready(function () {
 
-        debugger;
-        var select = document.getElementById("RoleNo").value;
-
-        $(".RoleNo").show(function () {
-        if (select != "Teacher") {
-        $(".ReviewStarDiv").hide();
-        }
-        else {
-        $(".ReviewStarDiv").show();
-        }
-        });
-
-        console.log(select);
-
-        }); *@
-
-            function onChanged() {
                 debugger;
                 var select = document.getElementById("RoleNo").value;
 
                 $(".RoleNo").show(function () {
-                    if (select == "Teacher") {
-                        $(".ReviewStarDiv").slideDown();
+                    if (select != "Teacher") {
+                        $(".ReviewStarDiv").hide();
                     }
                     else {
-                        $(".ReviewStarDiv").slideUp();
+                        $(".ReviewStarDiv").show();
                     }
                 });
+
                 console.log(select);
-            }       
+
+            });
+
+        function onChanged() {
+            debugger;
+            var select = document.getElementById("RoleNo").value;
+
+            $(".RoleNo").show(function () {
+                if (select == "Teacher") {
+                    $(".ReviewStarDiv").slideDown();
+                }
+                else {
+                    $(".ReviewStarDiv").slideUp();
+                }
+            });
+            console.log(select);
+        }       
     </script>
 }

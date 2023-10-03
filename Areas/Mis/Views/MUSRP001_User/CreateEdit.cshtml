@@ -89,9 +89,9 @@
             @Html.DropDownListFor(model => model.RoleNo, roles, new
                 {
                     @class = "form-control RoleNo",
-                    id = "dropdown",
-                    @* id = "RoleNo",
-        @onchange = "onChanged()" *@
+                    @* id = "dropdown", *@
+                    id = "RoleNo",
+                    @onchange = "onChanged()"
                 })
             @Html.ValidationMessageFor(model => model.RoleNo, "", new { @class = "text-danger" })
         </div>
@@ -190,52 +190,52 @@
 
 @section Scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-
-            debugger;
-            const dropdown = document.getElementById("dropdown");
-            const reviewstar = document.getElementById("ReviewStar");
-            dropdown.addEventListener('change', function () {
-
-                if (dropdown.value == "Teacher") {
-                    reviewstar.style.display = 'flex';
-                }
-                else {
-                    reviewstar.style.display = 'none';
-                }
-            })
-        });
         @* $(document).ready(function () {
 
         debugger;
-        var select = document.getElementById("RoleNo").value;
+        const dropdown = document.getElementById("dropdown");
+        const reviewstar = document.getElementById("ReviewStar");
+        dropdown.addEventListener('change', function () {
 
-        $(".RoleNo").show(function () {
-        if (select != "Teacher") {
-        $(".ReviewStarDiv").hide();
+        if (dropdown.value == "Teacher") {
+        reviewstar.style.display = 'flex';
         }
         else {
-        $(".ReviewStarDiv").show();
+        reviewstar.style.display = 'none';
         }
-        });
+        })
+        }); *@
+            $(document).ready(function () {
 
-        console.log(select);
+                debugger;
+                var select = document.getElementById("RoleNo").value;
 
-        });
+                $(".RoleNo").show(function () {
+                    if (select != "Teacher") {
+                        $(".ReviewStarDiv").hide();
+                    }
+                    else {
+                        $(".ReviewStarDiv").show();
+                    }
+                });
+
+                console.log(select);
+
+            });
 
         function onChanged() {
-        debugger;
-        var select = document.getElementById("RoleNo").value;
+            debugger;
+            var select = document.getElementById("RoleNo").value;
 
-        $(".RoleNo").show(function () {
-        if (select == "Teacher") {
-        $(".ReviewStarDiv").show();
-        }
-        else {
-        $(".ReviewStarDiv").hide();
-        }
-        });
-        console.log(select);
-        }        *@
+            $(".RoleNo").show(function () {
+                if (select == "Teacher") {
+                    $(".ReviewStarDiv").slideDown();
+                }
+                else {
+                    $(".ReviewStarDiv").slideUp();
+                }
+            });
+            console.log(select);
+        }       
     </script>
 }
