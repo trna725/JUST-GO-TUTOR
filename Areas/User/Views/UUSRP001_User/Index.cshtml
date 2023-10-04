@@ -86,6 +86,11 @@
                     @await Html.PartialAsync("_PartialFormEdit")
                     @await Html.PartialAsync("_PartialFormDelete")
                     @await Html.PartialAsync("_PartialFormResetPassword")
+
+                    @if (item.RoleNo == "Teacher")
+                    {
+                        @await Html.PartialAsync("_PartialFormContentEdit")
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserNo)

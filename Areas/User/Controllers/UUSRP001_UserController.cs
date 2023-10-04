@@ -193,6 +193,47 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
             return RedirectToAction("Index", ActionService.Controller, new { area = ActionService.Area });
         }
 
+         /// <summary>
+        /// 內容描述新編輯功能
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Area("User")]
+        [Login(RoleList ="User")]
+        [HttpGet]
+        public IActionResult ContentText(int id)
+        {
+            using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
+            // var model = datas.GetRoleDataList("Teacher", SessionService.SearchText);
+
+            var model = datas.GetDataList().Where(m=> m.Id == id).FirstOrDefault(); 
+
+            return View(model);
+        }
+
+        [Area("User")]
+        [Login(RoleList ="User")]
+        [HttpGet]
+        public IActionResult ContentTextEdit(int id)
+        {
+            using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
+            var model = datas.GetDataList().Where(m=> m.Id == id).FirstOrDefault(); 
+
+            return View(model); 
+        }
+
+        [Area("User")]
+        [Login(RoleList ="User")]
+        [HttpPost]
+        public IActionResult ContentTextEdit(Users model)
+        {
+            using var datas = new z_repoUsers(SessionService.SortColumn, SessionService.SortDirection);
+            datas.UpdateContentText(model.Id, model.ContentText); 
+
+            return RedirectToAction("Init", ActionService.Controller, new { area = ActionService.Area }); 
+        }        
+
+
         
     }
 }

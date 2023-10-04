@@ -1,0 +1,48 @@
+@model JUSTGOTUTOR.Models.Users
+
+@{
+    ViewData["Title"] = "ContentTextEdit";
+    Layout = "_LayoutAdminLite";
+
+    string str_header = $"{Model.UserNo} {Model.UserName} 老師簡介";
+}
+
+<div class="card">
+    <div class="card-header text-white bg-primary">
+        <h3 class="card-title text-white">
+            @str_header
+        </h3>
+    </div>
+    <div class="card-body pt-2">
+        @using (Html.BeginForm("ContentTextEdit", ActionService.Controller, new { area = ActionService.Area },
+        FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="row form-group">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.ContentText, new { @class = "form-control", rows = 50 })
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="資料存檔" class="btn btn-primary" />
+                    @Html.ActionLink("返回列表", "Index", ActionService.Controller,
+                             new { area = ActionService.Area }, new { @class = "btn btn-success" })
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section ScriptsEnd {
+    <script src="@Url.Content("~/lib/ckeditor/ckeditor.js")"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('ContentText', {
+            extraPlugins: 'codesnippet',
+            codeSnippet_theme: 'monokai_sublime'
+        });
+    </script>
+}
