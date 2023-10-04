@@ -1244,5 +1244,19 @@ VALUES
                 dpr.Execute(sql_query, parm);
     }
 
+
+    public void UpdateContentText(int id, string content)
+    {
+        using var dpr = new DapperRepository(); 
+        string str_query = @"
+    UPDATE Users SET ContentText = @ContentText WHERE Id = @Id 
+    "; 
+        DynamicParameters parm = new DynamicParameters(); 
+        parm.Add("Id", id);
+        parm.Add("ContentText", content);  
+
+        dpr.Execute(str_query, parm);
+    }
+
     #endregion
 }

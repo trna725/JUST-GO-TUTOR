@@ -36,7 +36,7 @@
                                     <div class="row">
                                         @foreach (var item2 in CourseList)
                                         {
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 btn rounded-pill btn-success mx-1">
                                                 @item2.CategoryName
                                             </div>
                                         }
@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-text">
-                                            @item1.ContentText
+                                            @Html.Raw(item1.ContentText)
                                         </div>
                                     </div>
                                 </div>
