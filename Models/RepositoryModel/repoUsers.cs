@@ -1108,7 +1108,7 @@ VALUES
         parm.Add("ContactAddress", model.ContactAddress);
         parm.Add("ValidateCode", "");
         parm.Add("NotifyPassword","");
-        parm.Add("ContentText", "");
+        parm.Add("ContentText", model.ContentText);
         parm.Add("Remark", model.Remark);
 
         dpr.Execute(str_query, parm);

@@ -172,10 +172,29 @@
             @Html.DisplayNameFor(m => m.Remark)
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.Remark, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    if (Model.Id == 0)
+    {
+        <div class="row form-group my-3 ContentText">
+            <div class="control-label col-md-2">
+                @Html.DisplayNameFor(m => m.ContentText)
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.ContentText, new
+                    {
+                        @class = "form-control"
+
+                    })
+                @Html.ValidationMessageFor(model => model.ContentText, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+
+
     <hr>
     <div class="row form-group my-3">
         <div class="col-md-12">
@@ -212,9 +231,11 @@
                 $(".RoleNo").show(function () {
                     if (select != "Teacher") {
                         $(".ReviewStarDiv").hide();
+                        $(".ContentText").hide();
                     }
                     else {
                         $(".ReviewStarDiv").show();
+                        $(".ContentText").show();
                     }
                 });
 
@@ -229,9 +250,11 @@
             $(".RoleNo").show(function () {
                 if (select == "Teacher") {
                     $(".ReviewStarDiv").slideDown();
+                    $(".ContentText").slideDown();
                 }
                 else {
                     $(".ReviewStarDiv").slideUp();
+                    $(".ContentText").slideUp();
                 }
             });
             console.log(select);
