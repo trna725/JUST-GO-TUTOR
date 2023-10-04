@@ -215,7 +215,7 @@ public class z_repoUserCategorys : BaseClass
         string sql_where = GetSQLWhere();
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new UserCategorys(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumnByUserCategory(new UserCategorys(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數

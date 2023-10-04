@@ -95,6 +95,9 @@ namespace JUSTGOTUTOR.Areas_Mis_Controllers
                 course +=")"; 
 
                 ModelState.AddModelError("TeacherNo", $"此老師並未教授所選課程，請參閱此老師以下課程再做選擇：{course}!!");
+                ViewBag.TimeSection = datas.GetData(model.Id).TimeSection; 
+                ViewBag.WeekSection = datas.GetData(model.Id).WeekSection; 
+                ViewBag.UserMemo =  datas.GetData(model.Id).UserMemo;
                 return View(model);
             }
 

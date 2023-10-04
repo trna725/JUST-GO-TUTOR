@@ -206,7 +206,16 @@ var isChecked = false; *@
             }
             else
             {
-                @Html.DisplayFor(m => m.TimeSection, new { htmlAttribute = new { @class = "form-control" } })
+                if (string.IsNullOrEmpty(Model.TimeSection))
+                {
+                    @ViewBag.TimeSection
+                }
+                else
+                {
+
+                    @Html.DisplayFor(m => m.TimeSection, new { htmlAttribute = new { @class = "form-control" } })
+
+                }
             }
 
             @* @Html.EditorFor(model => model.TimeSection, new { htmlAttributes = new { @class = "form-control" } })
@@ -250,7 +259,15 @@ var isChecked = false; *@
             }
             else
             {
-                @Html.DisplayFor(m => m.WeekSection, new { htmlAttribute = new { @class = "form-control" } })
+                if (string.IsNullOrEmpty(Model.WeekSection))
+                {
+                    @ViewBag.WeekSection
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.WeekSection, new { htmlAttribute = new { @class = "form-control" } })
+                }
+
             }
 
             @* @Html.EditorFor(model => model.WeekSection, new { htmlAttributes = new { @class = "form-control" } })
@@ -268,7 +285,14 @@ var isChecked = false; *@
             }
             else
             {
-                @Html.DisplayFor(model => model.UserMemo, new { htmlAttributes = new { @class = "form-control" } })
+                if (string.IsNullOrEmpty(Model.UserMemo))
+                {
+                    @ViewBag.UserMemo
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.UserMemo, new { htmlAttributes = new { @class = "form-control" } })
+                }
             }
             @Html.ValidationMessageFor(model => model.UserMemo, "", new { @class = "text-danger" })
         </div>

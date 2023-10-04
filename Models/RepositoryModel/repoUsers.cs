@@ -925,7 +925,7 @@ VALUES
         string sql_where = " WHERE (Users.RoleNo = @RoleNo_1 OR Users.RoleNo = @RoleNo_2 OR Users.RoleNo = @RoleNo_3 ) ";
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumnForUser(new Users(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數
@@ -954,7 +954,7 @@ VALUES
         string sql_where = " WHERE (Users.RoleNo = @RoleNo_1 OR Users.RoleNo = @RoleNo_2 ) ";
         sql_query += sql_where;
         if (!string.IsNullOrEmpty(searchString))
-            sql_query += dpr.GetSQLWhereBySearchColumn(new Users(), searchColumns, sql_where, searchString);
+            sql_query += dpr.GetSQLWhereBySearchColumnForUser(new Users(), searchColumns, sql_where, searchString);
         if (!string.IsNullOrEmpty(sql_where))
         {
             //自定義的 Weher Parm 參數
